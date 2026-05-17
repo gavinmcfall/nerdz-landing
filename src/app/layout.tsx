@@ -1,43 +1,48 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
+  display: "swap",
 });
+
+const description =
+  "Self-hostable tools for the nerdy hobbies Gavin McFall loves — Star Citizen, 3D printing, TTRPGs — and the homelab they all run on.";
 
 export const metadata: Metadata = {
-  title: "Nerdz Cloud — Homelab Infrastructure",
-  description:
-    "A fully automated, GitOps-driven Kubernetes homelab. Powered by Talos Linux, Flux, and a passion for self-hosting.",
+  title: "nerdz.cloud — Gavin McFall",
+  description,
   metadataBase: new URL("https://nerdz.cloud"),
   openGraph: {
-    title: "Nerdz Cloud — Homelab Infrastructure",
-    description:
-      "A fully automated, GitOps-driven Kubernetes homelab. Powered by Talos Linux, Flux, and a passion for self-hosting.",
+    title: "nerdz.cloud — Gavin McFall",
+    description,
     url: "https://nerdz.cloud",
-    siteName: "Nerdz Cloud",
+    siteName: "nerdz.cloud",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1024,
         height: 1024,
-        alt: "Nerdz Cloud",
+        alt: "nerdz.cloud",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nerdz Cloud — Homelab Infrastructure",
-    description:
-      "A fully automated, GitOps-driven Kubernetes homelab. Powered by Talos Linux, Flux, and a passion for self-hosting.",
+    title: "nerdz.cloud — Gavin McFall",
+    description,
     images: ["/og-image.png"],
   },
   icons: {
@@ -51,10 +56,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased noise`}
-      >
+    <html lang="en">
+      <body className={`${plexSans.variable} ${jetbrainsMono.variable}`}>
         {children}
       </body>
     </html>

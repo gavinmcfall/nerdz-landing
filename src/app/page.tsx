@@ -1,20 +1,23 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import ClusterStats from "@/components/ClusterStats";
-import Features from "@/components/Features";
-import TechStack from "@/components/TechStack";
-import Footer from "@/components/Footer";
+import { Topbar } from "@/components/Topbar";
+import { Hero } from "@/components/Hero";
+import { Workshop } from "@/components/Workshop";
+import { Workbench } from "@/components/Workbench";
+import { Ramblings } from "@/components/Ramblings";
+import { Cluster } from "@/components/Cluster";
+import { Colophon } from "@/components/Colophon";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Topbar />
       <main>
         <Hero />
-        <ClusterStats />
-        <TechStack />
+        <Workshop />
+        <Workbench />
+        <Ramblings />
+        <Cluster />
       </main>
-      <Footer />
+      <Colophon />
     </>
   );
 }
