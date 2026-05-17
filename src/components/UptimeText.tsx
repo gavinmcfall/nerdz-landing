@@ -1,8 +1,12 @@
 "use client";
 
-import { useUptime } from "@/lib/hooks";
+import {
+  useClusterSnapshot,
+  useUptimeFromSnapshot,
+} from "@/lib/hooks";
 
-export function UptimeText({ days = 47 }: { days?: number }) {
-  const uptime = useUptime(days);
+export function UptimeText() {
+  const snap = useClusterSnapshot();
+  const uptime = useUptimeFromSnapshot(snap);
   return <>{uptime}</>;
 }

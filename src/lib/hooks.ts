@@ -2,97 +2,135 @@
 
 import { useEffect, useState } from "react";
 
-export type NodeBase = {
+export type NodeStat = {
   name: string;
   role: string;
-  baseTemp: number;
-  baseLoad: number;
-  basePower: number;
-};
-
-export type NodeStat = NodeBase & {
   temp: number;
   load: number;
   power: number;
   warm: boolean;
+  healthy: boolean;
 };
 
-export const NODES: NodeBase[] = [
-  { name: "stanton-01", role: "control plane · ups", baseTemp: 42, baseLoad: 22, basePower: 28 },
-  { name: "stanton-02", role: "control plane", baseTemp: 44, baseLoad: 28, basePower: 26 },
-  { name: "stanton-03", role: "control plane", baseTemp: 41, baseLoad: 18, basePower: 24 },
-  { name: "pyro-01", role: "worker · gpu · ml", baseTemp: 56, baseLoad: 71, basePower: 180 },
+export type ClusterSummary = {
+  healthy: number;
+  total: number;
+  avgTemp: number;
+  uptimeSeconds: number;
+};
+
+export type ClusterSnapshot = {
+  nodes: NodeStat[];
+  summary: ClusterSummary;
+  isLive: boolean;
+  loaded: boolean;
+};
+
+// Static fallback used for SSR + initial paint + when /api/cluster is
+// unreachable. Names match the real cluster so the page reads correctly
+// even without live data.
+const FALLBACK_NODES: NodeStat[] = [
+  { name: "stanton-01", role: "control plane · ups", temp: 42, load: 22, power: 28, warm: false, healthy: true },
+  { name: "stanton-02", role: "control plane",       temp: 44, load: 28, power: 26, warm: false, healthy: true },
+  { name: "stanton-03", role: "control plane",       temp: 41, load: 18, power: 24, warm: false, healthy: true },
+  { name: "pyro-01",    role: "worker · gpu · ml",   temp: 56, load: 71, power: 180, warm: true,  healthy: true },
 ];
 
-function initialStats(): NodeStat[] {
-  return NODES.map((n) => ({
-    ...n,
-    temp: n.baseTemp,
-    load: n.baseLoad,
-    power: n.basePower,
-    warm: n.baseTemp >= 50,
-  }));
+const FALLBACK_SUMMARY: ClusterSummary = {
+  healthy: 4,
+  total: 4,
+  avgTemp: 45,
+  uptimeSeconds: 47 * 86400, // ~47d for the initial render only
+};
+
+const FALLBACK: ClusterSnapshot = {
+  nodes: FALLBACK_NODES,
+  summary: FALLBACK_SUMMARY,
+  isLive: false,
+  loaded: false,
+};
+
+type ApiResponse = {
+  summary: ClusterSummary;
+  nodes: Omit<NodeStat, "warm">[];
+  timestamp: string;
+};
+
+const POLL_MS = 6_000;
+
+async function fetchSnapshot(signal: AbortSignal): Promise<ClusterSnapshot | null> {
+  try {
+    const res = await fetch("/api/cluster", { signal, cache: "no-store" });
+    if (!res.ok) return null;
+    const data = (await res.json()) as ApiResponse;
+    const nodes: NodeStat[] = data.nodes.map((n) => ({
+      ...n,
+      warm: n.temp >= 50,
+    }));
+    return {
+      nodes,
+      summary: data.summary,
+      isLive: true,
+      loaded: true,
+    };
+  } catch {
+    return null;
+  }
 }
 
-export function useNodeStats(): NodeStat[] {
-  const [stats, setStats] = useState<NodeStat[]>(initialStats);
+export function useClusterSnapshot(): ClusterSnapshot {
+  const [snap, setSnap] = useState<ClusterSnapshot>(FALLBACK);
 
   useEffect(() => {
-    let tick = 0;
-    const compute = () => {
-      tick += 1;
-      setStats(
-        NODES.map((node, i) => {
-          const tDrift =
-            Math.sin((tick + i * 1.7) * 0.5) * 4 + (Math.random() - 0.5) * 2;
-          const lDrift =
-            Math.sin((tick + i * 2.3) * 0.6) * 12 + (Math.random() - 0.5) * 6;
-          const temp = Math.round(node.baseTemp + tDrift);
-          const load = Math.max(
-            4,
-            Math.min(96, Math.round(node.baseLoad + lDrift)),
-          );
-          // Power correlates loosely with load: 70% base at idle, ~130% at full.
-          const loadFraction = load / 100;
-          const power = Math.round(
-            node.basePower * (0.7 + loadFraction * 0.6) +
-              (Math.random() - 0.5) * 4,
-          );
-          return { ...node, temp, load, power, warm: temp >= 50 };
-        }),
-      );
+    const controller = new AbortController();
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    const tick = async () => {
+      const next = await fetchSnapshot(controller.signal);
+      if (cancelled) return;
+      if (next) setSnap(next);
+      else setSnap((prev) => ({ ...prev, loaded: true })); // mark loaded even on failure
+      timer = setTimeout(tick, POLL_MS);
     };
-    const id = setInterval(compute, 2800);
-    return () => clearInterval(id);
+
+    // First fetch fires on next macrotask so we don't set state synchronously
+    // in the effect body (React 19 strict purity rule).
+    const seed = setTimeout(tick, 0);
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+      clearTimeout(seed);
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
-  return stats;
+  return snap;
 }
 
-function formatUptime(days: number): string {
-  const start = new Date();
-  start.setHours(0, 0, 0, 0);
-  const secs = Math.floor((Date.now() - start.getTime()) / 1000);
-  const h = String(Math.floor(secs / 3600) % 24).padStart(2, "0");
-  const m = String(Math.floor(secs / 60) % 60).padStart(2, "0");
-  const s = String(secs % 60).padStart(2, "0");
+export function formatUptime(seconds: number): string {
+  if (!Number.isFinite(seconds) || seconds <= 0) return "0d 00:00:00";
+  const days = Math.floor(seconds / 86400);
+  const rest = Math.floor(seconds) - days * 86400;
+  const h = String(Math.floor(rest / 3600) % 24).padStart(2, "0");
+  const m = String(Math.floor(rest / 60) % 60).padStart(2, "0");
+  const s = String(Math.floor(rest) % 60).padStart(2, "0");
   return `${days}d ${h}:${m}:${s}`;
 }
 
-export function useUptime(days: number): string {
-  // Render-stable initial value so server and first client render match.
-  const [uptime, setUptime] = useState<string>(`${days}d 00:00:00`);
+// Ticks every second and returns a formatted uptime string sourced from a
+// live snapshot if provided, else extrapolates from the fallback seed.
+export function useUptimeFromSnapshot(snap: ClusterSnapshot): string {
+  const [tick, setTick] = useState(0);
 
   useEffect(() => {
-    // First update on next macrotask (not in the effect body) so we don't
-    // trigger a cascading render synchronously.
-    const id = setInterval(() => setUptime(formatUptime(days)), 1000);
-    const seed = setTimeout(() => setUptime(formatUptime(days)), 0);
-    return () => {
-      clearInterval(id);
-      clearTimeout(seed);
-    };
-  }, [days]);
+    const id = setInterval(() => setTick((t) => t + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
 
-  return uptime;
+  // Recompute from base + elapsed real seconds since the snapshot was loaded.
+  // Without snapshot.loaded we just format the fallback seed without drift.
+  void tick;
+  return formatUptime(snap.summary.uptimeSeconds + tick);
 }

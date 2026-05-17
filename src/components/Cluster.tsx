@@ -1,18 +1,19 @@
 "use client";
 
-import { useNodeStats } from "@/lib/hooks";
+import { useClusterSnapshot } from "@/lib/hooks";
 import { SectionHead } from "./SectionHead";
 import { UptimeText } from "./UptimeText";
 
 export function Cluster() {
-  const stats = useNodeStats();
-  // Simulator: every node is "up". Real telemetry pass will set a healthy
-  // flag from kubectl's Ready condition. `warm` is a temp-elevated cue and
-  // does NOT mean unhealthy — a GPU node running hot is still green.
-  const healthy = stats.length;
-  const avgTemp = Math.round(
-    stats.reduce((a, n) => a + n.temp, 0) / stats.length,
-  );
+  const snap = useClusterSnapshot();
+  const { nodes, summary, isLive, loaded } = snap;
+  const { healthy, total, avgTemp } = summary;
+
+  const caption = !loaded
+    ? "four nodes · talos · connecting…"
+    : isLive
+      ? "four nodes · talos · live telemetry"
+      : "four nodes · talos · live telemetry coming";
 
   return (
     <section className="section" id="cluster" aria-label="The homelab">
@@ -24,7 +25,7 @@ export function Cluster() {
               The <em>homelab</em>
             </>
           }
-          caption={<>four nodes · talos · live telemetry coming</>}
+          caption={<>{caption}</>}
         />
         <div className="cluster">
           <div className="cluster__lede">
@@ -35,14 +36,14 @@ export function Cluster() {
               A four-node Talos OS Kubernetes cluster on a shelf in
               Auckland — three Stanton control planes and a Pyro GPU
               worker. (Named after Star Citizen systems, because of
-              course.) Temps and load below are placeholder until the
-              kromgo telemetry wire-up lands.
+              course.) Numbers below are live from the kromgo bridge,
+              polled every few seconds.
             </p>
           </div>
 
           <div>
             <div className="cluster__grid">
-              {stats.map((n) => (
+              {nodes.map((n) => (
                 <div
                   key={n.name}
                   className={`node ${n.warm ? "warm" : ""}`}
@@ -53,20 +54,20 @@ export function Cluster() {
                   </div>
                   <div className="node__role">{n.role}</div>
                   <div className="node__temp">
-                    {n.temp}
+                    {Math.round(n.temp)}
                     <span className="deg">°C</span>
                   </div>
                   <div className="node__meta">
                     <span>load</span>
-                    <span>{n.load}%</span>
+                    <span>{Math.round(n.load)}%</span>
                   </div>
                   <div
                     className="node__bar"
-                    style={{ ["--load" as string]: `${n.load}%` }}
+                    style={{ ["--load" as string]: `${Math.round(n.load)}%` }}
                   />
                   <div className="node__meta">
                     <span>power</span>
-                    <span>{n.power} W</span>
+                    <span>{Math.round(n.power)} W</span>
                   </div>
                 </div>
               ))}
@@ -75,11 +76,11 @@ export function Cluster() {
               <div className="cluster__stat">
                 <div className="cluster__stat-k">health</div>
                 <div className="cluster__stat-v">
-                  {healthy === stats.length ? (
+                  {healthy === total && total > 0 ? (
                     <em>all green</em>
                   ) : (
                     <>
-                      {healthy}/{stats.length} green
+                      {healthy}/{total} green
                     </>
                   )}
                 </div>
@@ -87,7 +88,7 @@ export function Cluster() {
               <div className="cluster__stat">
                 <div className="cluster__stat-k">avg temp</div>
                 <div className="cluster__stat-v">
-                  {avgTemp}
+                  {Math.round(avgTemp)}
                   <span className="gold italic">°C</span>
                 </div>
               </div>

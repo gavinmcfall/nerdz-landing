@@ -1,4 +1,5 @@
 import { UptimeText } from "./UptimeText";
+import { ClusterStatusBadge } from "./ClusterStatusBadge";
 
 export function Topbar() {
   return (
@@ -12,7 +13,7 @@ export function Topbar() {
           <span>akl, nz</span>
           <span className="sep">·</span>
           <span>
-            cluster <span className="gold">ok</span>
+            <ClusterStatusBadge />
           </span>
           <span className="sep">·</span>
           <span>
