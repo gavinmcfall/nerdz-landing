@@ -40,7 +40,9 @@ const FALLBACK_SUMMARY: ClusterSummary = {
   healthy: 4,
   total: 4,
   avgTemp: 45,
-  uptimeSeconds: 47 * 86400, // ~47d for the initial render only
+  // 0 until live data lands — useUptimeFromSnapshot renders an em-dash
+  // placeholder when uptimeSeconds is 0 so we don't show a fictional value.
+  uptimeSeconds: 0,
 };
 
 const FALLBACK: ClusterSnapshot = {
@@ -110,7 +112,7 @@ export function useClusterSnapshot(): ClusterSnapshot {
 }
 
 export function formatUptime(seconds: number): string {
-  if (!Number.isFinite(seconds) || seconds <= 0) return "0d 00:00:00";
+  if (!Number.isFinite(seconds) || seconds <= 0) return "—";
   const days = Math.floor(seconds / 86400);
   const rest = Math.floor(seconds) - days * 86400;
   const h = String(Math.floor(rest / 3600) % 24).padStart(2, "0");
@@ -119,8 +121,9 @@ export function formatUptime(seconds: number): string {
   return `${days}d ${h}:${m}:${s}`;
 }
 
-// Ticks every second and returns a formatted uptime string sourced from a
-// live snapshot if provided, else extrapolates from the fallback seed.
+// Ticks every second and returns a formatted uptime string. While the
+// snapshot is still seeding (uptimeSeconds == 0) it renders an em-dash
+// placeholder rather than a fictional value.
 export function useUptimeFromSnapshot(snap: ClusterSnapshot): string {
   const [tick, setTick] = useState(0);
 
@@ -129,8 +132,6 @@ export function useUptimeFromSnapshot(snap: ClusterSnapshot): string {
     return () => clearInterval(id);
   }, []);
 
-  // Recompute from base + elapsed real seconds since the snapshot was loaded.
-  // Without snapshot.loaded we just format the fallback seed without drift.
   void tick;
   return formatUptime(snap.summary.uptimeSeconds + tick);
 }
