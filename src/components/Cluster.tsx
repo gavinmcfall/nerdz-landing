@@ -10,10 +10,10 @@ export function Cluster() {
   const { healthy, total, avgTemp } = summary;
 
   const caption = !loaded
-    ? "four nodes · talos · connecting…"
+    ? "three nodes · talos · connecting…"
     : isLive
-      ? "four nodes · talos · live telemetry"
-      : "four nodes · talos · live telemetry coming";
+      ? "three nodes · talos · live telemetry"
+      : "three nodes · talos · live telemetry coming";
 
   return (
     <section className="section" id="cluster" aria-label="The homelab">
@@ -33,11 +33,10 @@ export function Cluster() {
               Where all of this <em>actually runs.</em>
             </h3>
             <p className="cluster__p">
-              A four-node Talos OS Kubernetes cluster on a shelf in
-              Auckland — three Stanton control planes and a Pyro GPU
-              worker. (Named after Star Citizen systems, because of
-              course.) Numbers below are live from the kromgo bridge,
-              polled every few seconds.
+              A three-node Talos OS Kubernetes cluster on a shelf in
+              Auckland — Stanton-01 through 03, named after the Star
+              Citizen system, because of course. Numbers below are
+              live from the kromgo bridge, polled every few seconds.
             </p>
           </div>
 

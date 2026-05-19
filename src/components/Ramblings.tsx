@@ -138,7 +138,7 @@ export async function Ramblings() {
               </>
             }
             more="All cheatsheets"
-            moreHref="https://cheatsheets.nerdz.cloud"
+            moreHref="https://docs.nerdz.cloud"
             rows={SHEETS}
             kind="sheet"
           />

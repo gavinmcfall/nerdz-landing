@@ -13,13 +13,12 @@ type Shields = {
   schemaVersion?: number;
 };
 
-type NodeName = "stanton-01" | "stanton-02" | "stanton-03" | "pyro-01";
+type NodeName = "stanton-01" | "stanton-02" | "stanton-03";
 
 const NODE_META: { name: NodeName; role: string; key: string }[] = [
   { name: "stanton-01", role: "control plane · ups", key: "stanton01" },
   { name: "stanton-02", role: "control plane", key: "stanton02" },
   { name: "stanton-03", role: "control plane", key: "stanton03" },
-  { name: "pyro-01", role: "worker · gpu · ml", key: "pyro01" },
 ];
 
 const SUMMARY_QUERIES = [

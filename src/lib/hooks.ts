@@ -33,13 +33,12 @@ const FALLBACK_NODES: NodeStat[] = [
   { name: "stanton-01", role: "control plane · ups", temp: 42, load: 22, power: 28, warm: false, healthy: true },
   { name: "stanton-02", role: "control plane",       temp: 44, load: 28, power: 26, warm: false, healthy: true },
   { name: "stanton-03", role: "control plane",       temp: 41, load: 18, power: 24, warm: false, healthy: true },
-  { name: "pyro-01",    role: "worker · gpu · ml",   temp: 56, load: 71, power: 180, warm: true,  healthy: true },
 ];
 
 const FALLBACK_SUMMARY: ClusterSummary = {
-  healthy: 4,
-  total: 4,
-  avgTemp: 45,
+  healthy: 3,
+  total: 3,
+  avgTemp: 42,
   // 0 until live data lands — useUptimeFromSnapshot renders an em-dash
   // placeholder when uptimeSeconds is 0 so we don't show a fictional value.
   uptimeSeconds: 0,
