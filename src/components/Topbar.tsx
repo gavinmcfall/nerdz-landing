@@ -1,39 +1,73 @@
-import { UptimeText } from "./UptimeText";
-import { ClusterStatusBadge } from "./ClusterStatusBadge";
+"use client";
 
+import { useState } from "react";
+import { NAV } from "@/lib/nav";
+
+// The shared shell header. Markup follows the contract in
+// docs/unified-shell-spec.md §2 (class names mirrored by the Hugo blog).
+// The live telemetry pill is the framework-agnostic <nerdz-status> element
+// (/public/nerdz-status.js) — same tag in both runtimes.
 export function Topbar() {
+  const [open, setOpen] = useState(false);
+
+  const linkProps = (item: (typeof NAV)[number]) => ({
+    href: item.href,
+    className: item.cta ? "cta" : undefined,
+    ...(item.external
+      ? { target: "_blank", rel: "noreferrer noopener" }
+      : {}),
+  });
+
   return (
-    <header className="topbar">
-      <div className="frame topbar__inner">
-        <a href="#" className="topbar__brand">
-          <span className="topbar__brand-dot" aria-hidden="true" />
-          nerdz.cloud
-        </a>
-        <div className="topbar__meta mono">
-          <span>akl, nz</span>
-          <span className="sep">·</span>
-          <span>
-            <ClusterStatusBadge />
-          </span>
-          <span className="sep">·</span>
-          <span>
-            <UptimeText />
-          </span>
-        </div>
-        <nav className="topbar__nav">
-          <a href="#projects">projects</a>
-          <a href="#workbench">workbench</a>
-          <a href="#ramblings">ramblings</a>
-          <a
-            href="https://github.com/gavinmcfall"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="cta"
-          >
-            github →
+    <>
+      <a className="shell-skip" href="#main">
+        Skip to content
+      </a>
+      <header className="shell-topbar">
+        <div className="frame shell-topbar__inner">
+          <a className="shell-topbar__brand" href="/">
+            <span className="shell-topbar__dot" aria-hidden="true" />
+            nerdz.cloud
           </a>
+
+          <nerdz-status className="shell-topbar__status mono" />
+
+          <nav className="shell-topbar__nav" aria-label="Primary">
+            {NAV.map((item) => (
+              <a key={item.label} {...linkProps(item)}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <button
+            className="shell-topbar__menu"
+            aria-label="Menu"
+            aria-expanded={open}
+            aria-controls="shell-drawer"
+            onClick={() => setOpen((v) => !v)}
+          >
+            ≡
+          </button>
+        </div>
+
+        <nav
+          id="shell-drawer"
+          className="shell-drawer"
+          aria-label="Primary"
+          hidden={!open}
+        >
+          {NAV.map((item) => (
+            <a
+              key={item.label}
+              {...linkProps(item)}
+              onClick={() => setOpen(false)}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }

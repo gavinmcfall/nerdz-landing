@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -59,6 +60,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${plexSans.variable} ${jetbrainsMono.variable}`}>
         {children}
+        {/* shared shell telemetry pill — see docs/unified-shell-spec.md §4 */}
+        <Script src="/nerdz-status.js" strategy="afterInteractive" />
       </body>
     </html>
   );

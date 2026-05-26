@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Topbar />
-      <main>
+      <main id="main">
         <Hero />
         <Workshop />
         <Workbench />
