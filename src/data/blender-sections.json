@@ -1,0 +1,552 @@
+[
+  {
+    "num": "01",
+    "title": "Navigation",
+    "twoCol": false,
+    "alt": false,
+    "rows": [
+      {
+        "desc": "<b>Orbit</b> view",
+        "keys": "<kbd class=\"mouse\">MMB</kbd>"
+      },
+      {
+        "desc": "<b>Pan</b> view",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd class=\"mouse\">MMB</kbd>"
+      },
+      {
+        "desc": "<b>Zoom</b>",
+        "keys": "<kbd class=\"mouse\">Scroll</kbd>"
+      },
+      {
+        "desc": "<b>Dolly zoom</b>",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd class=\"mouse\">MMB</kbd>"
+      },
+      {
+        "desc": "Front view",
+        "keys": "<kbd>Num 1</kbd>"
+      },
+      {
+        "desc": "Side view",
+        "keys": "<kbd>Num 3</kbd>"
+      },
+      {
+        "desc": "Top view",
+        "keys": "<kbd>Num 7</kbd>"
+      },
+      {
+        "desc": "Opposite side",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Num 1/3/7</kbd>"
+      },
+      {
+        "desc": "Toggle Ortho / Persp",
+        "keys": "<kbd>Num 5</kbd>"
+      },
+      {
+        "desc": "Camera view",
+        "keys": "<kbd>Num 0</kbd>"
+      },
+      {
+        "desc": "<b>Frame selected</b>",
+        "keys": "<kbd>Num .</kbd>"
+      },
+      {
+        "desc": "View pie menu",
+        "keys": "<kbd>`</kbd>"
+      }
+    ],
+    "notes": [
+      "No numpad? <strong>Edit → Preferences → Input → Emulate Numpad</strong>."
+    ]
+  },
+  {
+    "num": "02",
+    "title": "Selection",
+    "twoCol": false,
+    "alt": false,
+    "rows": [
+      {
+        "desc": "Select / pick",
+        "keys": "<kbd class=\"mouse\">LMB</kbd>"
+      },
+      {
+        "desc": "Add to selection",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd class=\"mouse\">LMB</kbd>"
+      },
+      {
+        "desc": "<b>Select all</b>",
+        "keys": "<kbd class=\"accent\">A</kbd>"
+      },
+      {
+        "desc": "Deselect all",
+        "keys": "<kbd>Alt</kbd><span class=\"plus\">+</span><kbd>A</kbd>"
+      },
+      {
+        "desc": "Invert selection",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>I</kbd>"
+      },
+      {
+        "desc": "<b>Box select</b>",
+        "keys": "<kbd>B</kbd>"
+      },
+      {
+        "desc": "Circle select",
+        "keys": "<kbd>C</kbd> <span class=\"or\">scroll = size</span>"
+      },
+      {
+        "desc": "Linked (hover)",
+        "keys": "<kbd>L</kbd>"
+      },
+      {
+        "desc": "All linked",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>L</kbd>"
+      },
+      {
+        "desc": "Edge / face loop",
+        "keys": "<kbd>Alt</kbd><span class=\"plus\">+</span><kbd class=\"mouse\">LMB</kbd>"
+      },
+      {
+        "desc": "Loop ring",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Alt</kbd><span class=\"plus\">+</span><kbd class=\"mouse\">LMB</kbd>"
+      },
+      {
+        "desc": "Shortest path",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd class=\"mouse\">LMB</kbd>"
+      }
+    ],
+    "notes": [
+      "<span class=\"chip edit\">Edit</span>Press <strong>1/2/3</strong> for vertex/edge/face select."
+    ]
+  },
+  {
+    "num": "03",
+    "title": "Transform",
+    "twoCol": false,
+    "alt": false,
+    "rows": [
+      {
+        "desc": "<b>Grab / move</b>",
+        "keys": "<kbd class=\"accent\">G</kbd>"
+      },
+      {
+        "desc": "<b>Rotate</b>",
+        "keys": "<kbd class=\"accent\">R</kbd>"
+      },
+      {
+        "desc": "<b>Scale</b>",
+        "keys": "<kbd class=\"accent\">S</kbd>"
+      },
+      {
+        "desc": "Constrain to axis",
+        "keys": "<kbd>X</kbd> <span class=\"or\">/</span> <kbd>Y</kbd> <span class=\"or\">/</span> <kbd>Z</kbd>"
+      },
+      {
+        "desc": "Exclude axis",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>X/Y/Z</kbd>"
+      },
+      {
+        "desc": "Local axis",
+        "keys": "press <kbd>X/Y/Z</kbd> twice"
+      },
+      {
+        "desc": "Type exact value",
+        "keys": "<kbd>1</kbd>…<kbd>9</kbd>"
+      },
+      {
+        "desc": "Fine adjust",
+        "keys": "hold <kbd>Shift</kbd>"
+      },
+      {
+        "desc": "Snap during move",
+        "keys": "hold <kbd>Ctrl</kbd>"
+      },
+      {
+        "desc": "Double tap rotate",
+        "keys": "<kbd>R</kbd><kbd>R</kbd> <span class=\"or\">trackball</span>"
+      },
+      {
+        "desc": "Confirm / Cancel",
+        "keys": "<kbd>Enter</kbd> <span class=\"or\">/</span> <kbd>Esc</kbd>"
+      },
+      {
+        "desc": "<b>Apply transforms</b>",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>A</kbd>"
+      }
+    ],
+    "notes": [
+      "<strong>Workflow:</strong> <kbd>G</kbd> → <kbd>Z</kbd> → <kbd>2</kbd> → <kbd>Enter</kbd> moves 2m up."
+    ]
+  },
+  {
+    "num": "04",
+    "title": "Modes & Objects",
+    "twoCol": false,
+    "alt": true,
+    "rows": [
+      {
+        "desc": "<b>Object ↔ Edit</b> toggle",
+        "keys": "<kbd class=\"accent\">Tab</kbd>"
+      },
+      {
+        "desc": "Mode pie menu",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Tab</kbd>"
+      },
+      {
+        "desc": "Vertex / Edge / Face",
+        "keys": "<kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd>"
+      },
+      {
+        "desc": "<b>Add menu</b>",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>A</kbd>"
+      },
+      {
+        "desc": "Delete menu",
+        "keys": "<kbd>X</kbd> <span class=\"or\">or</span> <kbd>Del</kbd>"
+      },
+      {
+        "desc": "Duplicate",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>D</kbd>"
+      },
+      {
+        "desc": "Linked duplicate",
+        "keys": "<kbd>Alt</kbd><span class=\"plus\">+</span><kbd>D</kbd>"
+      },
+      {
+        "desc": "<b>Join objects</b>",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>J</kbd>"
+      },
+      {
+        "desc": "Separate (Edit)",
+        "keys": "<kbd>P</kbd>"
+      },
+      {
+        "desc": "Parent / Unparent",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>P</kbd> <span class=\"or\">/</span> <kbd>Alt</kbd><span class=\"plus\">+</span><kbd>P</kbd>"
+      },
+      {
+        "desc": "Hide / Unhide",
+        "keys": "<kbd>H</kbd> <span class=\"or\">/</span> <kbd>Alt</kbd><span class=\"plus\">+</span><kbd>H</kbd>"
+      },
+      {
+        "desc": "Local view (isolate)",
+        "keys": "<kbd>/</kbd>"
+      }
+    ]
+  },
+  {
+    "num": "05",
+    "title": "Edit Mode — Mesh Operations",
+    "twoCol": true,
+    "alt": false,
+    "left": [
+      {
+        "desc": "<b>Extrude</b>",
+        "keys": "<kbd class=\"accent\">E</kbd>"
+      },
+      {
+        "desc": "Extrude along normals",
+        "keys": "<kbd>Alt</kbd><span class=\"plus\">+</span><kbd>E</kbd>"
+      },
+      {
+        "desc": "<b>Inset face</b>",
+        "keys": "<kbd class=\"accent\">I</kbd>"
+      },
+      {
+        "desc": "Inset individual",
+        "keys": "<kbd>I</kbd> <kbd>I</kbd>"
+      },
+      {
+        "desc": "<b>Bevel</b>",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>B</kbd> <span class=\"or\">scroll = segments</span>"
+      },
+      {
+        "desc": "Bevel vertices",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Shift</kbd><span class=\"plus\">+</span><kbd>B</kbd>"
+      },
+      {
+        "desc": "<b>Loop cut</b>",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>R</kbd> <span class=\"or\">scroll = cuts</span>"
+      },
+      {
+        "desc": "Knife cut",
+        "keys": "<kbd>K</kbd> <span class=\"or\">+ Z = through</span>"
+      },
+      {
+        "desc": "Subdivide",
+        "keys": "right-click → Subdivide"
+      },
+      {
+        "desc": "Fill (make face)",
+        "keys": "<kbd>F</kbd>"
+      },
+      {
+        "desc": "Grid fill",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>F</kbd> → Grid Fill"
+      },
+      {
+        "desc": "Bridge edge loops",
+        "keys": "Edge menu → Bridge"
+      }
+    ],
+    "right": [
+      {
+        "desc": "<b>Merge</b>",
+        "keys": "<kbd class=\"accent\">M</kbd>"
+      },
+      {
+        "desc": "Merge by distance",
+        "keys": "<kbd>M</kbd> → By Distance"
+      },
+      {
+        "desc": "Split / Rip",
+        "keys": "<kbd>Y</kbd> <span class=\"or\">/</span> <kbd>V</kbd>"
+      },
+      {
+        "desc": "Connect vertices",
+        "keys": "<kbd>J</kbd>"
+      },
+      {
+        "desc": "Recalculate normals",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>N</kbd>"
+      },
+      {
+        "desc": "Flip normals",
+        "keys": "Mesh → Normals → Flip"
+      },
+      {
+        "desc": "Smooth / Flat shade",
+        "keys": "right-click → Shade Smooth"
+      },
+      {
+        "desc": "Mark seam / sharp",
+        "keys": "Edge menu"
+      },
+      {
+        "desc": "Proportional edit",
+        "keys": "<kbd>O</kbd> <span class=\"or\">scroll = radius</span>"
+      },
+      {
+        "desc": "Toggle X-Ray",
+        "keys": "<kbd>Alt</kbd><span class=\"plus\">+</span><kbd>Z</kbd>"
+      },
+      {
+        "desc": "Wireframe / Solid",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>Z</kbd>"
+      }
+    ]
+  },
+  {
+    "num": "06",
+    "title": "Snap, Pivot & Cursor",
+    "twoCol": false,
+    "alt": true,
+    "rows": [
+      {
+        "desc": "<b>Snap menu</b> (pie)",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>S</kbd>"
+      },
+      {
+        "desc": "Toggle snap",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>Tab</kbd>"
+      },
+      {
+        "desc": "Snap during move",
+        "keys": "hold <kbd>Ctrl</kbd>"
+      },
+      {
+        "desc": "Selection → Cursor",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>S</kbd> → SC"
+      },
+      {
+        "desc": "Cursor → Selection",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>S</kbd> → CS"
+      },
+      {
+        "desc": "Cursor → World Origin",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>S</kbd> → 1"
+      },
+      {
+        "desc": "<b>Pivot point</b> (pie)",
+        "keys": "<kbd>.</kbd> (period)"
+      },
+      {
+        "desc": "Origin to Geometry",
+        "keys": "Object → Set Origin"
+      },
+      {
+        "desc": "Transform orientation",
+        "keys": "<kbd>,</kbd> (comma)"
+      }
+    ],
+    "notes": [
+      "<strong>Pro tip:</strong> set pivot to <em>3D Cursor</em>, snap cursor to a vertex, rotate around it."
+    ]
+  },
+  {
+    "num": "07",
+    "title": "3D Printing Workflow",
+    "twoCol": true,
+    "alt": true,
+    "left": [
+      {
+        "desc": "<b>Set units to mm</b>",
+        "keys": "Scene Props → Units"
+      },
+      {
+        "desc": "Apply scale before export",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>A</kbd> → Scale"
+      },
+      {
+        "desc": "Apply all transforms",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>A</kbd> → All"
+      },
+      {
+        "desc": "Recalculate normals out",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>N</kbd>"
+      },
+      {
+        "desc": "Check inside normals",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>N</kbd>"
+      },
+      {
+        "desc": "Merge by distance",
+        "keys": "<kbd>M</kbd> → By Distance"
+      },
+      {
+        "desc": "Export STL",
+        "keys": "File → Export → STL"
+      },
+      {
+        "desc": "Export 3MF",
+        "keys": "File → Export → 3MF"
+      }
+    ],
+    "right": []
+  },
+  {
+    "num": "08",
+    "title": "Modifiers",
+    "twoCol": false,
+    "alt": false,
+    "rows": [
+      {
+        "desc": "Open modifier panel",
+        "keys": "🔧 Properties"
+      },
+      {
+        "desc": "<b>Subdivision Surface</b>",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>1</kbd>…<kbd>5</kbd>"
+      },
+      {
+        "desc": "Toggle in viewport",
+        "keys": "eye icon on modifier"
+      },
+      {
+        "desc": "<b>Apply modifier</b>",
+        "keys": "Ctrl-A on modifier"
+      },
+      {
+        "desc": "Reorder modifiers",
+        "keys": "drag handle"
+      }
+    ]
+  },
+  {
+    "num": "09",
+    "title": "Workflow Essentials",
+    "twoCol": false,
+    "alt": false,
+    "rows": [
+      {
+        "desc": "<b>Undo / Redo</b>",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Z</kbd> <span class=\"or\">/</span> <kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Shift</kbd><span class=\"plus\">+</span><kbd>Z</kbd>"
+      },
+      {
+        "desc": "Search menu",
+        "keys": "<kbd>F3</kbd>"
+      },
+      {
+        "desc": "<b>Repeat last</b> action",
+        "keys": "<kbd>Shift</kbd><span class=\"plus\">+</span><kbd>R</kbd>"
+      },
+      {
+        "desc": "Last-op panel",
+        "keys": "<kbd>F9</kbd> <span class=\"or\">bottom-left</span>"
+      },
+      {
+        "desc": "Save / Save As",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>S</kbd> <span class=\"or\">/</span> <kbd>Shift</kbd><span class=\"plus\">+</span><kbd>S</kbd>"
+      },
+      {
+        "desc": "Save incremental",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Alt</kbd><span class=\"plus\">+</span><kbd>S</kbd>"
+      },
+      {
+        "desc": "Quit",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Q</kbd>"
+      },
+      {
+        "desc": "N panel (transform info)",
+        "keys": "<kbd>N</kbd>"
+      },
+      {
+        "desc": "T panel (toolbar)",
+        "keys": "<kbd>T</kbd>"
+      },
+      {
+        "desc": "Fullscreen area",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Space</kbd>"
+      },
+      {
+        "desc": "Maximize area",
+        "keys": "<kbd>Ctrl</kbd><span class=\"plus\">+</span><kbd>Alt</kbd><span class=\"plus\">+</span><kbd>Space</kbd>"
+      }
+    ]
+  },
+  {
+    "num": "10",
+    "title": "Viewport & Display",
+    "twoCol": false,
+    "alt": false,
+    "rows": [
+      {
+        "desc": "Wireframe shading",
+        "keys": "<kbd>Z</kbd> → Wire"
+      },
+      {
+        "desc": "Solid shading",
+        "keys": "<kbd>Z</kbd> → Solid"
+      },
+      {
+        "desc": "Material preview",
+        "keys": "<kbd>Z</kbd> → MatPrev"
+      },
+      {
+        "desc": "Rendered preview",
+        "keys": "<kbd>Z</kbd> → Rendered"
+      },
+      {
+        "desc": "Toggle X-Ray",
+        "keys": "<kbd>Alt</kbd><span class=\"plus\">+</span><kbd>Z</kbd>"
+      },
+      {
+        "desc": "Toggle overlays",
+        "keys": "overlay icon"
+      },
+      {
+        "desc": "Hide gizmos",
+        "keys": "gizmo icon"
+      },
+      {
+        "desc": "Split / join area",
+        "keys": "right-click corner"
+      },
+      {
+        "desc": "Resize area",
+        "keys": "drag edge"
+      }
+    ],
+    "notes": [
+      "<strong>Quad view:</strong> <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Q</kbd> — four orthographic panels."
+    ]
+  }
+]

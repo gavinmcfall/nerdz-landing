@@ -1,0 +1,96 @@
+/* Print layout for `type: prose` field manuals (e.g. git-stash-recovery).
+   Normal document flow on the paper — headings, paragraphs, code blocks,
+   tables. Reads base.css tokens. Tuned for A4 portrait. */
+
+.sheet-body--prose {
+  font-size: 9pt;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.sheet-body--prose h2 {
+  font-size: 11.5pt;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 4mm 0 1.5mm;
+  padding-bottom: 1mm;
+  border-bottom: 0.5pt solid var(--rule-strong);
+  break-after: avoid;
+}
+.sheet-body--prose h3 {
+  font-size: 10pt;
+  font-weight: 600;
+  margin: 3mm 0 1mm;
+  break-after: avoid;
+}
+.sheet-body--prose h4 {
+  font-size: 9pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  margin: 2.5mm 0 1mm;
+}
+
+.sheet-body--prose p { margin: 0 0 2mm; }
+.sheet-body--prose ul,
+.sheet-body--prose ol { margin: 0 0 2mm; padding-left: 5mm; }
+.sheet-body--prose li { margin-bottom: 0.8mm; }
+
+.sheet-body--prose strong { font-weight: 700; }
+.sheet-body--prose em { font-style: italic; color: var(--purple); }
+
+.sheet-body--prose code {
+  font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
+  font-size: 8pt;
+  background: var(--kbd-bg);
+  padding: 0.2mm 1mm;
+  border-radius: 0.8mm;
+}
+.sheet-body--prose pre {
+  background: #1a1a1a;
+  color: #f1e8d6;
+  padding: 2mm 2.5mm;
+  border-radius: 1mm;
+  margin: 1.5mm 0;
+  overflow: hidden;
+  break-inside: avoid;
+  font-size: 7.8pt;
+  line-height: 1.4;
+}
+.sheet-body--prose pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+.sheet-body--prose blockquote {
+  border-left: 1pt solid var(--gold);
+  padding: 0.5mm 0 0.5mm 3mm;
+  margin: 2mm 0;
+  color: var(--ink-mid);
+  font-style: italic;
+}
+
+.sheet-body--prose table {
+  border-collapse: collapse;
+  margin: 2mm 0;
+  width: 100%;
+  break-inside: avoid;
+}
+.sheet-body--prose th,
+.sheet-body--prose td {
+  text-align: left;
+  padding: 1mm 2mm;
+  border-bottom: 0.5pt solid var(--rule);
+  font-size: 8.5pt;
+}
+.sheet-body--prose th {
+  font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
+  font-size: 7pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  border-bottom-color: var(--rule-strong);
+}

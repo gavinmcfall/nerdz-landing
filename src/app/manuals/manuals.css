@@ -1,0 +1,291 @@
+/* manuals.css — styles for the field-manuals surfaces (/manuals/*), merged in
+   from the former nerdz-guides app. Scoped concerns:
+   - The light "paper sheet" palette is set ON .manual (not :root) so it cannot
+     leak onto the dark shell elsewhere. Landing's global tokens (shell-tokens.css)
+     keep the same names with DARK values — scoping here is what avoids the clash.
+   - Bench-level chrome (a11y menu, PDF link) reads --shell-* aliases that map to
+     landing's dark tokens, defined once below.
+   HubCockpit + BlenderManual carry their own inline <style>, so they aren't here. */
+
+:root {
+  /* --shell-* aliases → landing's dark shell tokens (for the a11y menu + pdf
+     link, which sit on the dark bench, not on the light sheet). */
+  --shell-card:        var(--paper-card);
+  --shell-rule:        var(--rule);
+  --shell-rule-strong: var(--rule-strong);
+  --shell-ink:         var(--ink);
+  --shell-ink-mid:     var(--ink-mid);
+  --shell-ink-mute:    var(--ink-mute);
+  --shell-purple:      var(--glow);
+  --shell-purple-fill: var(--purple);
+  --shell-glow:        var(--glow-soft);
+
+  /* Paper sizes in pixels (96dpi) — on-screen sheet preview */
+  --paper-a4-portrait-w:    794px;
+  --paper-a4-portrait-h:    1123px;
+  --paper-a4-landscape-w:   1123px;
+  --paper-a4-landscape-h:   794px;
+  --paper-letter-portrait-w:  816px;
+  --paper-letter-portrait-h:  1056px;
+  --paper-letter-landscape-w: 1056px;
+  --paper-letter-landscape-h: 816px;
+  --paper-a3-landscape-w:   1587px;
+  --paper-a3-landscape-h:   1123px;
+}
+
+/* Dyslexia-friendly font toggle (html data-font="dyslexic") */
+html[data-font="dyslexic"] body,
+html[data-font="dyslexic"] .mono {
+  font-family: "OpenDyslexic", var(--font-plex-sans), system-ui, sans-serif;
+  letter-spacing: 0.03em;
+}
+
+/* ── FIELD MANUAL LAYOUT — the light "sheet" on the dark bench ─────────────
+   The light palette is scoped HERE so it overrides landing's dark tokens only
+   within the sheet subtree. */
+.manual {
+  --paper:        #efe6d2;
+  --paper-deep:   #e5dcc6;
+  --paper-soft:   #f3ecda;
+  --paper-card:   #fbf6ea;
+  --ink:          #0a0712;
+  --ink-mid:      #2a2230;
+  --ink-mute:     #6b5e7a;
+  --ink-dim:      #8c8194;
+  --ink-veryDim:  #b4abb8;
+  --purple:       #5a0e93;
+  --purple-soft:  #7c2eb5;
+  --magenta:      #6b1f88;
+  --glow:         #8c4dd1;
+  --glow-soft:    #a878d8;
+  --gold:         #8a7547;
+  --gold-soft:    #6e5b35;
+  --rule:         rgba(10, 7, 18, 0.10);
+  --rule-strong:  rgba(10, 7, 18, 0.20);
+
+  background: var(--paper-card);
+  color: var(--ink);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 48px;
+  margin: 40px auto;
+  position: relative;
+  box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.7),
+    0 4px 16px -8px rgba(0, 0, 0, 0.5);
+}
+.manual a { color: var(--purple); }
+.manual a:hover { color: var(--gold); }
+.manual ::selection { background: var(--purple); color: var(--paper); }
+
+.manual[data-paper="A4-landscape"]     { width: var(--paper-a4-landscape-w);     min-height: var(--paper-a4-landscape-h); }
+.manual[data-paper="A4-portrait"]      { width: var(--paper-a4-portrait-w);      min-height: var(--paper-a4-portrait-h); }
+.manual[data-paper="Letter-landscape"] { width: var(--paper-letter-landscape-w); min-height: var(--paper-letter-landscape-h); }
+.manual[data-paper="Letter-portrait"]  { width: var(--paper-letter-portrait-w);  min-height: var(--paper-letter-portrait-h); }
+.manual[data-paper="A3-landscape"]     { width: var(--paper-a3-landscape-w);     min-height: var(--paper-a3-landscape-h); }
+
+@media (max-width: 720px) {
+  .manual { width: 100% !important; min-height: 0; padding: 24px; margin: 16px auto; }
+}
+
+/* ── SHEET HEADER ──────────────────────────────────────────── */
+.manual__head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.manual__title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(24px, 2.4vw, 36px);
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+.manual__title em { font-style: italic; color: var(--purple); font-weight: 500; }
+.manual__meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/* ── PROSE STYLES (type:'prose' sheets) ─────────────────────── */
+.manual--prose h1,
+.manual--prose h2,
+.manual--prose h3,
+.manual--prose h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 1.8em 0 0.6em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.manual--prose h2 { font-size: 24px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+.manual--prose h3 { font-size: 20px; }
+.manual--prose h4 { font-size: 17px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); }
+.manual--prose p { max-width: 70ch; margin: 0 0 1.1em; }
+.manual--prose ul, .manual--prose ol { max-width: 70ch; margin: 0 0 1.1em; padding-left: 1.4em; }
+.manual--prose li { margin-bottom: 0.4em; }
+.manual--prose code { font-family: var(--font-mono); font-size: 0.92em; background: var(--paper-deep); padding: 1px 6px; border-radius: 4px; }
+.manual--prose pre {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 18px 20px;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  position: relative;
+  margin: 1.4em 0;
+}
+.manual--prose pre code { background: transparent; color: inherit; padding: 0; font-size: 13px; line-height: 1.55; }
+.manual--prose strong { font-weight: 600; color: var(--ink); }
+.manual--prose em { font-style: italic; color: var(--purple); }
+.manual--prose blockquote {
+  border-left: 3px solid var(--gold);
+  padding: 6px 16px;
+  margin: 1.2em 0;
+  color: var(--ink-mid);
+  font-style: italic;
+}
+.manual--prose table { border-collapse: collapse; margin: 1.2em 0; width: auto; }
+.manual--prose th, .manual--prose td { text-align: left; padding: 8px 14px; border-bottom: 1px solid var(--rule); }
+.manual--prose th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+  border-bottom-color: var(--rule-strong);
+}
+
+/* ── COPY BUTTON (top-right of <pre>) ──────────────────────── */
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--paper);
+  background: rgba(245, 239, 222, 0.08);
+  border: 1px solid rgba(245, 239, 222, 0.20);
+  border-radius: 4px;
+  transition: background 200ms ease, color 200ms ease;
+}
+.copy-btn:hover,
+.copy-btn[data-copied="true"] { background: var(--gold); color: var(--ink); }
+
+/* ── COMPONENT LAYOUT (type:'component') ──────────────────── */
+.manual--component {
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+/* ── POSTER LAYOUT (type:'poster') ─────────────────────────── */
+.manual--poster { padding: 0; overflow: hidden; }
+.manual--poster .manual__head { padding: 16px 24px; margin-bottom: 0; }
+.manual--poster img { width: 100%; height: auto; display: block; }
+.manual--poster .manual__credit {
+  padding: 16px 24px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/* ── ACCESSIBILITY MENU (floating, on the dark bench) ──────── */
+.a11y-menu {
+  position: fixed;
+  top: 88px;
+  right: 16px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--shell-card);
+  border: 1px solid var(--shell-rule-strong);
+  border-radius: var(--radius);
+  padding: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+}
+.a11y-menu__row { display: flex; gap: 6px; align-items: center; }
+.a11y-menu__label { color: var(--shell-ink-mute); margin-right: 4px; }
+.a11y-menu__btn {
+  padding: 4px 8px;
+  border: 1px solid var(--shell-rule-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--shell-ink);
+}
+.a11y-menu__btn[data-active="true"] {
+  background: var(--shell-purple-fill);
+  color: #fff;
+  border-color: var(--shell-purple-fill);
+}
+
+/* ── DOWNLOAD PDF LINK (on the dark bench, above the sheet) ── */
+.manual__pdf-link {
+  display: inline-block;
+  margin: 24px auto 0;
+  padding: 7px 15px;
+  border: 1px solid var(--shell-rule-strong);
+  border-radius: 6px;
+  color: var(--shell-ink-mid);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+.manual__pdf-link:hover { border-color: var(--shell-purple); color: var(--shell-glow); }
+
+/* ── HIGH-CONTRAST TOGGLE (html data-contrast="high") ──────── */
+html[data-contrast="high"] .manual {
+  --paper-card: #ffffff;
+  --paper: #ffffff;
+  --ink: #000000;
+  --ink-mid: #1a1a1a;
+  --ink-mute: #4a4a4a;
+  --rule: rgba(0, 0, 0, 0.30);
+  --rule-strong: rgba(0, 0, 0, 0.50);
+  --purple: #4a0a7d;
+  --gold: #6b5a32;
+}
+html[data-contrast="high"] {
+  --shell-card: #0d0d0d;
+  --shell-ink: #ffffff;
+  --shell-ink-mid: #ededed;
+  --shell-ink-mute: #cccccc;
+  --shell-rule-strong: rgba(255, 255, 255, 0.55);
+  --shell-purple: #cba6ff;
+  --shell-purple-fill: #7c3aed;
+  --shell-glow: #d8b4fe;
+}
+html[data-contrast="high"] .ck { background-image: none; }
+
+/* ── PRINT (screen viewer; the real artifact is the WeasyPrint PDF) ── */
+@media print {
+  .a11y-menu, .no-print { display: none !important; }
+  .manual {
+    margin: 0;
+    padding: 0.5cm;
+    border: none;
+    box-shadow: none;
+    width: 100% !important;
+    min-height: 0 !important;
+  }
+  .copy-btn { display: none; }
+  .manual--prose pre { background: #1a1a1a; }
+}

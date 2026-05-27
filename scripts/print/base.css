@@ -1,0 +1,94 @@
+/* Shared print chrome for all field manual PDFs: @page geometry, running
+   header (sheet title + page counter), footer brand, paper palette.
+   Rendered by WeasyPrint, which implements the full CSS Paged Media spec
+   (unlike browser print engines), so @page margin boxes and counter(page)
+   work natively here.
+
+   Tokens substituted per-sheet by scripts/render_pdf.py:
+     __PAGE_SIZE__    e.g. "A4 portrait"
+     __SHEET_TITLE__  e.g. "Blender Modelling"
+*/
+
+@page {
+  size: __PAGE_SIZE__;
+  margin: 10mm 10mm 9mm 10mm;
+
+  @top-left {
+    content: "__SHEET_TITLE__";
+    font-family: "IBM Plex Sans", "DejaVu Sans", sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    color: #555;
+    vertical-align: bottom;
+    padding-bottom: 2mm;
+  }
+  @top-right {
+    content: counter(page, decimal-leading-zero);
+    font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
+    font-size: 8pt;
+    color: #888;
+    vertical-align: bottom;
+    padding-bottom: 2mm;
+  }
+  @bottom-right {
+    content: "nerdz.cloud";
+    font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
+    font-size: 6.5pt;
+    color: #b0b0b0;
+    vertical-align: top;
+    padding-top: 2mm;
+  }
+}
+
+:root {
+  --ink:         #0a0712;
+  --ink-mid:     #2a2230;
+  --ink-mute:    #6b5e7a;
+  --ink-dim:     #8c8194;
+  --purple:      #5a0e93;
+  --gold:        #6e5b35;
+  --rule:        rgba(10, 7, 18, 0.12);
+  --rule-strong: rgba(10, 7, 18, 0.24);
+  --kbd-bg:      #f0ebd9;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: var(--ink);
+  font-family: "IBM Plex Sans", "DejaVu Sans", sans-serif;
+}
+
+/* Document head: large title block above the content on page 1 only. */
+.sheet-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 0 2.5mm;
+  padding-bottom: 1.5mm;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.sheet-head h1 {
+  font-size: 14pt;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1;
+  /* Don't let WeasyPrint's flexbox shrink the title into a wrap — the page is
+     far wider than these short titles. flex:none keeps it content-sized. */
+  flex: none;
+  white-space: nowrap;
+}
+.sheet-head h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--purple);
+}
+.sheet-head .sheet-sub {
+  font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
+  font-size: 7pt;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+}
