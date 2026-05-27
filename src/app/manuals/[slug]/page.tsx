@@ -1,12 +1,14 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getManual, listManualSlugs } from "@/lib/manuals";
+import { getManual } from "@/lib/manuals";
 import { ManualLayout } from "@/components/ManualLayout";
 
-export async function generateStaticParams() {
-  const slugs = await listManualSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+// Server-rendered per request on the Cloudflare Worker. The manuals list +
+// frontmatter are bundled (lib/manuals.ts → manuals.data.json) and the MDX
+// bodies are bundled too, so SSR needs no filesystem and no incremental-cache
+// backend — which OpenNext would otherwise require to serve a *prerendered*
+// dynamic route (and without it, 404s). Unknown slugs 404 via getManual.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

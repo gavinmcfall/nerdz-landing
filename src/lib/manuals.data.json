@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "blender",
+    "frontmatter": {
+      "title": "Blender Modelling",
+      "slug": "blender",
+      "type": "component",
+      "paperSize": "A4-landscape",
+      "printPaperSize": "A4-portrait",
+      "category": "3D Modelling",
+      "tags": [
+        "blender",
+        "modelling",
+        "hotkeys"
+      ],
+      "updated": "2026-05-19",
+      "summary": "One-page reference for Blender's modelling hotkeys, modifiers, and edit-mode mesh operations."
+    }
+  },
+  {
+    "slug": "git-stash-recovery",
+    "frontmatter": {
+      "title": "Git stash recovery",
+      "slug": "git-stash-recovery",
+      "type": "prose",
+      "paperSize": "A4-portrait",
+      "category": "Git",
+      "tags": [
+        "git",
+        "stash",
+        "recovery"
+      ],
+      "updated": "2026-05-18",
+      "summary": "How to get back a stash you accidentally dropped, deleted, or lost in a rebase gone wrong."
+    }
+  }
+]
