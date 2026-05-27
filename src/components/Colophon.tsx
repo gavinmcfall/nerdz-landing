@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { blogLink } from "@/lib/flags";
 
 // The shared shell footer. Markup follows the contract in
 // docs/unified-shell-spec.md §2 (class names mirrored by the Hugo blog).
@@ -82,9 +83,19 @@ export function Colophon() {
                 </Link>
               </li>
               <li>
-                <Link href="/blog">
-                  Blog <span className="arr">→</span>
-                </Link>
+                {blogLink.external ? (
+                  <a
+                    href={blogLink.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Blog <span className="arr">↗</span>
+                  </a>
+                ) : (
+                  <Link href={blogLink.href}>
+                    Blog <span className="arr">→</span>
+                  </Link>
+                )}
               </li>
               <li>
                 <Link href="/about">

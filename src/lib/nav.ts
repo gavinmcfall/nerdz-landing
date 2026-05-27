@@ -1,6 +1,9 @@
 // Nav manifest — the canonical shared-shell nav (docs/unified-shell-spec.md §3).
 // Home is carried by the brand mark, so the nav starts at projects.
-// /manuals and /blog 404 until plans 3 & 5 land them (accepted interim state).
+// "blog" routing is feature-flagged (see lib/flags.ts): the live subdomain
+// until the same-origin /blog edge route ships (plan 5).
+import { blogLink } from "./flags";
+
 export type NavItem = {
   label: string;
   href: string;
@@ -11,7 +14,7 @@ export type NavItem = {
 export const NAV: NavItem[] = [
   { label: "projects", href: "/projects" },
   { label: "field manuals", href: "/manuals" },
-  { label: "blog", href: "/blog" },
+  { label: "blog", href: blogLink.href, external: blogLink.external },
   { label: "about", href: "/about" },
   {
     label: "github →",
