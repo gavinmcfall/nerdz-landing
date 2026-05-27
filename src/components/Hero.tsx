@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -24,12 +25,12 @@ export function Hero() {
               do.
             </p>
             <div className="hero__ctas">
-              <a href="#projects" className="btn-primary">
+              <Link href="/projects" className="btn-primary">
                 <span>See what I&apos;m building</span>
                 <span className="arr" aria-hidden="true">
                   →
                 </span>
-              </a>
+              </Link>
               <a href="#ramblings" className="btn-ghost mono">
                 ramblings →
               </a>

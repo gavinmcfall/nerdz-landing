@@ -1,23 +1,16 @@
-import { Topbar } from "@/components/Topbar";
 import { Hero } from "@/components/Hero";
-import { Workshop } from "@/components/Workshop";
-import { Workbench } from "@/components/Workbench";
+import { Teasers } from "@/components/Teasers";
 import { Ramblings } from "@/components/Ramblings";
-import { Cluster } from "@/components/Cluster";
-import { Colophon } from "@/components/Colophon";
 
+// Slim landing: hero + teaser cards into each destination + latest ramblings.
+// The full sections now live on their own routes (Topbar/Colophon are in the
+// root layout, so navigation between them is SPA with no page load).
 export default function Home() {
   return (
     <>
-      <Topbar />
-      <main id="main">
-        <Hero />
-        <Workshop />
-        <Workbench />
-        <Ramblings />
-        <Cluster />
-      </main>
-      <Colophon />
+      <Hero />
+      <Teasers />
+      <Ramblings />
     </>
   );
 }

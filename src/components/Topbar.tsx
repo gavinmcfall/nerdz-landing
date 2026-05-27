@@ -1,22 +1,46 @@
 "use client";
 
 import { useState } from "react";
-import { NAV } from "@/lib/nav";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { NAV, isActive, type NavItem } from "@/lib/nav";
 
 // The shared shell header. Markup follows the contract in
-// docs/unified-shell-spec.md §2 (class names mirrored by the Hugo blog).
-// The live telemetry pill is the framework-agnostic <nerdz-status> element
-// (/public/nerdz-status.js) — same tag in both runtimes.
+// docs/unified-shell-spec.md §2 — the rendered DOM is a plain <a> either way,
+// so the Hugo blog mirrors it; React uses <Link> for app-internal routes to get
+// prefetched, client-side SPA navigation (external links stay a plain <a>).
+// The live telemetry pill is the framework-agnostic <nerdz-status> element.
 export function Topbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
-  const linkProps = (item: (typeof NAV)[number]) => ({
-    href: item.href,
-    className: item.cta ? "cta" : undefined,
-    ...(item.external
-      ? { target: "_blank", rel: "noreferrer noopener" }
-      : {}),
-  });
+  // Renders a nav destination: <Link> for app routes, <a> for external.
+  const NavItemLink = ({ item }: { item: NavItem }) => {
+    const className = item.cta ? "cta" : undefined;
+    if (item.external) {
+      return (
+        <a
+          href={item.href}
+          className={className}
+          target="_blank"
+          rel="noreferrer noopener"
+          onClick={() => setOpen(false)}
+        >
+          {item.label}
+        </a>
+      );
+    }
+    return (
+      <Link
+        href={item.href}
+        className={className}
+        aria-current={isActive(pathname, item) ? "page" : undefined}
+        onClick={() => setOpen(false)}
+      >
+        {item.label}
+      </Link>
+    );
+  };
 
   return (
     <>
@@ -25,18 +49,16 @@ export function Topbar() {
       </a>
       <header className="shell-topbar">
         <div className="frame shell-topbar__inner">
-          <a className="shell-topbar__brand" href="/">
+          <Link className="shell-topbar__brand" href="/">
             <span className="shell-topbar__dot" aria-hidden="true" />
             nerdz.cloud
-          </a>
+          </Link>
 
           <nerdz-status className="shell-topbar__status mono" />
 
           <nav className="shell-topbar__nav" aria-label="Primary">
             {NAV.map((item) => (
-              <a key={item.label} {...linkProps(item)}>
-                {item.label}
-              </a>
+              <NavItemLink key={item.label} item={item} />
             ))}
           </nav>
 
@@ -58,13 +80,7 @@ export function Topbar() {
           hidden={!open}
         >
           {NAV.map((item) => (
-            <a
-              key={item.label}
-              {...linkProps(item)}
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </a>
+            <NavItemLink key={item.label} item={item} />
           ))}
         </nav>
       </header>

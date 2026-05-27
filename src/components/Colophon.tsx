@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 // The shared shell footer. Markup follows the contract in
 // docs/unified-shell-spec.md §2 (class names mirrored by the Hugo blog).
+// Internal index links use <Link> (renders a plain <a>) for SPA navigation.
 export function Colophon() {
   return (
     <footer className="shell-colophon" aria-label="Colophon">
@@ -64,24 +67,29 @@ export function Colophon() {
             <h4>Index</h4>
             <ul className="shell-colophon__list">
               <li>
-                <a href="#projects">
-                  Projects <span className="arr">↑</span>
-                </a>
+                <Link href="/projects">
+                  Projects <span className="arr">→</span>
+                </Link>
               </li>
               <li>
-                <a href="#workbench">
-                  Workbench <span className="arr">↑</span>
-                </a>
+                <Link href="/lab">
+                  The Lab <span className="arr">→</span>
+                </Link>
               </li>
               <li>
-                <a href="#ramblings">
-                  Ramblings <span className="arr">↑</span>
-                </a>
+                <Link href="/manuals">
+                  Field Manuals <span className="arr">→</span>
+                </Link>
               </li>
               <li>
-                <a href="#cluster">
-                  Cluster <span className="arr">↑</span>
-                </a>
+                <Link href="/blog">
+                  Blog <span className="arr">→</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/about">
+                  About <span className="arr">→</span>
+                </Link>
               </li>
             </ul>
           </div>
