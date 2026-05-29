@@ -7,7 +7,7 @@
 // a broken nav. Flip to true once the edge route + bespoke Hugo front end are
 // live, and the blog crossover becomes a same-origin (View-Transition) hop.
 export const FLAGS = {
-  blogSameOrigin: false,
+  blogSameOrigin: true,
 } as const;
 
 // The blog destination, derived from the flag: same-origin once merged, the
