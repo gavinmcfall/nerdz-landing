@@ -37,7 +37,7 @@ const SHEETS: Row[] = [
   },
 ];
 
-const BLOG_BASE = "https://blog.nerdz.cloud";
+const BLOG_BASE = "https://nerdz.cloud/blog";
 const RSS_URL = `${BLOG_BASE}/index.xml`;
 const BLOG_REVALIDATE_SECONDS = 60 * 60; // 1 hour
 
