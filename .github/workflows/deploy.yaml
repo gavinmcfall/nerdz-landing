@@ -6,6 +6,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Refresh /projects card stats periodically. The fetcher pulls live data
+  # from GitHub at build time (commits / last push / latest release / derived
+  # status), so a scheduled rebuild is all we need to catch releases cut on
+  # tracked repos between manual deploys. Every 6h ≈ 4 build minutes/day.
+  schedule:
+    - cron: "0 */6 * * *"
 
 concurrency:
   group: deploy-${{ github.ref }}
