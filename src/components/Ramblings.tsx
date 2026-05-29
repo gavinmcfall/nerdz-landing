@@ -112,7 +112,6 @@ export async function Ramblings() {
     <section className="section" id="ramblings" aria-label="Ramblings">
       <div className="frame">
         <SectionHead
-          num="03"
           title={
             <>
               Of <em>ramblings</em> &amp; field manuals

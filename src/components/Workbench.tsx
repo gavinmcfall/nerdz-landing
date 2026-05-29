@@ -55,7 +55,6 @@ export function Workbench() {
     <section className="section" id="workbench" aria-label="The workbench">
       <div className="frame">
         <SectionHead
-          num="02"
           title={
             <>
               The <em>workbench</em>

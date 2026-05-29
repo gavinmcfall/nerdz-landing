@@ -970,15 +970,92 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .teaser:hover .teaser__arr { transform: translateX(4px); }
 
-/* ─── ABOUT (stub) ──────────────────────────────────────────── */
+/* ─── ABOUT ─────────────────────────────────────────────────── */
 .about__body {
-  max-width: 68ch;
-  display: flex; flex-direction: column; gap: 1em;
+  display: flex; flex-direction: column; gap: 32px;
   color: var(--ink-mid);
   font-family: var(--font-sans);
   font-size: 17px; line-height: 1.7;
 }
 .about__body em { color: var(--gold); font-style: italic; }
+.about__lede {
+  max-width: 70ch;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+}
+.about__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 56px;
+}
+@media (max-width: 720px) {
+  .about__grid { grid-template-columns: 1fr; }
+}
+.about__col { display: flex; flex-direction: column; gap: 18px; }
+.about__h {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  margin: 8px 0 -4px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.about__h::before {
+  content: ''; width: 18px; height: 1px; background: currentColor; opacity: 0.6;
+}
+.about__list { list-style: none; padding-left: 0; margin: 0; }
+.about__list li {
+  padding: 4px 0;
+  font-size: 16.5px;
+  color: var(--ink-mid);
+}
+.about__list li::before {
+  content: '·';
+  color: var(--ink-dim);
+  margin-right: 10px;
+}
+.about__p { margin: 0; max-width: 60ch; }
+.about__quote {
+  margin: 6px 0 0;
+  padding: 14px 18px;
+  border-left: 2px solid var(--gold);
+  background: linear-gradient(90deg, rgba(201, 168, 110, 0.05), transparent 80%);
+  font-style: italic;
+  color: var(--ink-mid);
+}
+.about__quote p { margin: 0; }
+.about__quote footer { margin-top: 8px; font-size: 13px; color: var(--ink-mute); }
+.about__contact {
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+.about__contact-list { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.about__contact-list li { font-size: 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; }
+.about__contact-list a { color: var(--ink); text-decoration: underline; text-decoration-color: rgba(168, 85, 247, 0.4); text-underline-offset: 3px; }
+.about__contact-list a:hover { text-decoration-color: var(--glow); }
+.about__contact-k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* ─── CLUSTER 4th tile — summary "the cluster at a glance" ───── */
+.node--summary {
+  /* Sits in the slot pyro-01 used to occupy; matches node card chrome but
+     has a different content shape (no temp tower, just key/value lines). */
+  background: var(--paper-card);
+}
+.node--summary .node__role { color: var(--gold); }
+.node--summary .node__meta {
+  font-size: 14px;
+  padding: 2px 0;
+}
 
 /* ─── PAGE TRANSITION (SPA route change) ────────────────────── */
 @keyframes pageFade {

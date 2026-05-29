@@ -253,7 +253,6 @@ export function Workshop() {
     <section className="section" id="projects" aria-label="The workshop">
       <div className="frame">
         <SectionHead
-          num="01"
           title={
             <>
               The <em>workshop</em>

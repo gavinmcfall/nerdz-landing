@@ -49,7 +49,6 @@ export function Teasers() {
     <section className="section teasers" id="explore" aria-label="Explore">
       <div className="frame">
         <SectionHead
-          num="00"
           title="Where to"
           caption="The workshop, the lab, the manuals, the ramblings."
         />

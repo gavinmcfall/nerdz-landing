@@ -47,17 +47,26 @@ export function Colophon() {
                 </a>
               </li>
               <li>
-                <a href="#">
-                  Star Citizen org <span className="arr">↗</span>
+                <a
+                  href="https://discord.gg/Exelus"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Star Citizen org · discord.gg/Exelus{" "}
+                  <span className="arr">↗</span>
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a
+                  href="https://makerworld.com/en/@nzvengeance"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
                   MakerWorld <span className="arr">↗</span>
                 </a>
               </li>
               <li>
-                <a href="/rss.xml">
+                <a href="/blog/index.xml">
                   RSS <span className="arr">→</span>
                 </a>
               </li>

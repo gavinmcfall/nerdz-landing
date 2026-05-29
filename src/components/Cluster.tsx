@@ -7,7 +7,7 @@ import { UptimeText } from "./UptimeText";
 export function Cluster() {
   const snap = useClusterSnapshot();
   const { nodes, summary, isLive, loaded } = snap;
-  const { healthy, total, avgTemp } = summary;
+  const { healthy, total, avgTemp, podCount, fluxReady, fluxTotal, speedtestDownMbps } = summary;
 
   const caption = !loaded
     ? "three nodes · talos · connecting…"
@@ -19,7 +19,6 @@ export function Cluster() {
     <section className="section" id="cluster" aria-label="The homelab">
       <div className="frame">
         <SectionHead
-          num="04"
           title={
             <>
               The <em>homelab</em>
@@ -70,6 +69,40 @@ export function Cluster() {
                   </div>
                 </div>
               ))}
+              {/* 4th tile — fills the slot where pyro-01 used to live with a
+                   cluster-wide summary instead of a fictional node. NAS
+                   capacity belongs here too once kromgo exposes it. */}
+              <div className="node node--summary">
+                <div className="node__name">
+                  <span>the cluster</span>
+                  <span className="pulse-dot" aria-hidden="true" />
+                </div>
+                <div className="node__role">at a glance</div>
+                <div className="node__meta">
+                  <span>pods</span>
+                  <span>{podCount != null ? podCount : "—"}</span>
+                </div>
+                <div className="node__meta">
+                  <span>flux</span>
+                  <span>
+                    {fluxReady != null && fluxTotal != null
+                      ? `${fluxReady}/${fluxTotal}`
+                      : "—"}
+                  </span>
+                </div>
+                <div className="node__meta">
+                  <span>wan ↓</span>
+                  <span>
+                    {speedtestDownMbps != null
+                      ? `${Math.round(speedtestDownMbps)} Mbps`
+                      : "—"}
+                  </span>
+                </div>
+                <div className="node__meta">
+                  <span>nas</span>
+                  <span>—</span>
+                </div>
+              </div>
             </div>
             <div className="cluster__sub">
               <div className="cluster__stat">

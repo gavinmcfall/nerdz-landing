@@ -17,6 +17,13 @@ export type ClusterSummary = {
   total: number;
   avgTemp: number;
   uptimeSeconds: number;
+  /** Total running pods across the cluster (kromgo: cluster_pod_count). */
+  podCount: number | null;
+  /** Flux GitOps state (kromgo: flux_kustomizations_ready / _total). */
+  fluxReady: number | null;
+  fluxTotal: number | null;
+  /** WAN speedtest most recent download throughput (kromgo: speedtest_download_mbps). */
+  speedtestDownMbps: number | null;
 };
 
 export type ClusterSnapshot = {
@@ -42,6 +49,10 @@ const FALLBACK_SUMMARY: ClusterSummary = {
   // 0 until live data lands — useUptimeFromSnapshot renders an em-dash
   // placeholder when uptimeSeconds is 0 so we don't show a fictional value.
   uptimeSeconds: 0,
+  podCount: null,
+  fluxReady: null,
+  fluxTotal: null,
+  speedtestDownMbps: null,
 };
 
 const FALLBACK: ClusterSnapshot = {
