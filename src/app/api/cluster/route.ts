@@ -26,13 +26,13 @@ const SUMMARY_QUERIES = [
   "cluster_health_total",
   "cluster_temp_avg",
   "cluster_uptime_seconds",
-  // 4th-tile metrics (where pyro-01 used to sit). NAS capacity belongs here
-  // too but isn't exposed by kromgo yet — needs a query added to
-  // home-ops/kubernetes/apps/observability/kromgo/app/resources/config.yaml.
+  // 4th-tile metrics (where pyro-01 used to sit).
   "cluster_pod_count",
   "flux_kustomizations_ready",
   "flux_kustomizations_total",
   "speedtest_download_mbps",
+  "nas_capacity_used",
+  "nas_capacity_total",
 ] as const;
 
 async function fetchMetric(name: string): Promise<number | null> {
@@ -87,6 +87,8 @@ export async function GET() {
     fluxReady,
     fluxTotal,
     speedtestDown,
+    nasUsedTib,
+    nasTotalTib,
   ] = summary;
 
   return NextResponse.json(
@@ -100,6 +102,8 @@ export async function GET() {
         fluxReady: fluxReady ?? null,
         fluxTotal: fluxTotal ?? null,
         speedtestDownMbps: speedtestDown ?? null,
+        nasUsedTib: nasUsedTib ?? null,
+        nasTotalTib: nasTotalTib ?? null,
       },
       nodes,
       timestamp: new Date().toISOString(),

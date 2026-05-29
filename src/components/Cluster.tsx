@@ -7,7 +7,22 @@ import { UptimeText } from "./UptimeText";
 export function Cluster() {
   const snap = useClusterSnapshot();
   const { nodes, summary, isLive, loaded } = snap;
-  const { healthy, total, avgTemp, podCount, fluxReady, fluxTotal, speedtestDownMbps } = summary;
+  const {
+    healthy,
+    total,
+    avgTemp,
+    podCount,
+    fluxReady,
+    fluxTotal,
+    speedtestDownMbps,
+    nasUsedTib,
+    nasTotalTib,
+  } = summary;
+
+  const nasRow =
+    nasUsedTib != null && nasTotalTib != null
+      ? `${nasUsedTib.toFixed(1)}/${nasTotalTib.toFixed(1)} TiB`
+      : "—";
 
   const caption = !loaded
     ? "three nodes · talos · connecting…"
@@ -100,7 +115,7 @@ export function Cluster() {
                 </div>
                 <div className="node__meta">
                   <span>nas</span>
-                  <span>—</span>
+                  <span>{nasRow}</span>
                 </div>
               </div>
             </div>

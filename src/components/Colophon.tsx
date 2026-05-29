@@ -52,8 +52,7 @@ export function Colophon() {
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  Star Citizen org · discord.gg/Exelus{" "}
-                  <span className="arr">↗</span>
+                  Star Citizen org <span className="arr">↗</span>
                 </a>
               </li>
               <li>

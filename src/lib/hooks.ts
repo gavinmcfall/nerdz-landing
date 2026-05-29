@@ -24,6 +24,9 @@ export type ClusterSummary = {
   fluxTotal: number | null;
   /** WAN speedtest most recent download throughput (kromgo: speedtest_download_mbps). */
   speedtestDownMbps: number | null;
+  /** TrueNAS used + total capacity in TiB (kromgo: nas_capacity_used / _total). */
+  nasUsedTib: number | null;
+  nasTotalTib: number | null;
 };
 
 export type ClusterSnapshot = {
@@ -53,6 +56,8 @@ const FALLBACK_SUMMARY: ClusterSummary = {
   fluxReady: null,
   fluxTotal: null,
   speedtestDownMbps: null,
+  nasUsedTib: null,
+  nasTotalTib: null,
 };
 
 const FALLBACK: ClusterSnapshot = {
