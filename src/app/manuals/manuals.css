@@ -237,9 +237,12 @@ html[data-font="dyslexic"] .mono {
   border-color: var(--shell-purple-fill);
 }
 
-/* ── DOWNLOAD PDF LINK (on the dark bench, above the sheet) ── */
+/* ── DOWNLOAD PDF LINK (on the bench, above the sheet) ── */
 .manual__pdf-link {
-  display: inline-block;
+  /* block + fit-content + auto margins = actually centered (inline-block w/
+     auto margins doesn't center). */
+  display: block;
+  width: fit-content;
   margin: 24px auto 0;
   padding: 7px 15px;
   border: 1px solid var(--shell-rule-strong);
@@ -250,6 +253,19 @@ html[data-font="dyslexic"] .mono {
   font-family: var(--font-mono);
 }
 .manual__pdf-link:hover { border-color: var(--shell-purple); color: var(--shell-glow); }
+
+/* In LIGHT theme the body bg is cream (~#efe6d2) and .manual's scoped
+   `--paper-card` (#fbf6ea) is barely lighter — sheet "washes out" against the
+   body. Bump the sheet to white + strengthen the edge so it reads as a sheet
+   ON the page, not painted into it. (In dark theme the sheet is already
+   high-contrast against the velvet — these overrides only apply in light.) */
+[data-theme="light"] .manual {
+  --paper-card: #ffffff;
+  border: 1px solid rgba(26, 20, 31, 0.16);
+  box-shadow:
+    0 1px 2px rgba(26, 20, 31, 0.06),
+    0 12px 32px -16px rgba(26, 20, 31, 0.18);
+}
 
 /* ── HIGH-CONTRAST TOGGLE (html data-contrast="high") ──────── */
 html[data-contrast="high"] .manual {

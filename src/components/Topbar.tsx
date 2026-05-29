@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV, isActive, type NavItem } from "@/lib/nav";
+import { ThemeToggle } from "./ThemeToggle";
 
 // The shared shell header. Markup follows the contract in
 // docs/unified-shell-spec.md §2 — the rendered DOM is a plain <a> either way,
@@ -60,6 +61,7 @@ export function Topbar() {
             {NAV.map((item) => (
               <NavItemLink key={item.label} item={item} />
             ))}
+            <ThemeToggle />
           </nav>
 
           <button
@@ -82,6 +84,7 @@ export function Topbar() {
           {NAV.map((item) => (
             <NavItemLink key={item.label} item={item} />
           ))}
+          <ThemeToggle />
         </nav>
       </header>
     </>

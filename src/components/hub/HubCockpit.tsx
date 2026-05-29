@@ -47,11 +47,8 @@ export function HubCockpit({ manuals }: { manuals: ManualCard[] }) {
           </section>
         ))}
 
-        <nav className="ck-nav">
-          <a href="https://nerdz.cloud">nerdz.cloud</a>
-          <a href="https://blog.nerdz.cloud">blog</a>
-          <span className="ck-nav__here">guides</span>
-        </nav>
+        {/* ck-nav removed — the unified shell Topbar provides cross-surface
+            nav now; the standalone-guides-site footer was redundant. */}
       </div>
     </div>
   );
@@ -95,4 +92,17 @@ const CSS = `
 .ck-nav a:hover { border-color:var(--glow); color:var(--glow); }
 .ck-nav__here { background:var(--pp); color:#fff; border-color:var(--pp); }
 @media (max-width:760px){ .ck-row{ grid-template-columns:auto 1fr auto; } .ck-row__desc,.ck-row__paper{ display:none; } }
+
+/* Light-theme overrides — translated from the design's .surface--light rules.
+   The cockpit's inline CSS hard-codes a few dark rgbas (the readout bar bg,
+   the row hover, the purple-fill type pill), so those need explicit flips in
+   light mode rather than auto-flipping from tokens. */
+[data-theme="light"] .ck { background-image: radial-gradient(120% 55% at 50% -10%, rgba(124, 58, 237, 0.08), transparent 62%); }
+[data-theme="light"] .ck-readout { background: rgba(251, 246, 234, 0.7); }
+[data-theme="light"] .ck-row:hover { background: rgba(90, 14, 147, 0.05); }
+[data-theme="light"] .ck-dot--row { background: var(--purple); box-shadow: 0 0 8px rgba(90, 14, 147, 0.5); }
+[data-theme="light"] .ck-row__type { background: var(--purple); box-shadow: 0 0 12px rgba(90, 14, 147, 0.4); }
+[data-theme="light"] .ck-row:hover .ck-row__pdf { color: var(--purple); }
+[data-theme="light"] .ck-nav a:hover { border-color: var(--purple); color: var(--purple); }
+[data-theme="light"] .ck-nav__here { color: #f1e8d6; }
 `;

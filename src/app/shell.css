@@ -87,7 +87,7 @@
   letter-spacing: 0.04em;
 }
 .shell-topbar__nav a { transition: color 200ms ease; position: relative; }
-.shell-topbar__nav a:hover { color: var(--ink); }
+.shell-topbar__nav a:hover { color: var(--glow); }
 .shell-topbar__nav a[aria-current="page"] { color: var(--ink); }
 .shell-topbar__nav a[aria-current="page"]::after {
   content: ''; position: absolute;
@@ -139,6 +139,11 @@
   padding: 96px 0 48px;
   border-top: 1px solid var(--rule);
   background: linear-gradient(180deg, transparent, rgba(106, 13, 173, 0.08));
+}
+/* Light-mode: deeper, lower-alpha purple wash so the cream still gets a hint
+   of brand without the dark-mode 0.08 reading as cool-pink on cream. */
+[data-theme="light"] .shell-colophon {
+  background: linear-gradient(180deg, transparent, rgba(90, 14, 147, 0.05));
 }
 .shell-colophon__grid {
   display: grid;
@@ -229,3 +234,38 @@
   .shell-imprint { grid-template-columns: 1fr; text-align: center; gap: 12px; }
   .shell-imprint__center, .shell-imprint__right, .shell-imprint__brand { justify-content: center; }
 }
+
+/* ── PALETTE TOGGLE (sun/moon) ──────────────────────────────── */
+.palette-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: 4px;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+.palette-toggle:hover { color: var(--ink); border-color: var(--glow); }
+.palette-toggle svg { display: block; }
+
+/* In the mobile drawer, render as a labelled row to match the nav items. */
+.shell-drawer .palette-toggle {
+  width: auto;
+  height: auto;
+  padding: 10px var(--gutter);
+  margin: 0;
+  justify-content: flex-start;
+  border: 0;
+  border-radius: 0;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  text-transform: lowercase;
+  color: var(--ink-mid);
+}
+.shell-drawer .palette-toggle::after { content: "theme"; }
