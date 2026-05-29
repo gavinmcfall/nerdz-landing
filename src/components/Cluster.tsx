@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useClusterSnapshot } from "@/lib/hooks";
 import { SectionHead } from "./SectionHead";
 import { UptimeText } from "./UptimeText";
@@ -14,6 +15,8 @@ export function Cluster() {
     podCount,
     fluxReady,
     fluxTotal,
+    cpuPct,
+    memPct,
     speedtestDownMbps,
     nasUsedTib,
     nasTotalTib,
@@ -23,6 +26,13 @@ export function Cluster() {
     nasUsedTib != null && nasTotalTib != null
       ? `${Math.round(nasUsedTib)}/${Math.round(nasTotalTib)} TiB`
       : "—";
+
+  const pair = (k: string, v: ReactNode) => (
+    <span className="cluster__topbar__pair">
+      <span className="cluster__topbar__k">{k}</span>
+      <span className="cluster__topbar__v">{v}</span>
+    </span>
+  );
 
   const caption = !loaded
     ? "three nodes · talos · connecting…"
@@ -84,36 +94,39 @@ export function Cluster() {
                   </div>
                 </div>
               ))}
-              {/* Cluster-wide stats bar fused to the base of the node grid
-                   (same border container, separated by the 1px hairline).
-                   Cell visual matches .cluster__stat from the health/temp/
-                   uptime row below. */}
+              {/* Cluster-wide stats bar fused to the base of the node grid.
+                   Single row, three groups via justify-content: space-between
+                   — pods/flux LEFT, cpu/mem CENTER, wan/nas RIGHT. Each pair
+                   (k+v) is tight; pair-to-pair gap is looser. No hairline
+                   separators. */}
               <div className="cluster__topbar">
-                <div className="cluster__stat">
-                  <div className="cluster__stat-k">pods</div>
-                  <div className="cluster__stat-v">
-                    {podCount != null ? podCount : "—"}
-                  </div>
-                </div>
-                <div className="cluster__stat">
-                  <div className="cluster__stat-k">flux</div>
-                  <div className="cluster__stat-v">
-                    {fluxReady != null && fluxTotal != null
+                <div className="cluster__topbar__group">
+                  {pair("pods", podCount != null ? podCount : "—")}
+                  {pair(
+                    "flux",
+                    fluxReady != null && fluxTotal != null
                       ? `${fluxReady}/${fluxTotal}`
-                      : "—"}
-                  </div>
+                      : "—",
+                  )}
                 </div>
-                <div className="cluster__stat">
-                  <div className="cluster__stat-k">wan ↓</div>
-                  <div className="cluster__stat-v">
-                    {speedtestDownMbps != null
+                <div className="cluster__topbar__group">
+                  {pair(
+                    "cpu",
+                    cpuPct != null ? `${Math.round(cpuPct)}%` : "—",
+                  )}
+                  {pair(
+                    "mem",
+                    memPct != null ? `${Math.round(memPct)}%` : "—",
+                  )}
+                </div>
+                <div className="cluster__topbar__group">
+                  {pair(
+                    "wan ↓",
+                    speedtestDownMbps != null
                       ? `${Math.round(speedtestDownMbps)} Mbps`
-                      : "—"}
-                  </div>
-                </div>
-                <div className="cluster__stat">
-                  <div className="cluster__stat-k">nas</div>
-                  <div className="cluster__stat-v">{nasRow}</div>
+                      : "—",
+                  )}
+                  {pair("nas", nasRow)}
                 </div>
               </div>
             </div>

@@ -22,6 +22,9 @@ export type ClusterSummary = {
   /** Flux GitOps state (kromgo: flux_kustomizations_ready / _total). */
   fluxReady: number | null;
   fluxTotal: number | null;
+  /** Cluster-wide CPU + memory usage % (kromgo: cluster_cpu_usage / _memory_usage). */
+  cpuPct: number | null;
+  memPct: number | null;
   /** WAN speedtest most recent download throughput (kromgo: speedtest_download_mbps). */
   speedtestDownMbps: number | null;
   /** TrueNAS used + total capacity in TiB (kromgo: nas_capacity_used / _total). */
@@ -55,6 +58,8 @@ const FALLBACK_SUMMARY: ClusterSummary = {
   podCount: null,
   fluxReady: null,
   fluxTotal: null,
+  cpuPct: null,
+  memPct: null,
   speedtestDownMbps: null,
   nasUsedTib: null,
   nasTotalTib: null,
