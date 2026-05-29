@@ -21,7 +21,7 @@ export function Cluster() {
 
   const nasRow =
     nasUsedTib != null && nasTotalTib != null
-      ? `${nasUsedTib.toFixed(1)}/${nasTotalTib.toFixed(1)} TiB`
+      ? `${Math.round(nasUsedTib)}/${Math.round(nasTotalTib)} TiB`
       : "—";
 
   const caption = !loaded
@@ -84,38 +84,36 @@ export function Cluster() {
                   </div>
                 </div>
               ))}
-              {/* 4th tile — fills the slot where pyro-01 used to live with a
-                   cluster-wide summary instead of a fictional node. NAS
-                   capacity belongs here too once kromgo exposes it. */}
-              <div className="node node--summary">
-                <div className="node__name">
-                  <span>the cluster</span>
-                  <span className="pulse-dot" aria-hidden="true" />
+              {/* Cluster-wide stats bar fused to the base of the node grid
+                   (same border container, separated by the 1px hairline).
+                   Cell visual matches .cluster__stat from the health/temp/
+                   uptime row below. */}
+              <div className="cluster__topbar">
+                <div className="cluster__stat">
+                  <div className="cluster__stat-k">pods</div>
+                  <div className="cluster__stat-v">
+                    {podCount != null ? podCount : "—"}
+                  </div>
                 </div>
-                <div className="node__role">at a glance</div>
-                <div className="node__meta">
-                  <span>pods</span>
-                  <span>{podCount != null ? podCount : "—"}</span>
-                </div>
-                <div className="node__meta">
-                  <span>flux</span>
-                  <span>
+                <div className="cluster__stat">
+                  <div className="cluster__stat-k">flux</div>
+                  <div className="cluster__stat-v">
                     {fluxReady != null && fluxTotal != null
                       ? `${fluxReady}/${fluxTotal}`
                       : "—"}
-                  </span>
+                  </div>
                 </div>
-                <div className="node__meta">
-                  <span>wan ↓</span>
-                  <span>
+                <div className="cluster__stat">
+                  <div className="cluster__stat-k">wan ↓</div>
+                  <div className="cluster__stat-v">
                     {speedtestDownMbps != null
                       ? `${Math.round(speedtestDownMbps)} Mbps`
                       : "—"}
-                  </span>
+                  </div>
                 </div>
-                <div className="node__meta">
-                  <span>nas</span>
-                  <span>{nasRow}</span>
+                <div className="cluster__stat">
+                  <div className="cluster__stat-k">nas</div>
+                  <div className="cluster__stat-v">{nasRow}</div>
                 </div>
               </div>
             </div>

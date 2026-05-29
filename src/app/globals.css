@@ -818,7 +818,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .cluster__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
@@ -826,10 +826,20 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   overflow: hidden;
 }
 @media (max-width: 540px) { .cluster__grid { grid-template-columns: repeat(2, 1fr); } }
+/* Cluster-wide stats bar fused to the base of the node grid (same border
+   container, separated by the 1px hairline that the parent's gap creates). */
+.cluster__topbar {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+}
+@media (max-width: 720px) { .cluster__topbar { grid-template-columns: repeat(2, 1fr); } }
 .node {
   background: var(--paper-card);
-  padding: 22px 18px 18px;
-  display: flex; flex-direction: column; gap: 10px;
+  padding: 16px 18px 14px;
+  display: flex; flex-direction: column; gap: 8px;
   position: relative;
 }
 .node__name {
@@ -846,12 +856,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   color: var(--ink-mute);
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  min-height: 28px;
+  min-height: 22px;
 }
 .node__temp {
   font-family: var(--font-plex-sans), system-ui, sans-serif;
   font-weight: 600;
-  font-size: 32px;
+  font-size: 28px;
   letter-spacing: -0.02em;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
@@ -1043,18 +1053,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-mute);
-}
-
-/* ─── CLUSTER 4th tile — summary "the cluster at a glance" ───── */
-.node--summary {
-  /* Sits in the slot pyro-01 used to occupy; matches node card chrome but
-     has a different content shape (no temp tower, just key/value lines). */
-  background: var(--paper-card);
-}
-.node--summary .node__role { color: var(--gold); }
-.node--summary .node__meta {
-  font-size: 14px;
-  padding: 2px 0;
 }
 
 /* ─── PAGE TRANSITION (SPA route change) ────────────────────── */
