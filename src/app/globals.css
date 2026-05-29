@@ -539,10 +539,27 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   color: var(--ink);
 }
 .stat-dot { width: 8px; height: 8px; border-radius: 50%; }
-.stat--in-dev .stat-dot { background: #f4b942; box-shadow: 0 0 6px #f4b942; }
+/* Status palette (derived per Gavin's rule, 2026-05-29):
+   spec    → outlined dot (just docs, no code)
+   design  → soft violet (code, no release)
+   alpha   → amber
+   beta    → amber + brighter ring
+   live    → green
+   stale   → desaturated grey (overrides whatever tier was reached) */
+.stat--spec .stat-dot   { background: transparent; border: 1px solid var(--ink-mute); }
+.stat--design .stat-dot { background: var(--glow-soft); box-shadow: 0 0 6px var(--glow-soft); }
 .stat--alpha .stat-dot  { background: #f4b942; box-shadow: 0 0 6px #f4b942; }
-.stat--planned .stat-dot{ background: transparent; border: 1px solid var(--ink-mute); }
-.stat--ok .stat-dot     { background: #4ade80; box-shadow: 0 0 6px #4ade80; }
+.stat--beta .stat-dot   { background: #f4b942; box-shadow: 0 0 8px #f4b942, 0 0 14px rgba(244, 185, 66, 0.5); }
+.stat--live .stat-dot   { background: #4ade80; box-shadow: 0 0 6px #4ade80; }
+.stat--stale .stat-dot  { background: var(--ink-mute); box-shadow: none; opacity: 0.7; }
+.stat--stale            { color: var(--ink-mute); }
+/* Stale projects: bar fill is muted, no glow, so the eye doesn't keep
+   reading "active" momentum on a quiet repo. */
+.statwin__bar-fill--stale::after {
+  background: var(--ink-mute);
+  box-shadow: none;
+  opacity: 0.45;
+}
 .statwin__title {
   font-family: var(--font-plex-sans), system-ui, sans-serif;
   font-weight: 600;

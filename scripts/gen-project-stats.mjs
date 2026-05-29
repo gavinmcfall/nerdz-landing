@@ -32,7 +32,11 @@ const QUERY = `
     repository(owner: $owner, name: $name) {
       pushedAt
       isPrivate
+      primaryLanguage { name }
       latestRelease { tagName }
+      releases(first: 20, orderBy: { field: CREATED_AT, direction: DESC }) {
+        nodes { tagName isPrerelease createdAt }
+      }
       defaultBranchRef {
         target {
           ... on Commit {
@@ -43,6 +47,45 @@ const QUERY = `
     }
   }
 `;
+
+// Derive status per Gavin's rule (2026-05-29):
+//   spec   — repo has docs only, no code yet (primaryLanguage null / Markdown)
+//   design — code exists, no qualifying releases
+//   alpha  — has a non-prerelease release whose tag contains "alpha"
+//   beta   — has a non-prerelease release whose tag contains "beta"
+//   live   — has a non-prerelease release with a clean semver-style tag
+//   stale  — overrides everything else: no commits in >= 6 months
+// "Most advanced" wins for the release tier: live > beta > alpha. Stale wraps
+// the bar regardless of which tier it reached.
+const SIX_MONTHS_MS = 6 * 30 * 24 * 60 * 60 * 1000;
+function deriveStatus(repo, now = Date.now()) {
+  if (!repo) return { status: "spec", reachedTier: "spec" };
+
+  const lang = repo.primaryLanguage?.name ?? null;
+  const hasCode = lang != null && lang !== "Markdown";
+
+  const releases = (repo.releases?.nodes ?? []).filter((r) => !r.isPrerelease);
+  const tags = releases.map((r) => (r.tagName || "").toLowerCase());
+  const hasAlpha = tags.some((t) => t.includes("alpha"));
+  const hasBeta = tags.some((t) => t.includes("beta"));
+  // "real release" = non-prerelease, version-like, not alpha/beta/rc.
+  const hasLive = tags.some(
+    (t) => /^v?\d/.test(t) && !/alpha|beta|rc|pre/.test(t),
+  );
+
+  let reachedTier;
+  if (hasLive) reachedTier = "live";
+  else if (hasBeta) reachedTier = "beta";
+  else if (hasAlpha) reachedTier = "alpha";
+  else if (hasCode) reachedTier = "design";
+  else reachedTier = "spec";
+
+  const pushedTs = Date.parse(repo.pushedAt);
+  const isStale =
+    !Number.isNaN(pushedTs) && now - pushedTs >= SIX_MONTHS_MS;
+
+  return { status: isStale ? "stale" : reachedTier, reachedTier };
+}
 
 function humanLastPush(iso) {
   if (!iso) return null;
@@ -81,6 +124,7 @@ async function fetchRepo(token, repo) {
     if (!r) {
       return { repo, ok: false, reason: "no-data", errors: json?.errors };
     }
+    const { status, reachedTier } = deriveStatus(r);
     return {
       repo,
       ok: true,
@@ -89,6 +133,8 @@ async function fetchRepo(token, repo) {
       commits: r.defaultBranchRef?.target?.history?.totalCount ?? null,
       release: r.latestRelease?.tagName ?? null,
       isPrivate: r.isPrivate,
+      status,
+      reachedTier,
     };
   } catch (err) {
     return { repo, ok: false, reason: "fetch-error", err: String(err) };
@@ -120,9 +166,11 @@ for (const r of results) {
     commits: r.commits,
     release: r.release,
     isPrivate: r.isPrivate,
+    status: r.status,
+    reachedTier: r.reachedTier,
   };
   console.log(
-    `  ${key}: ${r.commits ?? "?"} commits · pushed ${r.lastPushHuman ?? "?"} · ${r.release ?? "no-release"}${r.isPrivate ? " · private" : ""}`,
+    `  ${key}: ${r.status} (reached ${r.reachedTier}) · ${r.commits ?? "?"} commits · pushed ${r.lastPushHuman ?? "?"} · ${r.release ?? "no-release"}${r.isPrivate ? " · private" : ""}`,
   );
 }
 
