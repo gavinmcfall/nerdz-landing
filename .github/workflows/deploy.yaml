@@ -31,6 +31,13 @@ jobs:
 
       - name: Build (OpenNext → Cloudflare Worker)
         run: npm run cf:build
+        env:
+          # PAT with `repo` scope (or fine-grained equivalent). Used by
+          # scripts/gen-project-stats.mjs to pull build-time stats from
+          # public + private repos across orgs (gavinmcfall/*, SC-Bridge/*,
+          # Realmstacks/*). If absent the build still succeeds — stats just
+          # render as em-dashes.
+          GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
 
       - name: Deploy (wrangler)
         run: ./node_modules/.bin/wrangler deploy

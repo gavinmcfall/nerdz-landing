@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { SectionHead } from "./SectionHead";
+import projectStatsData from "@/lib/project-stats.data.json";
 
 type ProjectStatus = "in dev" | "alpha" | "planned" | "ok";
 
@@ -12,10 +13,15 @@ type Project = {
   tags: string[];
   status: ProjectStatus;
   statusClass: string;
-  stats: { k: string; v: ReactNode }[];
+  /** GitHub repo, used to look up build/commits/lastPush at build time. */
+  repo?: { owner: string; name: string };
+  /** Override the auto-fetched "build" label (e.g. internal rc number). */
+  buildOverride?: string;
+  stack: ReactNode;
   progress: number;
   progressLabel: string;
   side: "left" | "right";
+  /** Public link for the "Visit" CTA — leave undefined for "Coming soon". */
   url?: string;
 };
 
@@ -29,19 +35,12 @@ const PROJECTS: Project[] = [
     tags: ["Star Citizen", "Fleet", "AI"],
     status: "in dev",
     statusClass: "in-dev",
-    stats: [
-      { k: "build", v: "v0.4-rc1" },
-      { k: "commits", v: "412" },
-      { k: "last push", v: "2d ago" },
-      {
-        k: "stack",
-        v: (
-          <span>
-            next · ts · <em>pg</em>
-          </span>
-        ),
-      },
-    ],
+    repo: { owner: "SC-Bridge", name: "sc-bridge" },
+    stack: (
+      <span>
+        next · ts · <em>pg</em>
+      </span>
+    ),
     progress: 62,
     progressLabel: "beta",
     side: "left",
@@ -56,19 +55,12 @@ const PROJECTS: Project[] = [
     tags: ["3D Print", "Workflow", "Self-host"],
     status: "in dev",
     statusClass: "in-dev",
-    stats: [
-      { k: "build", v: "v0.2" },
-      { k: "commits", v: "138" },
-      { k: "last push", v: "6d ago" },
-      {
-        k: "stack",
-        v: (
-          <span>
-            rust · <em>sqlite</em>
-          </span>
-        ),
-      },
-    ],
+    repo: { owner: "gavinmcfall", name: "lootgoblin" },
+    stack: (
+      <span>
+        rust · <em>sqlite</em>
+      </span>
+    ),
     progress: 38,
     progressLabel: "alpha",
     side: "right",
@@ -83,12 +75,8 @@ const PROJECTS: Project[] = [
     tags: ["Lore", "Worldbuilding", "TTRPG", "Self-Host", "SaaS", "Fair Source"],
     status: "alpha",
     statusClass: "alpha",
-    stats: [
-      { k: "build", v: "alpha 3" },
-      { k: "commits", v: "89" },
-      { k: "last push", v: "11d ago" },
-      { k: "stack", v: <span>sveltekit · pg</span> },
-    ],
+    repo: { owner: "Realmstacks", name: "Realmstack" },
+    stack: <span>sveltekit · pg</span>,
     progress: 22,
     progressLabel: "alpha",
     side: "left",
@@ -100,21 +88,79 @@ const PROJECTS: Project[] = [
     motto: "Mail for AI, on infrastructure you own.",
     desc: "One MCP server for every mailbox. Outlook, Gmail, Migadu, iCloud, Fastmail, any IMAP. Read, send, label from Claude. BYO identity, self-hosted.",
     tags: ["MCP", "Email", "Self-host"],
-    status: "planned",
-    statusClass: "planned",
-    stats: [
-      { k: "build", v: <em>tbd</em> },
-      { k: "commits", v: "—" },
-      { k: "last push", v: "—" },
-      { k: "stack", v: <span>go · imap</span> },
-    ],
-    progress: 8,
-    progressLabel: "spec",
+    status: "in dev",
+    statusClass: "in-dev",
+    repo: { owner: "gavinmcfall", name: "postcraft" },
+    stack: <span>ts · imap</span>,
+    progress: 30,
+    progressLabel: "alpha",
     side: "right",
+  },
+  {
+    n: "05",
+    name: "Spyglass",
+    handle: "spyglass",
+    // TODO(gavin): real motto + desc + tags
+    motto: "Tools your eye deserves.",
+    desc: "Placeholder description — repo private, no description yet. Gavin to fill in.",
+    tags: ["Self-host"],
+    status: "in dev",
+    statusClass: "in-dev",
+    repo: { owner: "gavinmcfall", name: "spyglass" },
+    stack: <span>go</span>,
+    progress: 10,
+    progressLabel: "alpha",
+    side: "left",
+  },
+  {
+    n: "06",
+    name: "Mangarr",
+    handle: "mangarr",
+    // TODO(gavin): polish motto
+    motto: "The missing *arr for manga.",
+    desc: "Watches the download folder, classifies series by origin via AniList, files them into the right Kavita library, and triggers a scan. The missing *arr organizer tier for manga.",
+    tags: ["Self-host", "Manga", "Kavita", "Arr"],
+    status: "in dev",
+    statusClass: "in-dev",
+    repo: { owner: "gavinmcfall", name: "mangarr" },
+    stack: <span>go · anilist</span>,
+    progress: 15,
+    progressLabel: "alpha",
+    side: "right",
+    url: "https://github.com/gavinmcfall/mangarr",
   },
 ];
 
+type ProjectStatsEntry = {
+  pushedAt?: string;
+  lastPushHuman?: string;
+  commits?: number | null;
+  release?: string | null;
+  isPrivate?: boolean;
+  error?: string;
+};
+const STATS = (projectStatsData as { stats: Record<string, ProjectStatsEntry> })
+  .stats;
+
+function statsForProject(p: Project): { k: string; v: ReactNode }[] {
+  const entry = p.repo ? STATS[`${p.repo.owner}/${p.repo.name}`] : undefined;
+  const dash = "—";
+  const build =
+    p.buildOverride ??
+    entry?.release ??
+    (entry && !entry.error ? "no release" : dash);
+  const commits = entry?.commits != null ? entry.commits.toLocaleString() : dash;
+  const lastPush = entry?.lastPushHuman ?? dash;
+  return [
+    { k: "build", v: build },
+    { k: "commits", v: commits },
+    { k: "last push", v: lastPush },
+    { k: "stack", v: p.stack },
+  ];
+}
+
 function Statwin({ p }: { p: Project }) {
+  const stats = statsForProject(p);
   return (
     <div className="statwin">
       <div className="statwin__head">
@@ -126,7 +172,7 @@ function Statwin({ p }: { p: Project }) {
       </div>
       <h4 className="statwin__title">{p.name} — status window</h4>
       <div className="statwin__grid">
-        {p.stats.map((s, i) => (
+        {stats.map((s, i) => (
           <div key={i}>
             <div className="statwin__stat-k">{s.k}</div>
             <div className="statwin__stat-v">{s.v}</div>
@@ -199,7 +245,11 @@ export function Workshop() {
               The <em>workshop</em>
             </>
           }
-          caption={<>four projects · in the order they keep me up</>}
+          caption={
+            <>
+              {PROJECTS.length} projects · in the order they keep me up
+            </>
+          }
         />
       </div>
       <div className="features">

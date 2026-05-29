@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-05-29T06:43:27.074Z",
+  "stats": {
+    "SC-Bridge/sc-bridge": {
+      "error": "no-token"
+    },
+    "gavinmcfall/lootgoblin": {
+      "error": "no-token"
+    },
+    "Realmstacks/Realmstack": {
+      "error": "no-token"
+    },
+    "gavinmcfall/postcraft": {
+      "error": "no-token"
+    },
+    "gavinmcfall/spyglass": {
+      "error": "no-token"
+    },
+    "gavinmcfall/mangarr": {
+      "error": "no-token"
+    }
+  }
+}

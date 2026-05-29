@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "gen:manuals": "node scripts/gen-manuals.mjs",
-    "dev": "node scripts/gen-manuals.mjs && next dev",
-    "build": "node scripts/gen-manuals.mjs && next build",
+    "gen:project-stats": "node scripts/gen-project-stats.mjs",
+    "gen": "node scripts/gen-manuals.mjs && node scripts/gen-project-stats.mjs",
+    "dev": "npm run gen && next dev",
+    "build": "npm run gen && next build",
     "start": "next start",
     "lint": "eslint",
-    "cf:build": "node scripts/gen-manuals.mjs && opennextjs-cloudflare build",
+    "cf:build": "npm run gen && opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare deploy"
   },
