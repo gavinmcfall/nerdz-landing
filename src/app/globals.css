@@ -705,6 +705,99 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .ratio-tall .wbcard__slot   { aspect-ratio: 3 / 4; }
 .ratio-wide .wbcard__slot   { aspect-ratio: 16 / 9; }
 
+/* ─── WBCARD — SC FLEET concierge slot ────────────────────────
+   The Concierge content nests INSIDE the standard wbcard's photo
+   slot (replacing the "photo soon" placeholder). The outer tile
+   chrome — purple paper-card bg, title row, caption — matches the
+   rest of the workbench. Paper texture + crest + rank pill all
+   sized to fit the slot's 4:3 ratio. */
+.wbcard__slot--concierge {
+  background-color: #e8e1cf;
+  background-image: url("https://cdn.robertsspaceindustries.com/static/images/account/dashboard/concierge-card-background.png");
+  background-size: cover;
+  background-position: center;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  place-items: stretch; /* override the parent's place-items: center */
+  color: #2a2230;
+}
+.wbcard--concierge__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.wbcard--concierge__head-text { min-width: 0; }
+.wbcard--concierge__title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #2a2230;
+  margin: 0;
+}
+.wbcard--concierge__handle {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.2;
+  color: rgba(42, 34, 48, 0.7);
+  margin: 4px 0 0;
+}
+.wbcard--concierge__enlisted {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: rgba(42, 34, 48, 0.6);
+  margin: auto 0 0; /* pin to the bottom of the slot's flex column */
+}
+.wbcard--concierge__crest {
+  flex: none;
+  width: 58px;
+  height: 60px;
+  color: rgba(108, 88, 50, 0.62);
+}
+.wbcard--concierge__pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, #cbb685 0%, #b39d68 100%);
+  border-radius: 8px;
+  color: #2a2230;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 1px 0 rgba(0, 0, 0, 0.10);
+}
+.wbcard--concierge__pill-icon {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  color: #4a3a1a;
+}
+.wbcard--concierge__pill-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.wbcard--concierge__pill-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.2;
+  color: rgba(42, 34, 48, 0.78);
+}
+.wbcard--concierge__pill-value {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: #1f1812;
+}
+
 /* ─── LEDGER — ramblings + cheatsheets ────────────────────── */
 .ledger-row {
   display: grid;
