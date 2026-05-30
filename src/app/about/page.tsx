@@ -25,13 +25,23 @@ export default function AboutPage() {
         />
 
         <div className="about__body">
-          <p className="about__lede">
-            Hey, I&rsquo;m Gavin&nbsp;👋. I run nerdz.cloud and most of
-            what&rsquo;s on the cluster above. I have a deep interest in
-            all things <em>nerdy</em>, and I build self-hostable tools for
-            the niche communities I&rsquo;m in &mdash; because the tools
-            they deserve usually don&rsquo;t exist yet.
-          </p>
+          <div className="about__intro">
+            <p className="about__lede">
+              Hey, I&rsquo;m Gavin&nbsp;👋. I run nerdz.cloud and most of
+              what&rsquo;s on the cluster above. I have a deep interest in
+              all things <em>nerdy</em>, and I build self-hostable tools for
+              the niche communities I&rsquo;m in &mdash; because the tools
+              they deserve usually don&rsquo;t exist yet.
+            </p>
+            <img
+              className="about__photo"
+              src="/gavin.jpg"
+              alt="Gavin McFall"
+              width={512}
+              height={416}
+              loading="eager"
+            />
+          </div>
 
           <div className="about__grid">
             <div className="about__col">
