@@ -1,0 +1,121 @@
+---
+title: GPU worker setup
+description: Standing up a GPU worker — Windows/WSL2 distro, CUDA, ComfyUI + Distributed, the symmetric custom-node packs, local models, no-window autostart, Wake-on-LAN, and firewall. The unusual part of the build (GPUs live outside the cluster).
+---
+
+A worker is any machine with an NVIDIA GPU running ComfyUI + the ComfyUI-Distributed plugin, reachable from the cluster on `:8188`. The workers here are Windows 11 gaming PCs, each running the worker inside a dedicated **WSL2** distro — so this runbook is Windows/WSL2-specific. A plain Linux GPU box is simpler: do the CUDA/ComfyUI/Distributed/custom-node steps and skip the Windows/WSL/WoL parts.
+
+> **Symmetry rule (don't skip):** every worker must run the **same** ComfyUI-Distributed version *and* the same curated custom-node set (same pinned SHAs) as the master image — the master validates the graph, the worker executes it. Master-only install = silent `worker_count: 0` / "node not found".
+
+## Prerequisites (per PC)
+- The **Windows NVIDIA driver** installed. The WSL2 CUDA layer rides on top of it — **do NOT install Linux NVIDIA drivers (`cuda`/`cuda-drivers`) inside WSL2**; they conflict with the passthrough.
+- The PC on the LAN with a known IP/MAC; admin rights.
+- A second LAN machine to fire the Wake-on-LAN test (`assets/wol.ps1`).
+
+## 1. Dedicated WSL2 distro (blast-radius isolation)
+PowerShell as Administrator:
+```powershell
+wsl --install -d Ubuntu-24.04 --name lighthouse
+```
+A *named* distro keeps the worker isolated from any dev Ubuntu and lets you `wsl --unregister lighthouse` to nuke it cleanly. Set a UNIX user + password when prompted.
+
+## 2. CUDA toolkit only
+Follow NVIDIA's current WSL-CUDA docs; the shape:
+```bash
+sudo apt update
+sudo apt install -y cuda-toolkit-13-3   # version is decorative — PyTorch bundles its own runtime
+# make nvcc discoverable (zsh shown):
+echo 'export PATH=/usr/local/cuda/bin:$PATH' >> ~/.zshrc
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> ~/.zshrc
+source ~/.zshrc
+nvcc --version && nvidia-smi   # nvidia-smi must see the GPU
+```
+
+## 3. ComfyUI in a venv
+```bash
+sudo apt install -y python3.12-venv      # Ubuntu 24.04 splits venv out of base python3
+cd ~ && git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI && python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+Requirement: **PyTorch ≥ 2.6** ends up installed (the Impact-Pack safe `.pt` loading needs it); ComfyUI's default install on a CUDA box gives a current torch, so this is usually automatic. Verify `python -c "import torch; print(torch.__version__)"`.
+
+## 4. ComfyUI-Distributed plugin (required for cluster dispatch)
+```bash
+cd ~/ComfyUI/custom_nodes
+git clone https://github.com/robertvoy/ComfyUI-Distributed.git
+git -C ComfyUI-Distributed checkout <DISTRIBUTED_REF>   # SAME ref as the master image. Note upstream's tag has a dot: v.1.4.0
+```
+Verify after the service is up: `curl -fsS http://localhost:8188/distributed/system_info` returns `{"status":"success",...}`. A 404 = plugin didn't load. Use `-fsS`, not `-s`.
+
+## 5. The curated custom-node packs (symmetric with the master)
+Install the **same vetted packs at the same pinned SHAs** as the master image. The worker (full Linux) won't hit the master's opencv-headless issue, but install the identical set so graphs validate+execute consistently:
+```bash
+cd ~/ComfyUI/custom_nodes
+git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack    && git -C ComfyUI-Impact-Pack    checkout <IMPACT_PACK_REF>
+git clone https://github.com/ltdrdata/ComfyUI-Impact-Subpack && git -C ComfyUI-Impact-Subpack checkout <IMPACT_SUBPACK_REF>
+touch ~/ComfyUI/custom_nodes/skip_download_model            # suppress install-time model auto-download
+git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale && git -C ComfyUI_UltimateSDUpscale checkout <USDU_REF> && git -C ComfyUI_UltimateSDUpscale submodule update --init --recursive
+git clone https://github.com/Fannovel16/comfyui_controlnet_aux && git -C comfyui_controlnet_aux checkout <CONTROLNET_AUX_REF>
+git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus    && git -C ComfyUI_IPAdapter_plus checkout <IPADAPTER_REF>
+PIP=~/ComfyUI/.venv/bin/pip
+$PIP install ultralytics segment-anything scikit-image piexif dill   # Impact-Pack/Subpack deps (sam2 git line deliberately omitted)
+$PIP install -r comfyui_controlnet_aux/requirements.txt
+```
+Confirm every target node registers: `for n in FaceDetailer SAMLoader UltralyticsDetectorProvider UltimateSDUpscale CannyEdgePreprocessor DepthAnythingV2Preprocessor IPAdapter IPAdapterAdvanced IPAdapterModelLoader; do curl -fsS "http://localhost:8188/object_info/$n" >/dev/null 2>&1 && echo "OK $n" || echo "MISSING $n"; done`
+
+## 6. Stage models locally (workers do NOT mount the cluster PVC)
+Each worker has its own `~/ComfyUI/models/...`. Either pull on demand from the cluster's `model-serve` (token-auth), or pre-stage. The auxiliary models for the custom packs (detectors, SAM, upscale, ipadapter, clip_vision, depth ckpts) must be staged where each node expects them. Set `HF_HUB_OFFLINE=1` in the service env if you block egress (so controlnet_aux can't phone home).
+
+## 7. Run ComfyUI as a service (with the load-bearing flag)
+A systemd unit inside the distro (the worker-setup `comfyui-worker.service`), launching:
+```
+python main.py --listen 0.0.0.0 --enable-cors-header
+```
+`--listen 0.0.0.0` exposes it on the LAN; **`--enable-cors-header` is REQUIRED** — without it ComfyUI 403s the master's browser-originated dispatch (Origin/Host mismatch).
+
+## 8. Point the worker's gpu_config at the master callback (clean logs)
+The plugin ships a default `gpu_config.json` with `master.host: localhost`; workers POST completion callbacks there. Point it at the cluster's licence-gate LB so the callback path is clean:
+```bash
+cat > ~/ComfyUI/custom_nodes/ComfyUI-Distributed/gpu_config.json <<'JSON'
+{ "master": { "host": "http://MASTER_LBIP:8000" }, "workers": [],
+  "settings": { "debug": false, "master_delegate_only": false, "websocket_orchestration": true } }
+JSON
+```
+(Render still works without this via the primary callback; wrong value just logs a per-render 404 warning.)
+
+## 9. No-window autostart (so you don't leave a terminal open)
+A per-user WSL distro must start windowless at login *and stay running*. The clean answer is a hidden VBS launcher in the Startup folder (`assets/lighthouse-worker.vbs.txt`):
+```powershell
+$vbs  = 'CreateObject("WScript.Shell").Run "wsl.exe -d lighthouse -e sleep infinity", 0, False'
+$dest = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\lighthouse-worker.vbs"
+Set-Content -Path $dest -Value $vbs -Encoding ASCII
+```
+`sleep infinity` is the held process that keeps the distro alive (systemd alone isn't enough); `Run(...,0,...)` is windowless. Limitation: runs at *login*, so cold-boot-with-nobody-logged-in won't start it — pair with auto-login on a dedicated worker.
+
+## 10. Wake-on-LAN (so a sleeping PC can be woken on demand)
+Receiver-side on each PC:
+- **Disable Fast Startup** (Control Panel → Power Options → "Turn on fast startup" OFF) — it makes the NIC ignore magic packets.
+- **NIC → Power Management:** allow device to wake; only allow a magic packet.
+- **NIC → Advanced:** Wake on Magic Packet = Enabled; Wake on Pattern Match = Disabled; Energy-Efficient Ethernet = Disabled (some adapters drop wake packets with EEE on).
+- **BIOS (for wake from full sleep/S3):** Wake on LAN = Enabled; ErP/EuP = Disabled; Deep Sleep = Disabled.
+
+Test from another LAN machine with `assets/wol.ps1 -Mac "AA:BB:CC:DD:EE:FF"`. If it won't wake, it's the receiver — recheck the above before BIOS. **Operating rule:** keep the distro running, then *sleep* the PC (don't shut down / stop the distro) — sleep+WoL recovers an already-running worker; a stopped distro won't auto-start on wake. Note: the cluster can't broadcast to the worker subnet, so WoL is fired from a LAN box (manual stopgap; automated wake is unbuilt).
+
+## 11. Firewall the worker port to the cluster only
+The worker `:8188` has no auth of its own — it trusts that only the master reaches it. Restrict it (Windows Firewall) to the cluster's source IPs:
+```powershell
+New-NetFirewallRule -DisplayName "ComfyUI worker 8188 (cluster only)" -Direction Inbound `
+  -Action Allow -Protocol TCP -LocalPort 8188 -RemoteAddress 10.0.10.0/24   # REPLACE with your cluster node CIDR
+# then ensure no broader Allow rule for 8188 exists
+```
+(Cluster-side NetworkPolicy can't enforce on a device outside the cluster, so this is the worker-side half of the isolation.)
+
+## Done criteria (per worker)
+1. `wsl -d lighthouse` reachable; `nvcc`/`nvidia-smi` work inside it.
+2. ComfyUI renders locally; `/distributed/system_info` returns success.
+3. All curated nodes register (the `object_info` loop is all OK).
+4. CUDA survives sleep+wake (render cleanly after a manual sleep).
+5. WoL wakes it from another LAN PC; the VBS launcher keeps the distro up.
+6. `:8188` firewalled to the cluster CIDR only.
+7. Added to the cluster's `gpu_config.json` with the right `tier` + `enabled: true`.

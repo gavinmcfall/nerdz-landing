@@ -1,0 +1,19 @@
+{
+  "title": "Lighthouse",
+  "description": "A self-hosted, family-safe AI image-generation studio.",
+  "root": true,
+  "pages": [
+    "index",
+    "concept-and-why",
+    "architecture-and-topology",
+    "prerequisites",
+    "gpu-worker-setup",
+    "images",
+    "reference-deploy",
+    "model-acquisition",
+    "curation-and-gating",
+    "operations-lifecycle",
+    "licence-gate-security-model",
+    "gotchas-and-troubleshooting"
+  ]
+}

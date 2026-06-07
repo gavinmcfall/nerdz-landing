@@ -1,14 +1,12 @@
 import type { NextConfig } from "next";
-import createMDX from "@next/mdx";
+import { createMDX as createFumadocsMDX } from "fumadocs-mdx/next";
 
-const withMDX = createMDX({
-  options: {
-    // Strip YAML frontmatter from rendered MDX output — it's parsed separately
-    // by gray-matter (src/lib/manuals.ts) for metadata and must not leak into
-    // the page body. String-form plugin so Turbopack can serialize the option.
-    remarkPlugins: [["remark-frontmatter", ["yaml"]]],
-  },
-});
+// Spike: Fumadocs MDX is the SOLE MDX wrapper. Chaining @next/mdx alongside
+// silently strips Fumadocs' frontmatter export pipeline so page.data.title
+// goes undefined. Existing /manuals/* one-pagers (src/manuals/*.mdx) keep
+// working because Fumadocs' loader handles arbitrary .mdx imports too — but
+// keep an eye on that during the migration.
+const withFumadocs = createFumadocsMDX();
 
 const nextConfig: NextConfig = {
   // No `output: "standalone"` — @opennextjs/cloudflare wraps the standard
@@ -18,7 +16,7 @@ const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "mdx"],
 };
 
-export default withMDX(nextConfig);
+export default withFumadocs(nextConfig);
 
 // Enable Cloudflare bindings (R2/KV/etc.) during `next dev`. No-op in the
 // production worker build.

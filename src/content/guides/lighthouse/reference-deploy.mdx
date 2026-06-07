@@ -1,0 +1,261 @@
+---
+title: Reference deploy
+description: A self-contained, genericized reference deployment — HelmRelease with three containers, PVCs, gateway/OIDC/NetworkPolicy wiring, and worked example registry.json / allowlist.json / gpu_config.json.
+---
+
+This is a **genericized, runnable** reference for the cluster side. It does not depend on any private repo or global Flux substitution. All real values are placeholders: `example.com`, `10.0.0.x`, generic groups, generic registry namespace.
+
+The deployment is **one workload with three containers** in front of shared storage:
+
+```
+            ┌─────────────────────────── pod: lighthouse ───────────────────────────┐
+ gateway ──▶│  licence-gate :8000  ──▶  ComfyUI master :8188 (CPU, 127.0.0.1)        │
+ (OIDC)     │        │                                                                │
+ workers ──▶│  model-serve :9090                                                      │
+            └────────┼──────────────────────┼────────────────────┼──────────────────┘
+                models PVC (RO)        output PVC (RW)      workflows PVC (RO/RW)
+```
+
+Two `LoadBalancer` Services expose **licence-gate :8000** (behind the gateway) and **model-serve :9090** (LAN, for workers to pull models). The master's :8188 is **never** exposed — only `127.0.0.1` inside the pod.
+
+> We used the **bjw-s `app-template`** Helm chart + Flux. Below is that HelmRelease, but the shapes are standard k8s — port it to a plain Deployment/Service/etc. on Argo or `kubectl` if you prefer.
+
+---
+
+## 1. PersistentVolumeClaims (RWX)
+
+```yaml
+# 3 RWX volumes. StorageClass = whatever provides ReadWriteMany on your cluster
+# (we used Rook-Ceph "ceph-filesystem"; Longhorn/NFS/etc. also fine).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: { name: lighthouse-models }
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: REPLACE-rwx-storageclass
+  resources: { requests: { storage: 300Gi } }   # models are large; size to your set
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: { name: lighthouse-output }
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: REPLACE-rwx-storageclass
+  resources: { requests: { storage: 100Gi } }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: { name: lighthouse-workflows }
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: REPLACE-rwx-storageclass
+  resources: { requests: { storage: 5Gi } }
+```
+
+## 2. Secret (placeholders — wire to your secret manager)
+
+```yaml
+# In production deliver these via external-secrets/SOPS/Sealed-Secrets.
+# Plain Secret shown so the reference runs without a secrets backend.
+apiVersion: v1
+kind: Secret
+metadata: { name: lighthouse-secret }
+stringData:
+  client-id: "REPLACE-oidc-client-id"            # the OIDC client for the gateway
+  client-secret: "REPLACE-oidc-client-secret"
+  BRAND_TOKEN: "REPLACE-long-random"             # bearer for non-browser/commercial callers
+  WORKER_TOKEN: "REPLACE-long-random"            # model-serve auth (workers + ingest)
+```
+
+## 3. The HelmRelease (bjw-s app-template) — 3 containers
+
+```yaml
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata: { name: lighthouse }
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      version: 4.4.0           # bjw-s; pin to current
+      sourceRef: { kind: HelmRepository, name: bjw-s, namespace: flux-system }
+  values:
+    controllers:
+      lighthouse:
+        strategy: Recreate
+        annotations: { reloader.stakater.com/auto: "true" }   # roll on config change
+        containers:
+          # ── ComfyUI orchestrator-only master (CPU) ──────────────────────
+          main:
+            image: { repository: REPLACE-registry/lighthouse, tag: "0.22.0" }
+            resources:
+              requests: { memory: 8Gi }
+              limits:   { memory: 24Gi }   # NOT optional — comfy-aimdo pins ~14Gi + master loads the checkpoint at validation
+            securityContext: { readOnlyRootFilesystem: false }
+          # ── licence-gate (the security boundary) ────────────────────────
+          licence-gate:
+            image: { repository: REPLACE-registry/licence-gate, tag: "0.1.6" }
+            env:
+              LIGHTHOUSE_LISTEN: ":8000"
+              LIGHTHOUSE_UPSTREAM: "http://127.0.0.1:8188"      # the master, same pod
+              LIGHTHOUSE_REGISTRY_PATH: "/etc/lighthouse/registry.json"
+              LIGHTHOUSE_ALLOWLIST_PATH: "/etc/lighthouse/allowlist.json"
+              LIGHTHOUSE_GPU_CONFIG_PATH: "/config/gpu_config.json"   # enables tier-aware dispatch
+              LIGHTHOUSE_DR_TOKEN:
+                valueFrom: { secretKeyRef: { name: lighthouse-secret, key: BRAND_TOKEN } }
+            securityContext: { readOnlyRootFilesystem: true }
+          # ── model-serve (token-auth model file server) ──────────────────
+          model-serve:
+            image: { repository: REPLACE-registry/model-serve, tag: "0.3.0" }
+            env:
+              MODELSERVE_LISTEN: ":9090"
+              MODELSERVE_ROOT: "/models"
+              MODELSERVE_TOKEN:
+                valueFrom: { secretKeyRef: { name: lighthouse-secret, key: WORKER_TOKEN } }
+            securityContext: { readOnlyRootFilesystem: true }
+    defaultPodOptions:
+      securityContext: { runAsUser: 568, runAsGroup: 568, fsGroup: 568 }
+    service:
+      app:         # licence-gate — the ONLY family-facing entrypoint, behind the gateway
+        controller: lighthouse
+        type: LoadBalancer
+        annotations: { io.cilium/lb-ipam-ips: "10.0.0.10" }   # REPLACE per your LB
+        externalTrafficPolicy: Local                          # preserve source IPs for the NetworkPolicy
+        ports: { http: { port: 8000 } }
+      model-serve: # LAN-only, for workers to pull models
+        controller: lighthouse
+        type: LoadBalancer
+        annotations: { io.cilium/lb-ipam-ips: "10.0.0.11" }   # REPLACE
+        externalTrafficPolicy: Local
+        ports: { http: { port: 9090 } }
+    persistence:
+      models:    { existingClaim: lighthouse-models,    globalMounts: [{ path: /app/models, readOnly: true }] }   # master sees models for validation
+      output:    { existingClaim: lighthouse-output,    globalMounts: [{ path: /app/output }] }
+      workflows: { existingClaim: lighthouse-workflows, globalMounts: [{ path: /app/user }] }
+      models-serve: { existingClaim: lighthouse-models, advancedMounts: { lighthouse: { model-serve: [{ path: /models }] } } }
+      registry:  # registry.json + allowlist.json → /etc/lighthouse (licence-gate)
+        type: configMap
+        name: lighthouse-registry
+        advancedMounts: { lighthouse: { licence-gate: [{ path: /etc/lighthouse }] } }
+      gpu-config: # gpu_config.json → the master's Distributed plugin dir AND the licence-gate
+        type: configMap
+        name: lighthouse-comfyui-distributed
+        advancedMounts:
+          lighthouse:
+            main:         [{ path: /app/custom_nodes/ComfyUI-Distributed/gpu_config.json, subPath: gpu_config.json }]
+            licence-gate: [{ path: /config/gpu_config.json, subPath: gpu_config.json }]
+```
+
+## 4. ConfigMaps (the worked example configs)
+
+Generate these as configmaps `lighthouse-registry` (from `registry.json` + `allowlist.json`) and `lighthouse-comfyui-distributed` (from `gpu_config.json`). With Kustomize: a `configMapGenerator`; or `kubectl create configmap ... --from-file=`.
+
+### `allowlist.json` — the default-deny node allowlist
+The live allowlist is a configmap, not the binary. Start minimal (what a standard SDXL + HiRes workflow needs) and add per curated workflow:
+```json
+{
+  "CheckpointLoaderSimple": { "model_fields": [{ "field": "ckpt_name", "folder": "checkpoints" }] },
+  "UNETLoader":             { "model_fields": [{ "field": "unet_name", "folder": "diffusion_models" }] },
+  "VAELoader":              { "model_fields": [{ "field": "vae_name", "folder": "vae" }] },
+  "LoraLoader":             { "model_fields": [{ "field": "lora_name", "folder": "loras" }] },
+  "CLIPLoader":             { "model_fields": [{ "field": "clip_name", "folder": "text_encoders" }] },
+  "DualCLIPLoader":         { "model_fields": [{ "field": "clip_name1", "folder": "text_encoders" }, { "field": "clip_name2", "folder": "text_encoders" }] },
+  "ControlNetLoader":       { "model_fields": [{ "field": "control_net_name", "folder": "controlnet" }] },
+  "SaveImage":              { "output_field": "filename_prefix" },
+  "SaveAnimatedWEBP":       { "output_field": "filename_prefix" },
+  "SaveAnimatedPNG":        { "output_field": "filename_prefix" },
+  "CLIPTextEncode": {},
+  "KSampler": {},
+  "EmptyLatentImage": {},
+  "VAEDecode": {},
+  "LatentUpscaleBy": {},
+  "DistributedCollector": {},
+  "DistributedSeed": {}
+}
+```
+Rules: a `class_type` absent here is **rejected pre-exec**. Add curated custom-node classes (e.g. `FaceDetailer`, `UltimateSDUpscale`, `IPAdapter`) as `{}` (execution-only). NEVER allowlist model-writer savers (`CheckpointSave`/`LoraSave`/`ModelSave`/…) or arbitrary-dispatch nodes.
+
+### `registry.json` — licence + role + tier per model
+```json
+{
+  "sd_xl_base_1.0.safetensors":  { "licence": "CreativeML-OpenRAIL++", "commercial_ok": true,  "tier_fit": ["heavy"],          "substitutes": [] },
+  "some-sd15-model.safetensors": { "licence": "CreativeML-OpenRAIL-M",  "commercial_ok": true,  "tier_fit": ["heavy","light"], "substitutes": [] },
+  "a-noncommercial-flux.gguf":   { "licence": "FLUX.1-dev-noncommercial","commercial_ok": false, "tier_fit": ["heavy"],         "substitutes": ["a-commercial-alt.safetensors"] },
+  "mature-model-a.safetensors":  { "licence": "CreativeML-OpenRAIL-M",  "commercial_ok": false, "tier_fit": ["heavy"],          "requires_group": "mature-content" }
+}
+```
+Fields: `commercial_ok` drives the licence gate; `tier_fit` drives tier dispatch; `requires_group` drives role-gating (the caller must hold this group); `substitutes` are suggested on a licence rejection. (`sha256` for integrity is verified at mount time, not per-request.)
+
+### `gpu_config.json` — the worker pool + tiers (read by master AND licence-gate)
+```json
+{
+  "master_delegate_only": true,
+  "workers": [
+    { "id": "gpu-worker-1", "host": "gpu-worker-1.lan", "port": 8188, "enabled": true, "tier": "heavy" },
+    { "id": "gpu-worker-2", "host": "gpu-worker-2.lan", "port": 8188, "enabled": true, "tier": "heavy" },
+    { "id": "gpu-worker-3", "host": "gpu-worker-3.lan", "port": 8188, "enabled": true, "tier": "light" }
+  ]
+}
+```
+`master_delegate_only: true` keeps the master out of the render pool (it dispatches only). The master ignores the extra `tier` field; the licence-gate uses it for tier-aware dispatch.
+
+## 5. The gateway + OIDC + NetworkPolicy (platform-specific)
+
+These are the **auth invariant**. Shown as our Envoy-Gateway example; the *requirement* is "gateway verifies OIDC + injects the JWT" and "licence-gate :8000 reachable only via the gateway + worker subnet". Implement with whatever you run.
+
+```yaml
+# HTTPRoute: public host → licence-gate :8000 (NOT the master)
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata: { name: lighthouse }
+spec:
+  parentRefs: [{ name: REPLACE-gateway, namespace: REPLACE-gw-ns, sectionName: https }]
+  hostnames: ["lighthouse.example.com"]
+  rules: [{ backendRefs: [{ name: lighthouse-app, port: 8000 }] }]
+---
+# OIDC enforcement (Envoy Gateway example) — verify token, forward it with groups
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata: { name: lighthouse-oidc }
+spec:
+  targetRefs: [{ group: gateway.networking.k8s.io, kind: HTTPRoute, name: lighthouse }]
+  oidc:
+    provider: { issuer: "https://id.example.com" }     # your OIDC provider
+    clientID: "REPLACE-oidc-client-id"
+    clientSecret: { name: lighthouse-secret }
+    scopes: ["openid","email","groups"]                # groups is REQUIRED for role-gating
+    forwardAccessToken: true                           # the licence-gate decodes this
+    redirectURL: "https://lighthouse.example.com/oauth2/callback"
+---
+# NetworkPolicy: :8000 only from the gateway + the worker subnet; :9090 only from workers.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: lighthouse-only-from-gateway }
+spec:
+  podSelector: { matchLabels: { app.kubernetes.io/name: lighthouse } }
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: REPLACE-gw-ns } }
+        - ipBlock: { cidr: 10.0.20.0/24 }   # the GPU-worker subnet
+      ports: [{ port: 8000 }]
+    - from: [{ ipBlock: { cidr: 10.0.20.0/24 } }]
+      ports: [{ port: 9090 }]
+```
+
+## 6. Identity-provider setup (out-of-band — the step nothing declares)
+Your OIDC provider has **no manifest trace** for these — do them in its admin UI/API:
+1. Register an OIDC client: redirect `https://lighthouse.example.com/oauth2/callback`, scopes incl. `groups`.
+2. Create the groups: `family-adult`, `family-minor`, `mature-content` (or your taxonomy).
+3. Assign each user to a group; ensure the issued token carries a `groups` claim.
+4. Put the client id/secret into your secret manager (the `lighthouse-secret` above).
+
+Without this, **role-gating silently does nothing** — there's no group claim to enforce on.
+
+## 7. Verify the deploy
+- Pod `lighthouse` is Running with **3/3** containers.
+- The licence-gate logs at startup show it loaded the registry + N allowlisted nodes (+ worker tiers if gpu_config mounted).
+- The master's `:8188` is **not** reachable from outside the pod; the public host redirects to OIDC login.
+- A smoke render (a standard SDXL `/distributed/queue` workflow) returns a `prompt_id` and lands an image in `/output/<your-uuid>/`.
+- Confirm a merged config change actually rolled the pod (`flux get ks` / `kubectl rollout status`) — a merge is not a deploy.

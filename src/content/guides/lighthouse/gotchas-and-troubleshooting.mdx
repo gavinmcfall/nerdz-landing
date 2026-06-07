@@ -1,0 +1,152 @@
+---
+title: Gotchas & troubleshooting
+description: The hard-won lessons — symptom → cause → fix — extracted from the build log and private memory. These are the failures a reproducer WILL hit; each cost real debugging time. The troubleshooting chapter of the guide.
+---
+
+Every entry below is a real failure encountered building Lighthouse. Format: **Symptom → Cause → Fix.** A reproducer following the happy path will hit many of these; this is the chapter that saves them the days it cost us.
+
+---
+
+## GPU workers (Windows / WSL2)
+
+### W1 — The worker WSL distro won't auto-start on boot, or only with a visible window
+**Symptom:** after a reboot the worker is down; SYSTEM-scheduled tasks silently no-op; running it interactively leaves a permanent terminal window open.
+**Cause:** WSL2 distros are registered **per Windows user**, so a SYSTEM/Task-Scheduler `-AtStartup` task can't see a user's distro (silent no-op, `LastTaskResult` may still be 0). And WSL tears a distro down shortly after the launching process exits — `systemd=true` alone doesn't keep it up; you need a **held process**.
+**Fix:** a hidden **VBScript launcher in the user's Startup folder** that runs `wsl.exe -d <distro> -e sleep infinity` with window-style hidden:
+```powershell
+$vbs  = 'CreateObject("WScript.Shell").Run "wsl.exe -d lighthouse -e sleep infinity", 0, False'  # 0 = hidden
+$dest = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\lighthouse-worker.vbs"
+Set-Content -Path $dest -Value $vbs -Encoding ASCII
+```
+Runs in the user's own session (distro visible), windowless, with `sleep infinity` as the keep-alive. Limitation: Startup runs at **login**, so cold-boot-with-nobody-logged-in still won't start it (pair with auto-login, or a future WoL agent). MS-account machines make stored-credential SYSTEM tasks painful — the VBS path sidesteps that. (Script in `assets/lighthouse-worker.vbs`.)
+
+### W2 — Installing CUDA in the worker distro breaks the GPU / conflicts with the Windows driver
+**Symptom:** `nvidia-smi` fails or behaves oddly after installing CUDA in WSL.
+**Cause:** installing the full `cuda` / `cuda-drivers` meta-packages inside WSL conflicts with the Windows-side driver that WSL passes through.
+**Fix:** install **only** `cuda-toolkit-X-Y` (never `cuda`/`cuda-drivers`). The toolkit version is largely decorative — PyTorch bundles its own CUDA runtime. Use a **dedicated WSL distro** for the worker (blast-radius isolation), not your default one.
+
+### W3 — `.wslconfig` / WSL changes don't take effect
+**Symptom:** edits to `.wslconfig` (e.g. mirrored networking) seem ignored.
+**Cause:** WSL config changes need **all** distros stopped; `wsl --shutdown` can silently leave a distro running.
+**Fix:** verify with `wsl -l -v`; force with `wsl --terminate <distro>` per distro, then restart.
+
+### W4 — Sleep/wake recovers the worker, but only if the distro was running at sleep
+**Symptom:** after Wake-on-LAN the PC is awake but `:8188` never comes back.
+**Cause:** sleep/wake only **preserves an already-running** distro+service; a stopped distro doesn't auto-start on wake.
+**Fix:** keep the distro running (W1's VBS guarantees this), then *sleep* the PC (don't fully shut down / stop the distro). With the distro up, sleep→WoL→auto-recovery works end-to-end. Recovering a *stopped* distro unattended is a future WoL-agent job.
+
+### W5 — `curl -s` reports success on an HTTP 404
+**Symptom:** a health check (`curl -s .../something && echo OK`) prints OK even though the endpoint 404s — false "it's installed/working".
+**Cause:** `curl -s` only fails on **connection** errors, not HTTP 4xx/5xx.
+**Fix:** use `curl -fsS` (the `-f` makes 4xx/5xx non-zero), or check the body / a directory existence test.
+
+---
+
+## ComfyUI + ComfyUI-Distributed
+
+### C1 — The render runs on the CPU master (slow, minutes) instead of the GPU worker
+**Symptom:** a generation takes minutes; logs show it executed on the master, not a worker.
+**Cause:** the workflow lacks the **DistributedCollector** (and DistributedSeed) nodes, so ComfyUI runs the whole graph locally on the `--cpu` master.
+**Fix:** every dispatched workflow must include `DistributedCollector` (gather) and, for multi-worker variance, `DistributedSeed`; submit to **`/distributed/queue`**, not `/prompt`. (We saw a 3m08s CPU render drop to ~8s on a GPU worker after adding the collector node.)
+
+### C2 — A custom node "isn't found" / `worker_count: 0` even though it's on the master
+**Symptom:** distributed dispatch fails, or a node validates on the master but the worker can't run it.
+**Cause:** ComfyUI-Distributed (and any node a workflow uses) must be installed **symmetrically on BOTH the master AND every worker** — the master validates/registers the class; the worker executes it. Master-only install = silent `worker_count: 0`.
+**Fix:** install the identical custom-node set (pinned to the same SHAs) on the master image **and** every worker. Diagnostic: probe `/object_info/<NodeName>` (or `/distributed/system_info`) on the worker — 404/missing means the node isn't there.
+
+### C3 — Browser requests get HTTP 403 from ComfyUI behind the proxy (curl works)
+**Symptom:** curl succeeds, the browser gets 403; only browser-originated requests fail.
+**Cause:** ComfyUI's DNS-rebinding defense returns 403 when `Origin` ≠ `Host`. A reverse proxy rewrites `Host` (to the upstream) but passes `Origin` through → mismatch. Curl has no `Origin`, so it passes.
+**Fix:** either run the master/workers with `--enable-cors-header`, **or** strip/rewrite the `Origin` header in the proxy on forward. (We do both: workers keep `--enable-cors-header`; the licence-gate strips `Origin`.)
+
+### C4 — A path-based gate/proxy/NetworkPolicy is silently bypassed by the web UI
+**Symptom:** in-pod curl to `/foo` is gated, but the browser reaches it ungated (or vice-versa); a should-exist path returns 405/404 oddly.
+**Cause:** ComfyUI serves **every route under both `/` and `/api`** (a server-side mirror loop); the web frontend always calls the `/api`-prefixed spelling, while some plugins use the bare path. Anything fronting ComfyUI must match **both** spellings or browser traffic bypasses it while in-pod curl falsely passes.
+**Fix:** normalize/strip a leading `/api` for matching in the proxy; gate **both** `/prompt` and `/distributed/queue` (and their `/api` twins). A 405 (not 404) on a should-exist path is often a slash/shape-mangling symptom (see C5).
+
+### C5 — Encoded slashes (`%2F`) get decoded before your backend sees them
+**Symptom:** browser-via-ingress behaves differently from in-pod curl on paths containing `%2F` (e.g. `/userdata/<file>` or subfolder params); a 405 instead of 404.
+**Cause (two layers):** (1) **Envoy Gateway** defaults to `UNESCAPE_AND_REDIRECT`, stripping `%2F`→`/` **before** the request reaches the backend. (2) Go's `httputil.NewSingleHostReverseProxy` rebuilds the URL from the **decoded** `Path`, losing `%2F` again.
+**Fix:** test through the **real ingress**, not in-pod. Fix at the backend on the decoded path (normalize), not by flipping the shared gateway policy. In the Go proxy, use a forwarder that preserves `RawPath`.
+
+### C6 — The orchestrator-only master OOM-kills (exit code 137) despite `--cpu`
+**Symptom:** the master pod restarts with exit 137; you assumed `--cpu` + delegate-only means low memory.
+**Cause:** `--cpu` + `master_delegate_only=true` does **not** mean "no memory". The aimdo/kitchen stack pins ~14 GiB regardless, **and** ComfyUI loads the checkpoint at *validation* time on the master.
+**Fix:** give the master ≥ **24 GiB** memory for SDXL workloads (more for Flux). (Our HelmRelease was bumped 8 Gi → 24 Gi.)
+
+### C7 — A workflow renders nothing / silent empty output
+**Symptom:** submit succeeds but no image; or the UI canvas shows an empty graph.
+**Cause:** ComfyUI has **two incompatible JSON formats** — `*.api.json` (the POST-endpoint graph, node-id keyed) vs `*.workflow.json` (the UI canvas format). Using the wrong one for the submission path renders nothing.
+**Fix:** name fixtures with the suffix; submit `.api.json` to `/prompt`//`/distributed/queue`; load `.workflow.json` in the UI. Pick the format per submission path.
+
+### C8 — "Stuck at stage X" in the UI
+**Symptom:** the ComfyUI progress UI appears stuck mid-render.
+**Cause:** the UI may be showing the last-known state of a render whose process already **died** (e.g. OOM-killed, W/C6).
+**Fix:** check process/service state first (`systemctl status`, `journalctl`, pod restarts/exit codes) **before** diagnosing the workflow.
+
+---
+
+## The proxy / images / build
+
+### P1 — Custom nodes fail `import cv2` on the slim master (`libxcb.so.1: cannot open shared object file`)
+**Symptom:** some packs register on the GPU workers but **not** on the master; logs show `import cv2 → libxcb.so.1 ... No such file`.
+**Cause:** `ultralytics` and `comfyui_controlnet_aux` pull **`opencv-python`** (the GUI build), whose `cv2` needs `libGL`/`libxcb` system libs absent from the slim Python base. The workers (full Linux) have them; the slim master doesn't — a master/worker asymmetry that only shows up if you verify on the master.
+**Fix:** force **`opencv-python-headless`** as the **final** pip step in the image (so no transitive dep reasserts the GUI build), plus a build-time `python -c "import cv2"` gate so CI fails loudly on regression. (Verify node registration on the master, not just the workers — see V1.)
+
+### P2 — Adding a custom node requires a full image rebuild (no runtime install)
+**Symptom:** you can't `pip install`/clone a node into the running master.
+**Cause (by design):** the master image bakes a **vetted node allowlist pinned by commit SHA** and deliberately **omits ComfyUI-Manager** — runtime install is impossible by construction.
+**Fix:** add the node to the Dockerfile (clone + `git checkout <SHA>`), pin the SHA in `docker-bake.hcl`, rebuild via CI. Vet each pack first (no eval/exec/subprocess/network/saver-escape; SafeTensors-respecting). For packs with a vendored submodule (e.g. Ultimate SD Upscale), `git submodule update --init` in the build + a build-time presence gate, or it tries to egress on import. Drop unpinned `git+` deps (e.g. Impact-Pack's sam2). PyTorch must be **≥ 2.6** for Impact-Pack's safe `.pt` loading.
+
+### P3 — Small upstream change needed in a third-party node
+**Symptom:** you need to tweak a pinned upstream node (e.g. a Distributed UI behavior).
+**Cause:** forking is heavyweight for a tiny change.
+**Fix:** Debian-style **vendor patch** — a unified-diff applied with `patch -p1` in the Dockerfile against the pinned version. Small, reviewable, self-documenting; CI fails loudly if the patch stops applying after a version bump (the signal to rebase it). **Scrub author identity from patch headers before publishing.**
+
+### P4 — Why no ComfyUI auth plugin (Sentinel) on the master?
+**Cause/decision:** ComfyUI-Sentinel (and its forks) are **full login systems that don't trust an upstream-injected JWT** — they re-auth. Behind an OIDC gateway that already authenticates, that's the wrong layer and double-auth. Per-user isolation belongs in the **identity-aware proxy** (the licence-gate), not in a ComfyUI plugin. So the master ships **no** auth plugin.
+
+### P5 — The live node allowlist is a configmap, not the binary
+**Symptom:** you change the allowlist in the Go source, rebuild, redeploy — and it doesn't take effect (or you want to add a node without a rebuild).
+**Cause:** the licence-gate loads its §7 allowlist from `LIGHTHOUSE_ALLOWLIST_PATH` (a mounted **configmap** `allowlist.json`), falling back to the hardcoded `DefaultAllowlist` only if the file is absent.
+**Fix:** add/remove allowlisted `class_type`s by editing the **configmap** (`allowlist.json`) + redeploying the config — **no image rebuild**. Format: `{"ClassType": {"model_fields":[{"field","folder"}], "output_field":"..."}}`; execution-only nodes are `{}`. The configmap remount rolls the pod.
+
+---
+
+## Models
+
+### M1 — A HuggingFace URL 404s even though it exists
+**Symptom:** a model download returns 404 from huggingface.co.
+**Cause:** HF returns **404 (not 401)** for unauthenticated requests to **gated** repos — the gate is silent.
+**Fix:** don't trust a 404 to mean "wrong URL". For gated repos, pass an HF token (our model-serve `ingest` forwards an `auth` field as the Authorization header on the source fetch). Accept the gate terms on the HF account first.
+
+### M2 — Don't fabricate registry/model facts; match the operator's conventions
+**Symptom:** registry entries with wrong sizes/filenames/sha; assuming a quantized variant exists.
+**Cause:** placeholder `disk_size_gb` were 1.5–2× off vs the real `/resolve/main/` files in several cases; quantized variants you expect may not exist upstream (e.g. no FP8 of a given model).
+**Fix:** fetch the real filename + size from the source before pinning; verify sha256 on acquisition; don't assume a quantized variant exists. Civitai has **separate** API keys for `.com` vs the red/adult domain — use the right one. Match the existing registry's exact schema (apiVersion, field names) — grep an example first.
+
+### M3 — Master still needs the model files present for validation
+**Symptom:** a workflow validates fine on a worker but the master rejects an unknown/missing model.
+**Cause:** ComfyUI validates combo inputs (model dropdowns) against the **folder listing at validation time** — on the master too.
+**Fix:** the master needs the model files visible (we mount the models PVC read-only into the master). Auxiliary infra models (detectors/upscalers/clip-vision) used by custom nodes must be staged where validation can see them; workers (which render) need them locally too — workers do **not** mount the cluster PVC.
+
+---
+
+## Deploy & verification discipline
+
+### V1 — Verify through the REAL path, not a bypass
+**Symptom:** a test passes via an in-pod curl (skipping Envoy) or on the workers only — a false green.
+**Cause:** the in-pod path skips the gateway's OIDC + `%2F` handling + the proxy; the workers differ from the slim master (P1). "Green on a shortcut" ≠ "works for the user".
+**Fix:** test through **every hop the real request takes** (browser → gateway → proxy → master → worker). When you can't script the browser, reproduce the exact transformed request and mark "browser-confirm pending" — don't tick ✅. Verify node registration on the **master**, not just the workers.
+
+### V2 — A merged PR is not a deployed change
+**Symptom:** green PR + green reconcile, but the cluster behavior is unchanged.
+**Cause:** GitOps merge ≠ applied. A pending manual-migration note in an earlier PR body can block all subsequent changes to the same kustomization.
+**Fix:** confirm with `flux get kustomizations -A` (READY + applied revision = your commit), then `kubectl rollout status` for the actual pod. Targeted nudge: `flux reconcile kustomization <name> -n <ns> --with-source`.
+
+### V3 — Per-user isolation: the review checklist
+When building/verifying the multi-tenant proxy, check **all** of: every model/output param is scoped (not just `filename`); a not-found in someone else's bucket returns a **byte-identical** 404 to a genuine miss (no existence side-channel); listing endpoints are scoped; the allowlist is an explicit map (default-deny), not an assumption; in-flight prompt→user state survives restarts (or fails closed). (We proved these as acceptance tests A2–A4.)
+
+### V4 — Day-2: adding/replacing a worker, or scaling storage
+- **Add a worker:** install the symmetric node set + stage models locally, add it to `gpu_config.json` with the right `tier`, set `enabled: true`, redeploy the gpu_config configmap.
+- **Storage:** size PVCs at ~2× current need and expand later via `kubectl patch pvc` if your StorageClass allows volume expansion — don't pre-hoard Ceph raw capacity (×replica) for hypotheticals.

@@ -1,0 +1,122 @@
+---
+title: Prerequisites & capability contract
+description: The platform capabilities a cluster must provide to host Lighthouse — with the worked example, alternatives, and a verification check for each.
+---
+
+Lighthouse runs **on top of** an existing Kubernetes cluster. It does **not** care which products provide the platform — only that the cluster offers a set of **capabilities**. This page states each required capability, what breaks without it, the stack used as the worked example, viable alternatives, and how to verify you have it.
+
+> Treat this as a checklist: tick every capability before deploying. Most are standard homelab-cluster features; two (a groups-emitting OIDC provider, and remote GPU workers) are the unusual ones.
+
+---
+
+## The one invariant you cannot vary: the auth chain
+
+This is the load-bearing security design. **However you implement the gateway and OIDC, preserve this exactly:**
+
+```
+Browser ─► Gateway (VERIFIES OIDC, injects a signed/verified JWT) ─► licence-gate (DECODES, does not verify) ─► ComfyUI master
+                                                                         ▲
+                              NetworkPolicy: licence-gate :8000 reachable ONLY from the gateway (+ the GPU-worker subnet)
+```
+
+- The **gateway verifies** the identity token and forwards it (e.g. `forwardAccessToken`). The **licence-gate trusts and only decodes** it — it never re-verifies signatures. That is safe **only** because (a) the gateway already verified it and (b) a NetworkPolicy makes the licence-gate unreachable except via the gateway.
+- **Expose the licence-gate directly (no gateway, no NetworkPolicy) and you have a full identity-spoofing bypass** — anyone can forge the JWT and become any user/role.
+- The OIDC provider **must emit a `groups` (or equivalent) claim**, because role/maturity gating keys off group membership. No groups claim → role-gating silently does nothing.
+
+Everything below serves this chain.
+
+---
+
+## Capabilities
+
+### 1. A way to deploy & keep manifests applied (GitOps or equivalent)
+- **Needs:** apply a set of k8s manifests + a Helm chart, and keep them reconciled.
+- **Breaks without it:** nothing fundamental — you can `kubectl apply` / `helm install` by hand; GitOps is convenience, not a hard requirement.
+- **Worked example:** Flux. *Non-obvious gotcha:* the source cluster uses a parent Kustomization that injects cluster-wide variables (`cluster-settings`/`cluster-secrets`) into every app via `postBuild.substituteFrom` — so per-app manifests reference vars like `${SECRET_DOMAIN}` that are defined globally. If you copy these manifests onto vanilla Flux/Argo, you must provide those substitutions yourself (the reference deploy uses plain values, no global substitution, to avoid this trap).
+- **Alternatives:** Argo CD, Helmfile, raw `kubectl`/`helm`.
+- **Verify:** you can deploy a HelmRelease/Helm chart and see it reconcile.
+
+### 2. ReadWriteMany persistent storage (3 volumes)
+- **Needs:** three persistent volumes — **models** (large, ~200–300 GB), **output** (per-user images), **workflows/user** (small). RWX so they can be shared if you later scale the master or run sidecars against them.
+- **Breaks without it:** models won't persist/serve; per-user output isolation has nowhere to land.
+- **Worked example:** Rook-Ceph, `ceph-filesystem` (CephFS) StorageClass.
+- **Alternatives:** Longhorn (RWX via its NFS provisioner), an NFS subdir provisioner, any RWX CSI. *Note:* if your storage only does RWO, the single-pod master still works for output/workflows, but plan for RWX if you add sidecars touching the same volumes (model-serve does).
+- **Verify:** `kubectl get storageclass`; create a test RWX PVC and confirm it binds.
+
+### 3. A LAN-reachable LoadBalancer IP for the master
+- **Needs:** the ComfyUI master needs an IP the **GPU workers can call back to** over the LAN (ComfyUI-Distributed dispatches to workers, which return results to the master's address). Also the model-serve sidecar needs a LAN IP workers can pull models from.
+- **Breaks without it:** distributed renders can't return; workers can't fetch models.
+- **Worked example:** Cilium LB-IPAM advertised via **BGP** (pool `10.0.0.0/24`, peering a BGP-capable router), with `externalTrafficPolicy: Local` to preserve client source IPs (the NetworkPolicy depends on real source IPs).
+- **Alternatives:** MetalLB (L2 or BGP), kube-vip, any LoadBalancer that yields a LAN IP.
+- **Verify:** a `Service type=LoadBalancer` gets an IP reachable from a worker PC (`curl http://<lb-ip>:<port>` from the LAN).
+
+### 4. An ingress gateway that performs OIDC and injects a verified JWT
+- **Needs:** terminate TLS for the public hostname, **authenticate users via OIDC**, and **forward the verified identity token** to the backend. (See the invariant above.)
+- **Breaks without it:** no auth, or — worse — a false sense of auth while the licence-gate trusts an unverified token.
+- **Worked example:** Envoy Gateway `SecurityPolicy` (OIDC against your provider, `forwardAccessToken: true`, scopes including `groups`), `HTTPRoute` to the licence-gate Service on :8000 (the master's :8188 is **never** exposed).
+- **Alternatives:** ingress-nginx + oauth2-proxy (forward-auth), Traefik + forwardAuth middleware, Authelia/Authentik forward-auth, APISIX openid-connect. Any of these works **iff** it verifies the token and passes it (and the groups claim) downstream.
+- **Verify:** hitting the public hostname unauthenticated redirects to login; after login, the backend receives a token containing the user id + `groups`.
+
+### 5. An OIDC provider that emits a groups claim
+- **Needs:** an identity provider where you can **register an OIDC client** (redirect `https://<lighthouse-host>/oauth2/callback`, scopes incl. `groups`), **create groups** (the worked example uses `family-adult`, `family-minor`, `mature-content`), **assign users**, and have the token carry a **groups claim**.
+- **Breaks without it:** role-gating and maturity-scoping (the whole "family-safe" guarantee) silently no-op.
+- **Worked example:** Pocket-ID. *Critical reproduction gap:* the client registration and the groups exist only in the provider's runtime DB — there is **no declarative/manifest trace**. Spell out, as explicit steps: create the client, create the three groups, assign each user, and confirm the issued token contains `groups`.
+- **Alternatives:** Authelia, Keycloak, Authentik, Zitadel, Dex — any OIDC IdP with group/claim support.
+- **Verify:** decode a freshly issued token (jwt.io / `jwt decode`) and confirm it contains the user's `sub` and a `groups` array.
+
+### 6. Secret management (no secrets in git)
+- **Needs:** deliver, at minimum: the OIDC **client-id/client-secret**, a **brand/service token** (for non-browser/commercial callers), and a **worker/model-serve token**.
+- **Breaks without it:** you either hardcode secrets (don't) or the app can't authenticate its sidecars.
+- **Worked example:** external-secrets-operator pulling from a vault backend; cluster-wide secrets SOPS-encrypted.
+- **Alternatives:** SOPS+age, Sealed Secrets, Vault, or plain (untracked) Secrets for a lab. The reference deploy uses a plain `Secret` stub with placeholder values so it runs without any secrets backend.
+- **Verify:** the app's Secret materializes with the expected keys.
+
+### 7. NetworkPolicy enforcement (the other half of the auth invariant)
+- **Needs:** restrict the licence-gate :8000 to **the gateway pods + the GPU-worker subnet only**; restrict model-serve :9090 to the worker subnet. This is what makes "decode-not-verify" safe.
+- **Breaks without it:** the JWT-trust becomes a spoofing hole (see invariant).
+- **Worked example:** Cilium NetworkPolicy (`lighthouse-only-from-envoy`).
+- **Alternatives:** Calico, any NetworkPolicy-capable CNI. (If your CNI can't enforce NetworkPolicy, you must isolate by other means — e.g. bind the licence-gate only where the gateway can reach it.)
+- **Verify:** a pod outside the gateway namespace / worker subnet **cannot** reach licence-gate :8000.
+
+### 8. TLS + public DNS for the hostname
+- **Needs:** a resolvable hostname with a valid TLS cert for the gateway.
+- **Worked example:** cert-manager (ACME DNS-01 via your DNS provider) + a wildcard cert + external-dns + a tunnel for public reachability.
+- **Alternatives:** any ACME issuer (HTTP-01/DNS-01), any DNS, any tunnel/port-forward/VPN. For a LAN-only deployment you can use a local CA + internal DNS.
+- **Verify:** `https://<lighthouse-host>` serves a valid cert and reaches the gateway.
+
+### 9. Remote GPU workers (the unusual one — GPUs are NOT in the cluster)
+- **Needs:** one or more machines with an NVIDIA GPU, each running **ComfyUI + the ComfyUI-Distributed plugin**, listening on `:8188` with `--listen 0.0.0.0 --enable-cors-header`, reachable from the master's LAN IP, listed in `gpu_config.json`, and firewalled so `:8188` only accepts the cluster's source IPs.
+- **Breaks without it:** nothing renders (the master is CPU-only and never owns a GPU).
+- **Worked example:** Windows 11 PCs running the worker inside a dedicated **WSL2** distro (CUDA toolkit, ComfyUI, the symmetric custom-node set), kept alive via a hidden VBS launcher, woken via Wake-on-LAN. See the GPU worker setup chapter.
+- **Alternatives:** any Linux box with an NVIDIA GPU running ComfyUI+Distributed; a dedicated GPU server; cloud GPU VMs. The Windows/WSL2 path is one specific (and fiddly) choice when the GPUs are repurposed gaming PCs.
+- **Verify:** from the master's network, `curl -fsS http://<worker>:8188/system_stats` returns JSON; the Distributed plugin reports the worker.
+
+### 10. A container registry (for the three images)
+- **Needs:** somewhere to host (or pull) the `lighthouse` (ComfyUI master), `licence-gate`, and `model-serve` images.
+- **Worked example:** GHCR (`ghcr.io/<your-org>/...`), built by CI.
+- **Alternatives:** any registry; or rebuild from the public `containers` repo and push to your own namespace (retarget the GHCR owner in the bake files). See the images chapter.
+- **Verify:** the cluster can pull the three image references.
+
+### 11. (Optional) Config-change pod reloader
+- **Needs:** roll the pod when the allowlist/registry/gpu_config configmaps change.
+- **Worked example:** stakater/reloader (`reloader.stakater.com/auto: "true"`).
+- **Alternatives:** a config-hash annotation on the pod template, or a manual `kubectl rollout restart` after config edits. (Kustomize `configMapGenerator` hash-suffixing also forces a roll.)
+- **Verify:** editing a mounted configmap triggers a new pod.
+
+---
+
+## Capability checklist
+
+- [ ] Deploy/reconcile manifests (GitOps or manual)
+- [ ] RWX storage for models / output / workflows
+- [ ] LAN-reachable LoadBalancer IP for the master (+ model-serve)
+- [ ] Gateway that does OIDC and forwards a **verified** JWT
+- [ ] OIDC provider with a client + **groups claim** (+ the 3 groups created, users assigned)
+- [ ] Secret delivery (OIDC client secret, brand token, worker token) — never in git
+- [ ] NetworkPolicy: licence-gate reachable only via gateway + worker subnet
+- [ ] TLS + DNS for the public hostname
+- [ ] ≥1 remote GPU worker running ComfyUI + Distributed on :8188
+- [ ] A registry hosting the 3 images
+- [ ] (Optional) a config reloader
+
+**Hardware reality check:** GPU VRAM is the binding constraint. The worked example's heavy tier is 16 GB (SDXL/Flux-class), light tier 8 GB (SD-1.5-class). Tier-aware dispatch (capability via `gpu_config.json` + the licence-gate) keeps SDXL off the 8 GB cards. Size your tiers accordingly; don't assume 24 GB.

@@ -1,6 +1,52 @@
 @import "tailwindcss";
 @import "./shell-tokens.css";
 @import "./shell.css";
+/* Prebuilt Fumadocs styles. The package's exports map sends `fumadocs-ui/css/*`
+   to the SOURCE css files (which pull in tailwindcss + @apply Tailwind v4
+   utilities like `-inset-s-4` that our project's Tailwind doesn't expose).
+   The dist/ folder ships the already-compiled CSS — no Tailwind needed. */
+@import "../../node_modules/fumadocs-ui/dist/style.css";
+
+/* Velvet override of Fumadocs UI tokens — our default is dark (no attribute),
+   inverse of Fumadocs' neutral.css which puts light in :root and dark in .dark.
+   Pin our values to :root so dark-by-default works, then re-skin for light. */
+:root {
+  --color-fd-background:           #0a0712;
+  --color-fd-foreground:           #f1e8d6;
+  --color-fd-muted:                #14101e;
+  --color-fd-muted-foreground:     #a39a85;
+  --color-fd-card:                 #14101e;
+  --color-fd-card-foreground:      #f1e8d6;
+  --color-fd-popover:              #14101e;
+  --color-fd-popover-foreground:   #f1e8d6;
+  --color-fd-border:               rgba(168, 85, 247, 0.18);
+  --color-fd-primary:              #a855f7;
+  --color-fd-primary-foreground:   #0a0712;
+  --color-fd-secondary:            #1a1525;
+  --color-fd-secondary-foreground: #f1e8d6;
+  --color-fd-accent:               rgba(168, 85, 247, 0.12);
+  --color-fd-accent-foreground:    #f1e8d6;
+  --color-fd-ring:                 #a855f7;
+}
+
+[data-theme="light"] {
+  --color-fd-background:           #efe6d2;
+  --color-fd-foreground:           #1a141f;
+  --color-fd-muted:                #e8dfca;
+  --color-fd-muted-foreground:     #5e5468;
+  --color-fd-card:                 #f5edd9;
+  --color-fd-card-foreground:      #1a141f;
+  --color-fd-popover:              #f5edd9;
+  --color-fd-popover-foreground:   #1a141f;
+  --color-fd-border:               rgba(90, 14, 147, 0.18);
+  --color-fd-primary:              #5a0e93;
+  --color-fd-primary-foreground:   #f1e8d6;
+  --color-fd-secondary:            #e8dfca;
+  --color-fd-secondary-foreground: #1a141f;
+  --color-fd-accent:               rgba(90, 14, 147, 0.10);
+  --color-fd-accent-foreground:    #1a141f;
+  --color-fd-ring:                 #5a0e93;
+}
 
 
 @theme inline {
