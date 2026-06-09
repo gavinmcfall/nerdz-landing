@@ -57,6 +57,7 @@ const WORKBENCH: WorkbenchItem[] = [
     cap: "Killing Vanduul and hauling quantanium one 30k at a time.",
     span: "span-4",
     conciergeLevel: "Wing Commander",
+    href: "/lab/star-citizen",
   },
 ];
 
