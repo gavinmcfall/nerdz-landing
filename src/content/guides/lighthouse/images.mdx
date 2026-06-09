@@ -1,0 +1,36 @@
+---
+title: The container images
+description: The three container images (ComfyUI master, licence-gate, model-serve) — what each is, how it's built, what's pinned, the CI/publish flow, and how a stranger rebuilds them.
+---
+
+Three first-party images, all source-public in `<your-org>/containers/apps/{lighthouse,licence-gate,model-serve}`. A stranger can rebuild all three (public base images, SHA-pinned refs, no build-time secrets — GHCR auth is the CI `github.token`). Retarget the GHCR namespace to your own.
+
+## A — `lighthouse` (ComfyUI orchestrator-only master)
+
+- **What:** stock ComfyUI + a *baked, vetted custom-node allowlist*, run CPU-only as a dispatch orchestrator (never owns a GPU). **No ComfyUI-Manager** → runtime node install is impossible by construction.
+- **Base:** `python:3.12-slim-bookworm` (consider digest-pinning; the Go images are pinned, this one is tag-only).
+- **Build steps:** apt `ca-certificates git patch tini`; clone ComfyUI at `v${VERSION}`; install **CPU torch first** (from `download.pytorch.org/whl/cpu`) so ComfyUI's unpinned torch resolves to CPU; clone+checkout the custom-node repos by SHA; apply vendor patches (`patch -p1`) to ComfyUI-Distributed; **strip the unpinned `sam2` git dep** from Impact-Pack reqs; `touch custom_nodes/skip_download_model`; `git submodule update --init` for Ultimate SD Upscale; **force `opencv-python-headless`** as the final pip step + a build-time `import cv2` gate; passwd entry for UID 568; run as `568:568`.
+- **Pinned (in `docker-bake.hcl`, each with a `// renovate:` comment):** `VERSION` (ComfyUI), `DISTRIBUTED_REF`, `IMPACT_PACK_REF`, `IMPACT_SUBPACK_REF`, `USDU_REF`, `CONTROLNET_AUX_REF`, `IPADAPTER_REF`.
+- **Build:** `docker buildx bake -f apps/lighthouse/docker-bake.hcl`.
+- **Gotcha:** the image clones GitHub at build time (ComfyUI + node repos + a submodule) → needs egress + the upstreams staying alive; transitive pip versions aren't fully pinned (only the git SHAs).
+
+## B — `licence-gate` (the security boundary)
+
+- **What:** the Go reverse proxy: decode-only auth, default-deny node allowlist, licence + role + tier gating, per-user isolation, audit.
+- **Base (multi-stage, both digest-pinned):** `golang:1.22-bookworm:<tag>` (build) → `gcr.io/distroless/static-debian12:nonroot:<tag>` (runtime). Retarget these to a digest you control before deploying.
+- **Build:** pure-stdlib Go (no go.sum, no external modules), `CGO_ENABLED=0 go build -trimpath -ldflags="-s -w"` → single static binary in distroless. `VERSION` is first-party/hand-bumped.
+- **Config surface (env):** `LIGHTHOUSE_LISTEN`, `LIGHTHOUSE_UPSTREAM`, `LIGHTHOUSE_REGISTRY_PATH`, `LIGHTHOUSE_ALLOWLIST_PATH`, `LIGHTHOUSE_GPU_CONFIG_PATH`, `EXAMPLE_BRAND_TOKEN` (brand bearer).
+- **Best-documented artifact:** read `apps/licence-gate/CONTRACT-NOTES.md` (the threat model + every bug) and the per-package doc comments before reproducing.
+
+## C — `model-serve` (model ingest/serve)
+
+- **What:** token-auth, read-only file server over the models volume. `GET /models/<path>` (range-resumable; workers verify sha256 their side); `POST /models/ingest` downloads server-side (`{url, dest, sha256?, auth?}`), verifies the hash, atomic-renames, returns the computed hash; `/healthz` open. `auth` is forwarded as the Authorization header on the source fetch (HF gated repos).
+- **Base/build:** identical pinned golang+distroless pattern as licence-gate. Env: `MODELSERVE_LISTEN`, `MODELSERVE_ROOT`, `MODELSERVE_TOKEN`.
+
+## CI / publish flow
+
+`.github/workflows/build.yaml`: triggers on `apps/**` changes; a `changed` job diffs to a matrix; the `build` job reads `VERSION` from each `docker-bake.hcl` and runs `docker/bake-action` (target `image-all`, `linux/amd64`). **PR = build only; push to main = build + push** tags `{{version}}`/`{{major}}.{{minor}}`/`{{major}}`/`rolling`/`sha-<sha>`. GHCR login uses the built-in token. Renovate auto-bumps the `default=` under each `// renovate:` comment.
+
+## Reproducibility summary
+
+Public bases, pinned refs, clear bake/CI flow, no build secrets. Frictions for a stranger: retarget the GHCR namespace (`<your-org>` in `SOURCE`/labels); needs egress for the master's git clones; pin the python base digest if you want bit-reproducibility. Reference image tags shown as `:<tag>` should be replaced with digests from your own registry before promotion.

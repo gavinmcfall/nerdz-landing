@@ -1,0 +1,46 @@
+---
+title: Concept & why
+description: What Lighthouse is, the problem it solves, the human motivation, and the constraints that shaped the design.
+---
+
+## One sentence
+
+**Lighthouse turns a family's existing gaming PCs into a private, sleep-by-default AI utility — present when summoned, near-free at rest, and the one place the family's creative work and sensitive life are allowed to stay.** This guide reproduces the first built capability: **family image generation** — gated, licence-clean, per-user-isolated, dispatched across the household's GPUs.
+
+## The problem this solves
+
+Cloud image generators have three costs a family feels: **money** (per-image or per-seat, forever), **privacy** (your prompts and outputs live on someone else's servers), and **control** (shared accounts mean everyone sees everyone's work; no real per-person boundaries; content rules you don't set). And the hardware to do it yourself is usually *already in the house* — gaming PCs with capable GPUs that sit idle most of the day.
+
+Lighthouse closes that gap: the family's own GPUs do the work, on demand, asleep when idle, with each person seeing only their own images, and with hard guarantees a cloud product can't give you — like "a commercial/brand job can **never** render on a non-commercially-licensed model."
+
+## The human reason (the deeper why)
+
+The everyday workhorse — image generation that just works, cheaply, for everyone in the house — is what's built and what this guide reproduces. But the *reason the project exists* is bigger: a private, patient assistant for two neurodivergent children who reject every mainstream cloud AI, precisely because those products feel surveilled and impersonal. The same foundations the image-gen system needs — **identity, per-person isolation, role/maturity boundaries, local-only data, appliance-grade operations** — are the foundations that deeper purpose needs. Image generation is the first, most tangible proof that the foundation works. (The assistant, LLM routing, family-data, and the rest are designed but **not built** — out of scope for this guide; don't promise them.)
+
+## What "great" looks like (the outcomes that drove the design)
+
+These are the testable promises the built system keeps — useful as the "what you get" list:
+
+- **Opportunistic & sleep-by-default.** The GPU PCs sleep by default and wake on demand; a person sitting down at a PC always wins over inference. Near-free at rest.
+- **Everyone generates; everyone is isolated.** Each family member generates images and sees **only their own** outputs — never another member's. Enforced, not assumed.
+- **Dispatched across the fleet.** Batches fan out across available GPUs in parallel, waking only as many machines as the work needs.
+- **Licence-clean by construction.** A commercial/brand job is *never* rendered with a non-commercial model — the gate makes it impossible, not merely discouraged.
+- **Tiered to the hardware.** Bigger models on the bigger cards (heavy tier), lighter models on the smaller cards (light tier) — without the user choosing.
+- **Family-safe content boundaries.** Maturity-scoped: mature-capable models are gated to a specific role; the rest are open to the whole family including kids. Role membership comes from the identity provider, enforced at the proxy.
+- **Private and gated.** Reachable only behind single-sign-on; never exposed to the public internet in a way that risks the host machines.
+- **Appliance-grade.** Declared in Git, reconciled automatically, observable — not a hobby that needs hand-tending.
+
+## The constraints that shaped it (and that a reproducer inherits)
+
+The design is the way it is because of hard realities — worth telling, because they're the interesting engineering story:
+
+- **GPUs are gaming PCs, not servers.** They must sleep, must yield instantly to a human, and hold the family's *personal* Windows data — so a compromised image-gen node must not become a household compromise. That single fact drives: PCs-outside-the-cluster, identity-hardening over generic firewalls, a vetted-node allowlist, SafeTensors-only models, and network isolation.
+- **VRAM is the ceiling.** Real cards are 16 GB and 8 GB, not 24 GB. Jobs stay on one card (no cross-machine VRAM pooling — it doesn't pay off on a home LAN). This forces tier-aware dispatch and model picks that fit.
+- **ComfyUI has no multi-tenancy.** Out of the box, everyone shares one space and one output folder. Per-user isolation had to be *added* — in an identity-aware proxy in front of ComfyUI, not bolted into ComfyUI itself.
+- **Sleep/wake + WSL2 + CUDA-resume was the scariest unknown.** The whole "near-free at rest" promise depended on a gaming PC waking from sleep and resuming CUDA cleanly. (It does — proven by hand; automated waking is future work.)
+- **Build on what the cluster already provides.** Don't reinvent identity, storage, ingress, secrets — compose them. (The reproduction guide generalizes this to a *capability contract* so it isn't tied to one platform.)
+
+## What's in scope for "reproduce this" vs not
+
+- **In scope (built):** the OIDC-gated ComfyUI image-gen service; the CPU orchestrator dispatching to LAN GPU workers; the licence-gate proxy (isolation + licence + role + tier gating); heavy/light tiers; model acquisition with a licence registry; curated workflows; sleep/wake with manual Wake-on-LAN.
+- **Out of scope (designed, not built — don't let readers chase):** automated WoL controller, LLM routing, family-data/provenance, the Cortex MCP seam, the voice assistant, the branded family portal. Plus open bugs to mention as caveats, not features: the App Mode gallery surfacing, the Jobs-panel parse error, the `.js` MIME quirk affecting one editor.

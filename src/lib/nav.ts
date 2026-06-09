@@ -9,18 +9,24 @@ export type NavItem = {
   href: string;
   cta?: boolean;
   external?: boolean;
+  // When set, the topbar renders the named icon instead of the text label.
+  // The label is still used for aria-label so screen readers + the mobile
+  // drawer fall back to it. Only 'github' is wired today.
+  icon?: "github";
 };
 
 export const NAV: NavItem[] = [
   { label: "projects", href: "/projects" },
   { label: "field manuals", href: "/manuals" },
+  { label: "guides", href: "/guides" },
   { label: "blog", href: blogLink.href, external: blogLink.external },
   { label: "about", href: "/about" },
   {
-    label: "github →",
+    label: "github",
     href: "https://github.com/gavinmcfall",
     cta: true,
     external: true,
+    icon: "github",
   },
 ];
 

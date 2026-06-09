@@ -1,0 +1,43 @@
+---
+title: Model acquisition & licensing
+description: Acquiring models onto the cluster + the licence registry that makes "no commercial job on a non-commercial model" structural. How model-serve ingests, the registry schema, the auth groups, and the gotchas.
+---
+
+Models live canonically on the cluster's `models` PVC, ingested via the **model-serve** sidecar; the **registry** (`registry.json`) records each model's licence/commercial status/tier/role so the licence-gate can enforce them. (Workers keep local copies — they don't mount the PVC.)
+
+## Ingesting a model (server-side, hash-verified)
+`POST /models/ingest` to the model-serve LB with the worker token:
+```bash
+curl -fsS -X POST "http://MODELSERVE_LBIP:9090/models/ingest" \
+  -H "Authorization: Bearer $WORKER_TOKEN" -H "Content-Type: application/json" \
+  -d '{"url":"https://huggingface.co/<repo>/resolve/main/<file>.safetensors",
+       "dest":"checkpoints/<file>.safetensors",
+       "sha256":"<optional-expected-hash>",
+       "auth":"Bearer <hf-token-if-gated>"}'
+```
+It downloads server-side into `MODELSERVE_ROOT`, verifies the sha256 (if given), atomic-renames, and returns the computed hash. The `auth` field is forwarded as the Authorization header on the *source* fetch — that's how gated HF repos work.
+
+## The registry schema (`registry.json` — the licence source of truth)
+```json
+{ "<filename>.safetensors": {
+    "licence": "CreativeML-OpenRAIL++",
+    "commercial_ok": true,
+    "tier_fit": ["heavy"],            // or ["heavy","light"] for SD-1.5-class
+    "requires_group": "mature-content", // optional — role-gates this asset
+    "substitutes": ["alt-commercial.safetensors"],  // suggested on a licence reject
+    "sha256": "<integrity, verified at mount time not per-request>"
+} }
+```
+- `commercial_ok` → the **licence gate**: a commercial job referencing a non-commercial model is rejected (with `substitutes` suggested).
+- `tier_fit` → **tier-aware dispatch**: SDXL/Flux = `["heavy"]`; SD-1.5-class = `["heavy","light"]`. Keeps big models off small cards.
+- `requires_group` → **role-gating**: the caller must hold this group (e.g. `mature-content`) for the asset to render. Tag the *model* (immutable), not the workflow.
+- `commercial_ok` is the gate's input; "is this job commercial?" is resolved in the identity layer (brand=always, family=commercial-by-default unless flagged personal).
+
+## Licensing gotchas
+- **HF gated repos return 404, not 401**, to unauthenticated requests — the gate is silent. Accept the terms on your HF account, pass a token via `auth`.
+- **Don't fabricate registry facts:** fetch the real filename + size from `/resolve/main/` before pinning (placeholder sizes were 1.5–2× off in several real cases); verify sha256 on acquisition; don't assume a quantized variant (e.g. FP8) exists upstream.
+- **Civitai has separate API keys** for the `.com` vs the adult domain — use the right one.
+- Pick models that **fit the VRAM ceiling** (16/8 GB) — see the project's model-picks research for a worked, licence-tagged set.
+
+## The licence story (why this matters)
+This is the structural guarantee a cloud product can't give a family/brand: a branded commercial render *cannot* use a non-commercially-licensed model, because the gate resolves every referenced model against the registry and rejects by construction (not by the operator remembering). Same machinery gates maturity (role) and tier (VRAM). One registry, three policies.

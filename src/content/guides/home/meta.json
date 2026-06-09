@@ -1,0 +1,8 @@
+{
+  "title": "Guides",
+  "description": "Pick a book to start.",
+  "root": true,
+  "pages": [
+    "index"
+  ]
+}

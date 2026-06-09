@@ -1,0 +1,72 @@
+---
+title: Licence-gate security model
+description: The licence-gate proxy — the security boundary and crown jewel. The threat model, each defense, and the real bugs that shaped them.
+---
+
+The licence-gate is a small bespoke reverse proxy that sits between the OIDC gateway and the ComfyUI master. It is the single policy point that turns a multi-user-hostile app (ComfyUI) into a family-safe one. Everything interesting about Lighthouse's safety lives here.
+
+## What it must guarantee
+
+1. **Per-user isolation** — each caller sees only their own outputs and workflows; you cannot even tell whether someone else's file exists.
+2. **Licence cleanliness** — a commercial/brand job can never render with a non-commercial model.
+3. **Maturity / role boundaries** — mature-capable models are reachable only by callers in the right group.
+4. **Tier safety** — a model never lands on a GPU too small for it (no OOM).
+5. **No custom-node escape** — only vetted node types can execute; nothing can smuggle a model-writer or arbitrary node.
+
+It does all of this by reading **one verified identity token** and inspecting **one workflow graph** per request.
+
+## The threat model in one breath
+
+ComfyUI has **no multi-tenancy**: one shared output folder, one shared workflow namespace, and a node system that is, by design, arbitrary code execution. The workers are the family's *personal* PCs. So the proxy must assume: authenticated family members who shouldn't see each other's work; a curious user hand-crafting a request to reach a model or node they shouldn't; and the structural risk that a malicious workflow could write model files or run an unvetted node. It defends all three **structurally** (by construction), not by good behaviour.
+
+## The defenses
+
+### 1. Decode-only auth, load-bearing on two upstream guarantees
+
+The proxy **decodes** the gateway-injected JWT for claims (`sub`, `email`, `groups`) — it does **not** verify the signature. That is safe **only** because: (1) the **gateway already cryptographically verified** the token (OIDC), and (2) a **NetworkPolicy** makes the proxy reachable *only* via the gateway. Weaken either and decode-only becomes a forge-any-identity hole.
+
+> **Reproduction rule:** if you ever expose the proxy port directly, add an ingress that skips the gateway, or drop the gateway's JWT verification — you MUST upgrade the proxy to verify signatures (fetch the IdP's JWKS) first. Do not relax either layer without that change. (This is *the* invariant.)
+
+### 2. One unified, default-deny node allowlist
+
+There is **one** map: `class_type → {model_fields?, output_field?}`. A class_type **absent from the map is rejected pre-execution**. This single check closes three holes at once: loader-smuggle (a hidden model loader), saver-escape (a `CheckpointSave`/`LoraSave`/`ModelSave` that writes model files), and any unreasoned node. Most nodes (KSampler, EmptyLatentImage…) are allowlisted with no special handling — they just need to be *present* in the map. Image savers (`SaveImage`, `SaveAnimatedWEBP`, `SaveAnimatedPNG`) are the only writers permitted; every audio/video/latent/**model-writer** saver is denied (and model-writers are *also* blocked by mounting the models volume read-only — defense in depth). The live allowlist is a **configmap**, not the binary — add a node by editing JSON + redeploying, no rebuild.
+
+### 3. Licence gating (commercial vs non-commercial)
+
+Every model the workflow references is resolved against a **registry** (`registry.json`: filename → licence, `commercial_ok`, `tier_fit`, optional `requires_group`, substitutes). If the job is **commercial** and the model is **not** `commercial_ok`, the gate **rejects** (and can suggest licence-clean substitutes). "Commercial" is resolved in the **identity layer**, not the gate — fail-safe: a brand identity is always commercial; a family member is commercial-by-default unless they flag a request personal; forgetting the flag → commercial → the *safe* model policy. The gate itself stays policy-pure and identity-agnostic (independently testable).
+
+### 4. Role-gating by model TAG (not by workflow)
+
+Maturity/role enforcement keys off `requires_group` on the **model** in the registry, **not** on a workflow's declared allowlist. Reason: a workflow allowlist is **craftable-around** — a user can hand-build a graph that loads the sensitive model. Gating the *immutable asset* is structural. The gate rejects (reason `requires-group`) unless the caller's `groups` include the required group for **every** referenced asset — checkpoints, both LoRA loaders, IPAdapter, Hypernetwork, StyleModel, GLIGEN, ControlNet, **and inline `embedding:<name>` references scanned out of prompt text** (those have no loader node — a regex catches them). Honest boundary: this gates **access to** mature models/LoRAs, not prompt content (a general model + suggestive prompt is ungated by any model-tag approach).
+
+### 5. Tier-aware dispatch (no OOM)
+
+On the distributed-render endpoint, the proxy intersects the request's candidate workers with **tier-capable** ones: acceptable tiers = the intersection of each referenced model's `tier_fit`; a worker is kept only if its tier (from `gpu_config.json`) qualifies. If none qualify it returns **400** — it never silently fans an SDXL job to an 8 GB card. Untagged models don't constrain (the licence gate owns unknown-model policy).
+
+### 6. Per-user output isolation (write + read)
+
+- **Write:** before dispatch, the proxy rewrites the `filename_prefix` on every allowlisted saver to `<user-uuid>/<original>`. The render runs on a worker, but the prefix travels in the graph, so the master's `SaveImage` lands in the caller's bucket regardless of which GPU rendered it.
+- **Read:** `/view`, `/history`, `/queue`, `/userdata`, `/upload/image` are scoped to the caller's bucket. Crucially, a request for someone else's file returns a **byte-identical 404** to a genuine miss — no existence side-channel (you can't probe whether another user's image exists).
+- **Workflow files** (`/userdata`) are scoped the same way (write + read + the rename/move endpoint scopes **both** source and dest — one-sided scoping would leak the dest as an escape).
+
+### 7. Audit
+
+Every decision emits a record composed from two halves — identity `{user, class, personal-flag, resolved commercial + rationale}` + gate `{model, licence, decision}` — joined with a timestamp. The raw bearer token is never logged; the brand token is compared constant-time.
+
+## The bugs that shaped it (the war stories)
+
+These are real holes found and closed; they make the security story *credible* rather than theoretical:
+
+- **The `/api`-prefix bypass.** ComfyUI's frontend prepends `/api` to every call, and the master mirrors every route under both `/` and `/api`. Early versions matched only the bare paths → **every browser request fell through to passthrough, bypassing the gate *and* isolation**. The only reason renders stayed gated was that dispatch used the no-prefix `/distributed/queue`. Fix: normalize a leading `/api` for matching. *Lesson: when fronting an app whose client uses a path-prefix convention, match every spelling — and test through the real frontend, not in-pod curl.*
+- **The `/distributed/queue` hole.** Gating only `/prompt` let any authenticated caller bypass the licence gate + isolation by using the distributed endpoint (the actual GPU render path). Both endpoints now run the identical gate→rewrite→audit pipeline.
+- **`%2F` decoded out from under us — twice.** Workflow paths arrive as one `%2F`-encoded segment. (a) Go's default reverse proxy decodes `%2F`→`/` when rebuilding the URL → fixed with a forwarder that preserves `RawPath`. (b) The Envoy gateway's default `UNESCAPE_AND_REDIRECT` decodes `%2F` *inbound* before the proxy sees it → the browser path broke while in-pod curl (encoded) passed. Fix: operate on the **fully decoded logical path** and re-encode as one segment, so the result is identical whether the input arrived encoded or decoded. *Lesson: never assume `%2F` survives HTTP intermediaries; RFC 3986 lets them normalize it.*
+- **Origin/Host 403.** ComfyUI's DNS-rebinding defense 403s when `Origin` ≠ `Host`; a proxy rewrites Host but passes Origin → browser 403s, curl (no Origin) passes. Fix: strip Origin on forward (and run workers with `--enable-cors-header`).
+
+## Why not a ComfyUI auth plugin?
+
+The available ComfyUI auth plugins are **full login systems that re-authenticate** — they don't trust an upstream-verified JWT. Behind an OIDC gateway that already authenticates, that's the wrong layer (double-auth) and can't be reduced to a claim-reader. Per-user isolation belongs in the **identity-aware proxy** that *does* trust the gateway. So the master ships **no** auth plugin.
+
+## Reproduction notes
+
+- The proxy is ~9 small Go packages (registry, workflow, gate, identity, isolation, tier, proxy, audit, main), pure stdlib, built into a distroless static image. The self-contained reference deploy provides worked `registry.json` / `allowlist.json` / `gpu_config.json` (the schemas otherwise live only in the Go tests).
+- Source is public (`gavinmcfall/containers/apps/licence-gate`) — read `CONTRACT-NOTES.md` there for the verified `class_type → fields` enumeration before reproducing the allowlist.

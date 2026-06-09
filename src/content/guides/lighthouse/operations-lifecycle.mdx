@@ -1,0 +1,51 @@
+---
+title: Operations & lifecycle
+description: Day-2 operations — the sleep/wake lifecycle, Wake-on-LAN (currently manual), adding/replacing workers, scaling storage, verifying a deploy actually landed, and what's NOT automated yet.
+---
+
+How the built system runs day-to-day. Be honest with readers: the **sleep/wake economics are real and proven**, but the **automation around them is not built** — waking is currently a manual Wake-on-LAN stopgap.
+
+## The sleep/wake model (the "near-free at rest" promise)
+
+- Workers **sleep by default**. The WSL distro + ComfyUI service **survive sleep**, and CUDA resumes cleanly on wake (the scariest unknown — proven by hand). So a worker that was running before sleep comes straight back after wake.
+- **Operating rule (`11-W4`):** keep the distro running (the VBS launcher guarantees it — `04` §9), then *sleep* the PC. Do **not** fully shut down or stop the distro — a stopped distro doesn't auto-start on wake.
+- A human sitting down at a worker always wins; the design never fights a user for their own PC. (Enforcing that automatically — gaming-active detection, auto-sleep-when-idle — is Plan-2 wol-agent, **not built**.)
+
+## Waking a worker (current reality: manual WoL)
+
+The cluster can't broadcast to the worker subnet (different L2 segment), so Wake-on-LAN is fired from a **LAN machine** with `assets/wol.ps1 -Mac <worker-mac>` (`04` §10). This is the honest current state — a manual stopgap. The designed **wol-controller (cluster) + wol-agent (per-PC)** that automate wake/sleep/health and a CUDA-resume recovery hook are **Plan 2, unbuilt**. Don't present automated waking as working.
+
+## Day-2 procedures
+
+- **Add / replace a GPU worker:** install the symmetric node set + stage models locally (`04`), add it to `gpu_config.json` with the right `tier`, set `enabled: true`, redeploy the gpu_config configmap. The licence-gate picks up the new worker for tier-appropriate jobs.
+- **Add a model:** ingest via model-serve (`08`), add a registry entry with licence/`commercial_ok`/`tier_fit`/optional `requires_group`, redeploy. Stage it on the workers that should serve it.
+- **Add a curated workflow / custom node:** add its class_types to `allowlist.json`, install the pack symmetrically (`04`/`05`), redeploy the config (`09`/`11-P5`).
+- **Scale storage (`11-V4`):** size PVCs at ~2× current need; expand later with `kubectl patch pvc` if the StorageClass allows volume expansion — don't pre-hoard raw capacity (×replica on Ceph).
+- **Rotate a token:** update the secret backend; the ExternalSecret/Secret re-syncs; reloader rolls the pod.
+
+## Verifying a change actually deployed (`11-V2`)
+
+A merged PR + green reconcile is **not** a deployed change. Confirm:
+
+```bash
+flux get kustomizations -A | grep <name>        # READY + applied revision == your commit
+kubectl rollout status deploy/lighthouse -n <ns>  # the pod actually rolled
+```
+
+A pending manual-migration note in an earlier PR can block *all* later changes to the same kustomization. Targeted nudge: `flux reconcile kustomization <name> -n <ns> --with-source`.
+
+## Verifying through the real path (`11-V1`)
+
+When you test, go through **every hop the user's request takes** (browser → gateway → proxy → master → worker), not an in-pod curl that skips the gateway's OIDC + `%2F` handling. Verify node registration on the **master**, not just the workers (the slim master differs — `11-P1`). In-pod-green ≠ user-green.
+
+## Observability & cost (designed, mostly unbuilt)
+
+The intent: reuse the cluster's Prometheus/Grafana; the wol-controller + router export metrics; a Grafana panel computes live daily cost (state-time × per-state wattage × tariff) and alerts when the fabric runs hotter than the disciplined baseline ("near-free at rest" is only true if measured). **This is design-only** — no Grafana/Prometheus config ships yet. Present it as the intended shape, not a working dashboard.
+
+## What's NOT automated (set reader expectations)
+
+- Automated wake/sleep (wol-controller/agent) — manual WoL today.
+- LLM routing, family-data/provenance, the Cortex MCP seam, voice, the branded portal — designed, unbuilt.
+- The App Mode results gallery, Jobs panel, one editor — open frontend bugs (`09`).
+
+Rendering, gating, per-user isolation, licence/role/tier enforcement, and sleep/wake-by-hand all work. That's the built system.
