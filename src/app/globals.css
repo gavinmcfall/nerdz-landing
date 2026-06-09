@@ -705,6 +705,22 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .ratio-tall .wbcard__slot   { aspect-ratio: 3 / 4; }
 .ratio-wide .wbcard__slot   { aspect-ratio: 16 / 9; }
 
+/* Tile-as-link variant — Low & Slow → /lab/bbq. Strip Link's default
+   text-decoration and let the existing .wbcard:hover lift do the work. */
+.wbcard--link { text-decoration: none; color: inherit; display: block; }
+.wbcard--link:hover .wbcard__title { color: var(--glow); }
+
+/* Tile slot rendering a real photo instead of the placeholder. */
+.wbcard__slot--photo { padding: 0; }
+.wbcard__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 480ms cubic-bezier(.4,1.6,.5,1);
+}
+.wbcard--link:hover .wbcard__photo { transform: scale(1.03); }
+
 /* ─── WBCARD — SC FLEET concierge slot ────────────────────────
    The Concierge content nests INSIDE the standard wbcard's photo
    slot (replacing the "photo soon" placeholder). The outer tile

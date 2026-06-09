@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SectionHead } from "./SectionHead";
 
 type WorkbenchItem = {
@@ -9,6 +10,10 @@ type WorkbenchItem = {
   ratio?: "ratio-square" | "ratio-tall" | "ratio-wide";
   /** Static-data overrides for special card variants. */
   conciergeLevel?: string;
+  /** Optional internal route — turns the tile into a link to the sub-page. */
+  href?: string;
+  /** Optional photo for the tile's slot (replaces the "photo soon" placeholder). */
+  photo?: { src: string; alt: string };
 };
 
 const WORKBENCH: WorkbenchItem[] = [
@@ -42,6 +47,8 @@ const WORKBENCH: WorkbenchItem[] = [
     cap: "BBQ is not a season.",
     span: "span-4",
     ratio: "ratio-tall",
+    href: "/lab/bbq",
+    photo: { src: "/lab/bbq/hero.jpg", alt: "Gavin in a No Sleep 'Til Brisket tee" },
   },
   {
     id: "wb-scfleet",
@@ -138,16 +145,20 @@ export function Workbench() {
         <div className="workbench">
           {WORKBENCH.map((card) => {
             const isFleet = card.id === "wb-scfleet";
-            return (
-              <article
-                key={card.id}
-                className={`wbcard ${card.span} ${card.ratio ?? ""}`}
-              >
+            const inner = (
+              <>
                 <div
-                  className={`wbcard__slot ${isFleet ? "wbcard__slot--concierge" : ""}`}
+                  className={`wbcard__slot ${isFleet ? "wbcard__slot--concierge" : ""} ${card.photo ? "wbcard__slot--photo" : ""}`}
                 >
                   {isFleet ? (
                     <ConciergeSlot card={card} />
+                  ) : card.photo ? (
+                    <img
+                      className="wbcard__photo"
+                      src={card.photo.src}
+                      alt={card.photo.alt}
+                      loading="lazy"
+                    />
                   ) : (
                     <span className="wbcard__slot-placeholder">
                       {card.title.toLowerCase()} · photo soon
@@ -159,6 +170,16 @@ export function Workbench() {
                   <span className="wbcard__tag">{card.tag}</span>
                 </div>
                 <p className="wbcard__cap">{card.cap}</p>
+              </>
+            );
+            const className = `wbcard ${card.span} ${card.ratio ?? ""} ${card.href ? "wbcard--link" : ""}`;
+            return card.href ? (
+              <Link key={card.id} href={card.href} className={className}>
+                {inner}
+              </Link>
+            ) : (
+              <article key={card.id} className={className}>
+                {inner}
               </article>
             );
           })}
