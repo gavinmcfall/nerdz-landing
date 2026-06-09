@@ -60,18 +60,41 @@ export default function StarCitizenPage() {
             </>
           }
           caption={
-            <>exelus executor · @NZVengeance · auckland</>
+            <>
+              exelus executor ·{" "}
+              <a
+                href="https://robertsspaceindustries.com/en/citizens/NZVengeance"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                @NZVengeance
+              </a>{" "}
+              · auckland
+            </>
           }
         />
 
         <div className="about__body">
           <div className="about__intro">
             <p className="about__lede">
-              I&rsquo;ve been backing <em>Star Citizen</em> since January 2016
-              &mdash; in-game year 2946. I fly as{" "}
-              <strong>Calder Rhys</strong>{" "}
-              (handle <em>@NZVengeance</em>), an{" "}
-              <strong>Executor</strong> in{" "}
+              I&rsquo;ve been backing{" "}
+              <a
+                href="https://www.robertsspaceindustries.com/enlist?referral=STAR-6WG5-BTYL"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Star Citizen
+              </a>{" "}
+              since <em>January 2946 (2016)</em>. I fly as{" "}
+              <strong>Calder Rhys</strong> (handle{" "}
+              <a
+                href="https://robertsspaceindustries.com/en/citizens/NZVengeance"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                @NZVengeance
+              </a>
+              ), an <strong>Executor</strong> in{" "}
               <a
                 href="https://robertsspaceindustries.com/en/orgs/EXLS"
                 target="_blank"
@@ -114,7 +137,16 @@ export default function StarCitizenPage() {
 
               <h3 className="about__h">Rank ladder</h3>
               <ul className="about__list">
-                <li><strong>Prime</strong> &mdash; the leader</li>
+                <li>
+                  <strong>Prime</strong> &mdash; the leader &mdash;{" "}
+                  <a
+                    href="https://robertsspaceindustries.com/en/citizens/Mr_Xul"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Xulari Davros
+                  </a>
+                </li>
                 <li><strong>Consul</strong> &mdash; second-in-command</li>
                 <li><strong>Executor</strong> &mdash; senior officer <em>(this is me)</em></li>
                 <li><strong>Justicar</strong> &mdash; veteran member &amp; mentor</li>
@@ -148,20 +180,29 @@ export default function StarCitizenPage() {
             <div className="about__col">
               <h3 className="about__h">The character &mdash; Calder Rhys</h3>
               <ul className="about__list">
-                <li><strong>Handle</strong> &mdash; @NZVengeance</li>
+                <li>
+                  <strong>Handle</strong> &mdash;{" "}
+                  <a
+                    href="https://robertsspaceindustries.com/en/citizens/NZVengeance"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    @NZVengeance
+                  </a>
+                </li>
                 <li><strong>UEE citizen record</strong> &mdash; #1147876</li>
                 <li><strong>Main org</strong> &mdash; The Exelus Corporation (Executor)</li>
-                <li><strong>Enlisted</strong> &mdash; Jan 4, 2016 &nbsp;<em>(2946)</em></li>
+                <li><strong>Enlisted</strong> &mdash; Jan 4, 2946 <em>(2016)</em></li>
                 <li><strong>Location</strong> &mdash; New Zealand, Auckland</li>
-                <li><strong>Awards</strong> &mdash; 2953 CDF Gold</li>
               </ul>
 
               <h3 className="about__h">Backer level</h3>
               <p className="about__p">
-                <strong>Wing Commander</strong> concierge &mdash; backed
-                deep enough to have a strong opinion about ship
-                rebalances. The original tier from 2016 that I&rsquo;ve
-                added to over the years.
+                <strong>Wing Commander</strong>{" "}concierge &mdash; but
+                I didn&rsquo;t back to that tier during the Kickstarter.
+                My first pledge was an <em>Aopoa Nox Kue</em> &mdash; a
+                little Xi&rsquo;an snub. I&rsquo;ve built up from there
+                over the years.
               </p>
 
               <h3 className="about__h">What I actually do</h3>

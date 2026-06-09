@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   // Field manuals are .mdx (src/manuals/*.mdx, rendered at /manuals/[slug]).
   pageExtensions: ["ts", "tsx", "mdx"],
+  // Allow cloudflared tunnel previews to reach `next dev` without tripping
+  // Next 16's cross-origin-host check (otherwise hydration silently dies).
+  allowedDevOrigins: ["*.trycloudflare.com"],
 };
 
 export default withMDX(nextConfig);
