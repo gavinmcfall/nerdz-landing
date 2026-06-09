@@ -66,12 +66,12 @@ export default function BBQPage() {
               <h3 className="about__h">Comps</h3>
               <ul className="about__list">
                 <li>
-                  <strong>Meatstock 2024</strong> &mdash; competed with
+                  <strong>Meatstock 2025</strong> &mdash; competed with
                   BBQVANA
                 </li>
                 <li>
-                  <strong>King of the Mountain</strong> &mdash; with the
-                  team
+                  <strong>King of the Mountain 2025</strong> &mdash; with
+                  the team
                 </li>
                 <li>More on the schedule &mdash; ask me what&rsquo;s next.</li>
               </ul>
