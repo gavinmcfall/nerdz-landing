@@ -9,18 +9,22 @@ export type NavItem = {
   href: string;
   cta?: boolean;
   external?: boolean;
+  /** When set, the Topbar renders the named icon instead of the label
+   * (label remains the aria-label for accessibility). */
+  icon?: "github";
 };
 
 export const NAV: NavItem[] = [
   { label: "projects", href: "/projects" },
   { label: "field manuals", href: "/manuals" },
   { label: "blog", href: blogLink.href, external: blogLink.external },
+  { label: "agentic", href: "/agentic-engineering" },
   { label: "about", href: "/about" },
   {
-    label: "github →",
+    label: "GitHub",
     href: "https://github.com/gavinmcfall",
-    cta: true,
     external: true,
+    icon: "github",
   },
 ];
 
