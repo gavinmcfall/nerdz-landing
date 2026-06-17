@@ -1220,6 +1220,97 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   color: var(--ink-mute);
 }
 
+/* ─── ESSAY ─── Long-form opinion pages (/agentic-engineering, future). */
+.essay__hero {
+  margin: 24px 0 40px;
+  padding: 0;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.08),
+    0 30px 80px -30px rgba(168, 85, 247, 0.35),
+    0 0 60px -10px rgba(106, 13, 173, 0.18);
+}
+.essay__hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.essay__hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 50%, transparent 40%, rgba(10, 7, 18, 0.35) 100%);
+  mix-blend-mode: multiply;
+}
+
+.essay { max-width: 70ch; margin: 0 auto; }
+.essay em { color: var(--gold); font-style: italic; }
+.essay a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(168, 85, 247, 0.45);
+  text-underline-offset: 3px;
+}
+.essay a:hover { text-decoration-color: var(--glow); }
+.essay__h {
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 48px 0 16px;
+  display: flex; align-items: center; gap: 14px;
+}
+.essay__h::before {
+  content: '';
+  width: 22px; height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+.essay__p { margin: 0 0 18px; }
+.essay__p--center { text-align: center; color: var(--ink-mute); font-family: var(--font-mono); font-size: 14px; }
+.essay__quote {
+  margin: 28px 0;
+  padding: 16px 22px;
+  border-left: 2px solid var(--gold-soft);
+  background: rgba(168, 85, 247, 0.04);
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+  color: var(--ink-mid);
+}
+.essay__quote p { margin: 0; }
+.essay__quote footer { margin-top: 10px; font-size: 13px; color: var(--ink-mute); font-style: normal; }
+.essay__code-inline {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 1px 6px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  color: var(--glow);
+}
+.essay__code-block {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 22px 0;
+  padding: 18px 20px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow-x: auto;
+  color: var(--ink);
+}
+.essay__code-block code { background: none; padding: 0; border: 0; }
+.essay .rule { margin: 48px 0; }
+
 /* ─── PAGE TRANSITION (SPA route change) ────────────────────── */
 @keyframes pageFade {
   from { opacity: 0; transform: translateY(6px); }
