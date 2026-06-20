@@ -131,6 +131,7 @@ const STYLES = `
 .blender-addons .note strong { font-style: normal; color: var(--ink); font-weight: 600; }
 .blender-addons .note kbd { font-style: normal; }
 .blender-addons .ad-foot {
+  grid-column: 1 / -1;
   margin-top: 16px; padding-top: 10px;
   border-top: 1px solid var(--rule);
   font-style: italic; font-size: 11px; color: var(--ink-mute); line-height: 1.5;
