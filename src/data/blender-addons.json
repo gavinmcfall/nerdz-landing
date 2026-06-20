@@ -1,0 +1,224 @@
+[
+  {
+    "kind": "menu",
+    "title": "Menus & how to open them",
+    "rows": [
+      { "desc": "<b>Edge</b> menu <span class='or'>edit mesh</span>", "keys": "<kbd>Ctrl</kbd>+<kbd>E</kbd>" },
+      { "desc": "<b>Vertex</b> menu <span class='or'>edit mesh</span>", "keys": "<kbd>Ctrl</kbd>+<kbd>V</kbd>" },
+      { "desc": "<b>Face</b> menu <span class='or'>edit mesh</span>", "keys": "<kbd>Ctrl</kbd>+<kbd>F</kbd>" },
+      { "desc": "<b>Context</b> menu <span class='or'>edit / object</span>", "keys": "<kbd class='mouse'>Right-click</kbd>" },
+      { "desc": "<b>Object</b> menu <span class='or'>object</span>", "keys": "<kbd>Object ▾</kbd> header" }
+    ]
+  },
+
+  { "kind": "band", "num": "01", "category": "Cutting & Booleans" },
+  {
+    "kind": "card",
+    "name": "Hard Ops",
+    "what": "The hub of the hard-surface workflow — booleans, bevels, mirroring, modifier management, and material/viewport helpers, all behind one menu.",
+    "when": "Any destructive/boolean hard-surface work; managing the modifier stack.",
+    "shortcuts": [
+      { "desc": "main menu", "keys": "<kbd>Q</kbd>" },
+      { "desc": "pie menu", "keys": "<kbd>Shift</kbd>+<kbd>Q</kbd>" },
+      { "desc": "HOps Helper", "keys": "<kbd>Ctrl</kbd>+<kbd>`</kbd>" },
+      { "desc": "materials", "keys": "<kbd>Alt</kbd>+<kbd>M</kbd>" },
+      { "desc": "viewport", "keys": "<kbd>Alt</kbd>+<kbd>V</kbd>" },
+      { "desc": "interactive mirror", "keys": "<kbd>Alt</kbd>+<kbd>X</kbd>" },
+      { "desc": "bevel helpers", "keys": "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>" }
+    ],
+    "notes": [
+      "<strong>Booleans</strong> (object mode): <kbd>Ctrl</kbd>+<kbd>Num −</kbd> difference · <kbd>+</kbd> union · <kbd>*</kbd> intersect · <kbd>÷</kbd> slash."
+    ]
+  },
+  {
+    "kind": "card",
+    "name": "BoxCutter",
+    "what": "Draw-on-surface cutting. Sketch a shape and it becomes a live boolean cut, inset, or new object. Pairs with Hard Ops.",
+    "when": "Fast carving of panels, slots, and shapes directly in the viewport.",
+    "shortcuts": [
+      { "desc": "activate BoxCutter", "keys": "<kbd>Alt</kbd>+<kbd>W</kbd>" }
+    ],
+    "notes": [
+      "Tool active: <kbd>Ctrl</kbd>+<kbd>D</kbd> pie menu · <kbd>D</kbd> helper · <kbd>C</kbd> custom."
+    ]
+  },
+  {
+    "kind": "card",
+    "name": "PUNCHit",
+    "sub": "MACHIN3, DeusEx bundle",
+    "what": "Manifold inset + extrude — \"punch\" clean holes and recesses that stay watertight, without the boolean cleanup.",
+    "when": "Insetting/extruding faces where you need manifold, fuse-ready geometry.",
+    "shortcuts": [
+      { "desc": "edit mesh", "keys": "<kbd>Shift</kbd>+<kbd>E</kbd>" }
+    ]
+  },
+
+  { "kind": "band", "num": "02", "category": "Surface Refinement" },
+  {
+    "kind": "card",
+    "name": "MESHmachine",
+    "what": "Post-bevel surgery: rework chamfers and fillets after the fact, fuse/unfuse/refuse surfaces, flatten, normal-edit, and stamp on detail with the Plug library.",
+    "when": "Fixing or reshaping bevels/fillets that a normal bevel can't handle.",
+    "shortcuts": [
+      { "desc": "menu <span class='or'>edit + object</span>", "keys": "<kbd>Y</kbd>" }
+    ],
+    "notes": [ "All tools live inside this one menu." ]
+  },
+  {
+    "kind": "card",
+    "name": "Edge Flow",
+    "menuOnly": true,
+    "what": "Relaxes selected edges/loops to follow surrounding surface curvature (like Maya's Edit Edge Flow). Also sets edge/vertex curve.",
+    "when": "Cleaning up edge loops so they flow smoothly across curved surfaces.",
+    "shortcuts": [
+      { "desc": "Edge menu → Set Flow / Curve / Linear", "keys": "<kbd>Ctrl</kbd>+<kbd>E</kbd>" },
+      { "desc": "Vertex menu → Set Vertex Curve", "keys": "<kbd>Ctrl</kbd>+<kbd>V</kbd>" }
+    ],
+    "notes": [ "Also in the edit-mode <kbd class='mouse'>Right-click</kbd> context menu → Set Flow." ]
+  },
+
+  { "kind": "band", "num": "03", "category": "Curves" },
+  {
+    "kind": "card",
+    "name": "CURVEmachine",
+    "what": "MESHmachine's little brother for curves — building and editing clean curve geometry for hard-surface detailing.",
+    "when": "Cable runs, pipes, and curve-based detail work.",
+    "shortcuts": [
+      { "desc": "menu <span class='or'>curve edit mode</span>", "keys": "<kbd>Y</kbd>" }
+    ]
+  },
+  {
+    "kind": "card",
+    "name": "Curves to Mesh",
+    "what": "Generates a clean quad surface that flows between two or more curves.",
+    "when": "Building surfaces/patches from curve \"rails.\"",
+    "shortcuts": [
+      { "desc": "run from the curve tools", "keys": "" }
+    ],
+    "notes": [
+      "While live: <kbd>Alt</kbd>+<kbd>↑↓←→</kbd> subdivisions · <kbd>Ctrl</kbd>+<kbd>R</kbd> refresh · <kbd>Shift</kbd>+<kbd>V</kbd> preview · <kbd>Alt</kbd>+<kbd>Enter</kbd> commit."
+    ]
+  },
+
+  { "kind": "band", "num": "04", "category": "CAD-Style Precision" },
+  {
+    "kind": "card",
+    "name": "Construction Lines",
+    "what": "CAD-style accurate modelling — work to exact dimensions with construction guides, snapping, and numeric input.",
+    "when": "Anything that needs real-world measurements and precise constraints.",
+    "shortcuts": [
+      { "desc": "launch <span class='or'>key left of 1</span>", "keys": "<kbd>Alt</kbd>+<kbd>`</kbd>" }
+    ],
+    "notes": [ "Then follow the on-screen prompts." ]
+  },
+  {
+    "kind": "card",
+    "name": "Grid Modeler",
+    "menuOnly": true,
+    "what": "Draw shapes on an interactive grid to cut into or build out geometry, with precise grid snapping.",
+    "when": "Greebles, panel detailing, and precise on-surface shapes.",
+    "shortcuts": [
+      { "desc": "Edit → <kbd class='mouse'>Right-click</kbd> → Grid Modeler", "keys": "" }
+    ],
+    "notes": [
+      "While live: <kbd>Q</kbd>/<kbd>Enter</kbd> confirm · <kbd>Ctrl</kbd>+<kbd class='mouse'>Scroll</kbd> resolution · <kbd>Alt</kbd>+<kbd class='mouse'>Scroll</kbd> extend grid · <kbd>W</kbd>/<kbd class='mouse'>RMB</kbd> switch mode · <kbd>Z</kbd> close shape · <kbd>X</kbd> from edge."
+    ]
+  },
+  {
+    "kind": "card",
+    "name": "Mesh Align Plus",
+    "what": "Align, move, and rotate geometry using points/lines/planes picked from the mesh itself — precise alignment without eyeballing.",
+    "when": "Matching parts together exactly using existing geometry as reference.",
+    "shortcuts": [
+      { "desc": "Sidebar → Align Plus tab", "keys": "<kbd>N</kbd>" }
+    ]
+  },
+  {
+    "kind": "card",
+    "name": "Simple Bend",
+    "menuOnly": true,
+    "what": "Bend geometry along an axis interactively, with angle/segment control.",
+    "when": "Curving a straight object (pipes, brackets, signage) to a set angle.",
+    "shortcuts": [
+      { "desc": "Edit → <kbd class='mouse'>Right-click</kbd> → Simple Bend", "keys": "" }
+    ],
+    "notes": [
+      "While live: <kbd>W</kbd> swap axis · <kbd>C</kbd> one side · <kbd>S</kbd> selected verts · <kbd>Shift</kbd> snap 5° · <kbd>Q</kbd> confirm."
+    ]
+  },
+
+  { "kind": "band", "num": "05", "category": "Workflow & Utility" },
+  {
+    "kind": "card",
+    "name": "MACHIN3tools",
+    "what": "A large suite of quality-of-life tools and pie menus: Smart Vert/Edge/Face, Focus, Mirror, Group, customised pies, and Hard Ops / BoxCutter integration.",
+    "when": "Everyday modelling speed-ups; ties the other tools together.",
+    "shortcuts": [
+      { "desc": "modes pie", "keys": "<kbd>Tab</kbd>" },
+      { "desc": "focus", "keys": "<kbd>F</kbd> / <kbd>Ctrl</kbd>+<kbd>F</kbd>" },
+      { "desc": "group", "keys": "<kbd>Ctrl</kbd>+<kbd>G</kbd>" },
+      { "desc": "symmetrize", "keys": "<kbd>Alt</kbd>+<kbd>X</kbd>" },
+      { "desc": "edge-constrained transform", "keys": "<kbd>Alt</kbd>+<kbd>R</kbd>" },
+      { "desc": "smart select", "keys": "<kbd>Alt</kbd>+<kbd class='mouse'>LMB</kbd>" }
+    ]
+  },
+  {
+    "kind": "card",
+    "name": "Quick Snap",
+    "what": "Maya-style interactive vertex/point snapping — grab a point and snap it precisely onto another.",
+    "when": "Precise point-to-point placement during edit/object mode.",
+    "shortcuts": [
+      { "desc": "snap", "keys": "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>" }
+    ]
+  },
+  {
+    "kind": "card",
+    "name": "Select Sim",
+    "menuOnly": true,
+    "what": "Quickly select faces/edges similar to the current selection (by shape hash).",
+    "when": "Grabbing all matching faces/edges in one step.",
+    "shortcuts": [
+      { "desc": "Edit → <kbd class='mouse'>Right-click</kbd> → Select Sim", "keys": "" }
+    ]
+  },
+  {
+    "kind": "card",
+    "name": "Mesh Copier",
+    "menuOnly": true,
+    "what": "Copy mesh detail from a source edge-ring/face onto destination faces.",
+    "when": "Reusing mesh detail across multiple surfaces.",
+    "shortcuts": [
+      { "desc": "Edit → <kbd class='mouse'>Right-click</kbd> → Mesh Copier", "keys": "" }
+    ],
+    "notes": [ "Set Source, then Paste." ]
+  },
+  {
+    "kind": "card",
+    "name": "Conform Object",
+    "menuOnly": true,
+    "what": "Wrap / conform one object onto the surface of another.",
+    "when": "Laying detail, decals-as-geometry, or panels onto a curved surface.",
+    "shortcuts": [
+      { "desc": "Object → <kbd>Object ▾</kbd> or <kbd class='mouse'>Right-click</kbd> → Conform Object", "keys": "" }
+    ]
+  },
+
+  { "kind": "band", "num": "06", "category": "Detailing Assets" },
+  {
+    "kind": "card",
+    "name": "Just Panels",
+    "what": "Generates panelling/greeble detail, with an accompanying asset pack.",
+    "when": "Fast sci-fi / hard-surface surface detailing.",
+    "shortcuts": [
+      { "desc": "pie menu", "keys": "<kbd>Alt</kbd>+<kbd>K</kbd>" }
+    ],
+    "notes": [
+      "Install the addon zip; load <b>JustPanels_ASSETS</b> via Preferences → File Paths → Asset Libraries."
+    ]
+  },
+
+  {
+    "kind": "footer",
+    "text": "Shortcuts reflect the addons' default keymaps as verified in Blender 5.0 (no personal overrides). \"Menu-only\" tools register no keymap of their own — they live solely inside the listed menus."
+  }
+]
