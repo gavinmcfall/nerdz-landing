@@ -109,6 +109,9 @@
 .desc { color: var(--ink-mid); flex: 1; min-width: 0; }
 .desc b { font-weight: 600; color: var(--ink); }
 .keys { text-align: right; white-space: nowrap; }
+/* breathing room around the literal + / separators between key chips */
+.keys kbd { margin: 0 0.7mm; }
+.keys kbd:last-child { margin-right: 0; }
 
 kbd {
   display: inline-block;
@@ -136,7 +139,7 @@ kbd.mouse { background: #ece4d0; }
   line-height: 1.7;
 }
 .note strong { font-style: normal; color: var(--ink); font-weight: 600; }
-.note kbd { font-style: normal; }
+.note kbd { font-style: normal; margin: 0 0.6mm; }
 
 .ad-foot {
   margin-top: 2.6mm;

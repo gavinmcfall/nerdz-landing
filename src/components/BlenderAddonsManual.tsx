@@ -129,7 +129,10 @@ const STYLES = `
   font-style: italic; font-size: 11.5px; color: var(--ink-mute); line-height: 1.9;
 }
 .blender-addons .note strong { font-style: normal; color: var(--ink); font-weight: 600; }
-.blender-addons .note kbd { font-style: normal; margin: 1.5px 0; }
+.blender-addons .note kbd { font-style: normal; margin: 1.5px 2.5px; }
+/* breathing room around the literal + / separators between key chips */
+.blender-addons .keys kbd { margin: 0 2.5px; }
+.blender-addons .keys kbd:last-child { margin-right: 0; }
 .blender-addons .ad-foot {
   grid-column: 1 / -1;
   margin-top: 16px; padding-top: 10px;
