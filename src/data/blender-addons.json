@@ -18,13 +18,13 @@
     "what": "The hub of the hard-surface workflow — booleans, bevels, mirroring, modifier management, and material/viewport helpers, all behind one menu.",
     "when": "Any destructive/boolean hard-surface work; managing the modifier stack.",
     "shortcuts": [
-      { "desc": "main menu", "keys": "<kbd>Q</kbd>" },
-      { "desc": "pie menu", "keys": "<kbd>Shift</kbd>+<kbd>Q</kbd>" },
+      { "desc": "Main menu", "keys": "<kbd>Q</kbd>" },
+      { "desc": "Pie menu", "keys": "<kbd>Shift</kbd>+<kbd>Q</kbd>" },
       { "desc": "HOps Helper", "keys": "<kbd>Ctrl</kbd>+<kbd>`</kbd>" },
-      { "desc": "materials", "keys": "<kbd>Alt</kbd>+<kbd>M</kbd>" },
-      { "desc": "viewport", "keys": "<kbd>Alt</kbd>+<kbd>V</kbd>" },
-      { "desc": "interactive mirror", "keys": "<kbd>Alt</kbd>+<kbd>X</kbd>" },
-      { "desc": "bevel helpers", "keys": "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>" }
+      { "desc": "Materials", "keys": "<kbd>Alt</kbd>+<kbd>M</kbd>" },
+      { "desc": "Viewport", "keys": "<kbd>Alt</kbd>+<kbd>V</kbd>" },
+      { "desc": "Interactive mirror", "keys": "<kbd>Alt</kbd>+<kbd>X</kbd>" },
+      { "desc": "Bevel helpers", "keys": "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>" }
     ],
     "notes": [
       "<strong>Booleans</strong> (object mode): <kbd>Ctrl</kbd>+<kbd>Num −</kbd> difference · <kbd>+</kbd> union · <kbd>*</kbd> intersect · <kbd>÷</kbd> slash."
@@ -36,7 +36,7 @@
     "what": "Draw-on-surface cutting. Sketch a shape and it becomes a live boolean cut, inset, or new object. Pairs with Hard Ops.",
     "when": "Fast carving of panels, slots, and shapes directly in the viewport.",
     "shortcuts": [
-      { "desc": "activate BoxCutter", "keys": "<kbd>Alt</kbd>+<kbd>W</kbd>" }
+      { "desc": "Activate BoxCutter", "keys": "<kbd>Alt</kbd>+<kbd>W</kbd>" }
     ],
     "notes": [
       "Tool active: <kbd>Ctrl</kbd>+<kbd>D</kbd> pie menu · <kbd>D</kbd> helper · <kbd>C</kbd> custom."
@@ -49,7 +49,7 @@
     "what": "Manifold inset + extrude — \"punch\" clean holes and recesses that stay watertight, without the boolean cleanup.",
     "when": "Insetting/extruding faces where you need manifold, fuse-ready geometry.",
     "shortcuts": [
-      { "desc": "edit mesh", "keys": "<kbd>Shift</kbd>+<kbd>E</kbd>" }
+      { "desc": "Edit mesh", "keys": "<kbd>Shift</kbd>+<kbd>E</kbd>" }
     ]
   },
 
@@ -60,7 +60,7 @@
     "what": "Post-bevel surgery: rework chamfers and fillets after the fact, fuse/unfuse/refuse surfaces, flatten, normal-edit, and stamp on detail with the Plug library.",
     "when": "Fixing or reshaping bevels/fillets that a normal bevel can't handle.",
     "shortcuts": [
-      { "desc": "menu <span class='or'>edit + object</span>", "keys": "<kbd>Y</kbd>" }
+      { "desc": "Menu <span class='or'>edit + object</span>", "keys": "<kbd>Y</kbd>" }
     ],
     "notes": [ "All tools live inside this one menu." ]
   },
@@ -84,7 +84,7 @@
     "what": "MESHmachine's little brother for curves — building and editing clean curve geometry for hard-surface detailing.",
     "when": "Cable runs, pipes, and curve-based detail work.",
     "shortcuts": [
-      { "desc": "menu <span class='or'>curve edit mode</span>", "keys": "<kbd>Y</kbd>" }
+      { "desc": "Menu <span class='or'>curve edit mode</span>", "keys": "<kbd>Y</kbd>" }
     ]
   },
   {
@@ -93,7 +93,7 @@
     "what": "Generates a clean quad surface that flows between two or more curves.",
     "when": "Building surfaces/patches from curve \"rails.\"",
     "shortcuts": [
-      { "desc": "run from the curve tools", "keys": "" }
+      { "desc": "Run from the curve tools", "keys": "" }
     ],
     "notes": [
       "While live: <kbd>Alt</kbd>+<kbd>↑↓←→</kbd> subdivisions · <kbd>Ctrl</kbd>+<kbd>R</kbd> refresh · <kbd>Shift</kbd>+<kbd>V</kbd> preview · <kbd>Alt</kbd>+<kbd>Enter</kbd> commit."
@@ -107,7 +107,7 @@
     "what": "CAD-style accurate modelling — work to exact dimensions with construction guides, snapping, and numeric input.",
     "when": "Anything that needs real-world measurements and precise constraints.",
     "shortcuts": [
-      { "desc": "launch <span class='or'>key left of 1</span>", "keys": "<kbd>Alt</kbd>+<kbd>`</kbd>" }
+      { "desc": "Launch <span class='or'>key left of 1</span>", "keys": "<kbd>Alt</kbd>+<kbd>`</kbd>" }
     ],
     "notes": [ "Then follow the on-screen prompts." ]
   },
@@ -154,12 +154,12 @@
     "what": "A large suite of quality-of-life tools and pie menus: Smart Vert/Edge/Face, Focus, Mirror, Group, customised pies, and Hard Ops / BoxCutter integration.",
     "when": "Everyday modelling speed-ups; ties the other tools together.",
     "shortcuts": [
-      { "desc": "modes pie", "keys": "<kbd>Tab</kbd>" },
-      { "desc": "focus", "keys": "<kbd>F</kbd> / <kbd>Ctrl</kbd>+<kbd>F</kbd>" },
-      { "desc": "group", "keys": "<kbd>Ctrl</kbd>+<kbd>G</kbd>" },
-      { "desc": "symmetrize", "keys": "<kbd>Alt</kbd>+<kbd>X</kbd>" },
-      { "desc": "edge-constrained transform", "keys": "<kbd>Alt</kbd>+<kbd>R</kbd>" },
-      { "desc": "smart select", "keys": "<kbd>Alt</kbd>+<kbd class='mouse'>LMB</kbd>" }
+      { "desc": "Modes pie", "keys": "<kbd>Tab</kbd>" },
+      { "desc": "Focus", "keys": "<kbd>F</kbd> / <kbd>Ctrl</kbd>+<kbd>F</kbd>" },
+      { "desc": "Group", "keys": "<kbd>Ctrl</kbd>+<kbd>G</kbd>" },
+      { "desc": "Symmetrize", "keys": "<kbd>Alt</kbd>+<kbd>X</kbd>" },
+      { "desc": "Edge-constrained transform", "keys": "<kbd>Alt</kbd>+<kbd>R</kbd>" },
+      { "desc": "Smart select", "keys": "<kbd>Alt</kbd>+<kbd class='mouse'>LMB</kbd>" }
     ]
   },
   {
@@ -168,7 +168,7 @@
     "what": "Maya-style interactive vertex/point snapping — grab a point and snap it precisely onto another.",
     "when": "Precise point-to-point placement during edit/object mode.",
     "shortcuts": [
-      { "desc": "snap", "keys": "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>" }
+      { "desc": "Snap", "keys": "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>" }
     ]
   },
   {
@@ -210,7 +210,7 @@
     "what": "Generates panelling/greeble detail, with an accompanying asset pack.",
     "when": "Fast sci-fi / hard-surface surface detailing.",
     "shortcuts": [
-      { "desc": "pie menu", "keys": "<kbd>Alt</kbd>+<kbd>K</kbd>" }
+      { "desc": "Pie menu", "keys": "<kbd>Alt</kbd>+<kbd>K</kbd>" }
     ],
     "notes": [
       "Install the addon zip; load <b>JustPanels_ASSETS</b> via Preferences → File Paths → Asset Libraries."

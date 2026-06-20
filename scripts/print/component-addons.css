@@ -133,7 +133,7 @@ kbd.mouse { background: #ece4d0; }
   font-style: italic;
   font-size: 6.6pt;
   color: var(--ink-mute);
-  line-height: 1.3;
+  line-height: 1.7;
 }
 .note strong { font-style: normal; color: var(--ink); font-weight: 600; }
 .note kbd { font-style: normal; }

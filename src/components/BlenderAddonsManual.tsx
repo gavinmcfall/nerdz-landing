@@ -126,10 +126,10 @@ const STYLES = `
 .blender-addons .note {
   margin-top: 8px; padding-top: 5px;
   border-top: 1px dashed var(--rule);
-  font-style: italic; font-size: 11.5px; color: var(--ink-mute); line-height: 1.4;
+  font-style: italic; font-size: 11.5px; color: var(--ink-mute); line-height: 1.9;
 }
 .blender-addons .note strong { font-style: normal; color: var(--ink); font-weight: 600; }
-.blender-addons .note kbd { font-style: normal; }
+.blender-addons .note kbd { font-style: normal; margin: 1.5px 0; }
 .blender-addons .ad-foot {
   grid-column: 1 / -1;
   margin-top: 16px; padding-top: 10px;
