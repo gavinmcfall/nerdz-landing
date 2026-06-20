@@ -183,9 +183,11 @@ html[data-font="dyslexic"] .mono {
 /* ── COMPONENT LAYOUT (type:'component') ──────────────────── */
 .manual--component {
   padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: 0;
+  /* Keep the base .manual border, border-radius and drop shadow so the
+     component sheet reads as a framed sheet floating on the bench — rounded
+     corners, not a flat cream block bleeding into the dark floor. The inner
+     component supplies its own background; overflow:hidden clips it to the
+     rounded corners. */
   overflow: hidden;
 }
 
