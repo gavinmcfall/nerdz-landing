@@ -118,6 +118,55 @@ def render_component_body(slug: str) -> str:
     return f'<div class="sheet-body">{"".join(cards)}</div>'
 
 
+def render_addon_body(slug: str) -> str:
+    """Addon-cheatsheet layout: a flat ordered list of band / menu / card /
+    footer items from <slug>.json. One card per addon, full-width category
+    bands, 2-col grid (component-addons.css). Inline-HTML fields (desc, keys,
+    what, when, notes) are passed through raw; plain-text fields are escaped."""
+    data_path = DATA_DIR / f"{slug}.json"
+    if not data_path.exists():
+        raise FileNotFoundError(
+            f"addon sheet '{slug}' needs {data_path} (hand-authored data file)"
+        )
+    items = json.loads(data_path.read_text(encoding="utf-8"))
+
+    out = []
+    for it in items:
+        kind = it.get("kind")
+        if kind == "band":
+            out.append(
+                '<div class="ad-band">'
+                f'<span>{html_lib.escape(it["category"])}</span>'
+                f'<span class="ad-band-num">{html_lib.escape(it.get("num", ""))}</span>'
+                "</div>"
+            )
+        elif kind == "menu":
+            out.append(
+                '<section class="ad-card ad-menu">'
+                f'<h2 class="ad-name">{html_lib.escape(it["title"])}</h2>'
+                f'{_rows_html(it.get("rows", []))}'
+                "</section>"
+            )
+        elif kind == "footer":
+            out.append(f'<div class="ad-foot">{html_lib.escape(it["text"])}</div>')
+        else:  # card
+            badge = '<span class="ad-badge">menu-only</span>' if it.get("menuOnly") else ""
+            sub = f'<div class="ad-sub">{html_lib.escape(it["sub"])}</div>' if it.get("sub") else ""
+            what = f'<p class="ad-what">{html_lib.escape(it["what"])}</p>' if it.get("what") else ""
+            when = (
+                f'<p class="ad-when"><span>When</span> {html_lib.escape(it["when"])}</p>'
+                if it.get("when") else ""
+            )
+            notes = "".join(f'<div class="note">{n}</div>' for n in it.get("notes", []))
+            out.append(
+                '<section class="ad-card">'
+                f'<h2 class="ad-name"><span>{html_lib.escape(it["name"])}</span>{badge}</h2>'
+                f'{sub}{what}{when}{_rows_html(it.get("shortcuts", []))}{notes}'
+                "</section>"
+            )
+    return f'<div class="sheet-body ad-grid">{"".join(out)}</div>'
+
+
 def render_prose_body(slug: str) -> str:
     """Prose sheets render their MDX markdown body to HTML. Prose MDX here is
     plain CommonMark (+ GFM tables) with no JSX, so markdown-it-py renders it
@@ -141,6 +190,7 @@ BODY_RENDERERS = {
     "component": lambda slug, fm: render_component_body(slug),
     "prose": lambda slug, fm: render_prose_body(slug),
     "poster": lambda slug, fm: render_poster_body(slug, fm),
+    "addons": lambda slug, fm: render_addon_body(slug),
 }
 
 # Per-type layout CSS appended after base.css.
@@ -148,6 +198,7 @@ TYPE_CSS = {
     "component": "component.css",
     "prose": "prose.css",
     "poster": "component.css",
+    "addons": "component-addons.css",
 }
 
 
@@ -159,11 +210,12 @@ def load_css(name: str) -> str:
 
 def build_html(slug: str, fm: dict) -> str:
     sheet_type = fm.get("type", "component")
+    layout_key = fm.get("printLayout") or sheet_type
     title = fm.get("title", slug)
 
-    renderer = BODY_RENDERERS.get(sheet_type)
+    renderer = BODY_RENDERERS.get(layout_key)
     if renderer is None:
-        raise ValueError(f"unknown sheet type '{sheet_type}' for {slug}")
+        raise ValueError(f"unknown layout '{layout_key}' for {slug}")
     body = renderer(slug, fm)
 
     base = (
@@ -171,7 +223,7 @@ def build_html(slug: str, fm: dict) -> str:
         .replace("__PAGE_SIZE__", page_size(fm))
         .replace("__SHEET_TITLE__", title.replace('"', "'"))
     )
-    layout = load_css(TYPE_CSS.get(sheet_type, "component.css"))
+    layout = load_css(TYPE_CSS.get(layout_key, "component.css"))
 
     # Title em: render "Blender Modelling" as "Blender <em>Modelling</em>"
     # (italic second word) to echo the web header, when there are 2 words.
