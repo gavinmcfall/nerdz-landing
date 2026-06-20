@@ -1,23 +1,32 @@
 /* Print layout for the blender-addons sheet (printLayout: addons).
-   2-col card grid, full-width category bands, A4 portrait, ~2 pages.
-   Reads base.css tokens & @page chrome. break-inside:avoid keeps cards
-   whole; break-after:avoid on bands stops a band orphaning from its cards. */
+   WeasyPrint's CSS Grid does NOT handle full-width spanning (grid-column:
+   1 / -1) — spanning items collapse and corrupt track sizing. So the menu
+   card, category bands, and footer are full-width BLOCK elements, and only
+   each category's cards sit in a 2-col grid (.ad-cat). No spanning anywhere.
+   Reads base.css tokens & @page chrome. break-inside:avoid keeps cards whole;
+   break-after:avoid on bands stops a band orphaning from its first cards. */
 
-.ad-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.4mm;
-  align-items: start;
+.sheet-body {
   font-size: 7.4pt;
   line-height: 1.25;
 }
 
+/* Category cards laid out two-up. minmax(0,1fr) lets columns shrink so long
+   prose wraps instead of overflowing the page (plain 1fr can size to
+   max-content in WeasyPrint and spill past the right margin). */
+.ad-cat {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.4mm;
+  align-items: start;
+  margin-bottom: 1mm;
+}
+
 .ad-band {
-  grid-column: 1 / -1;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin: 1.6mm 0 0;
+  margin: 2.6mm 0 1.4mm;
   padding-bottom: 0.8mm;
   border-bottom: 0.5pt solid var(--rule-strong);
   font-weight: 600;
@@ -27,7 +36,6 @@
   color: var(--ink-mid);
   break-after: avoid;
 }
-.ad-band:first-of-type { margin-top: 0; }
 .ad-band-num {
   font-style: italic;
   font-weight: 400;
@@ -44,13 +52,14 @@
   border-radius: 1.4mm;
   padding: 1.6mm 2.2mm 1.8mm;
 }
-.ad-menu { grid-column: 1 / -1; }
 
+/* The menu card spans the full width as its own block (not in a grid). */
+.ad-menu { margin-bottom: 1mm; }
+
+/* Block title; the menu-only badge sits inline after the name. Using a block
+   (not flex) keeps two-word names like "Hard Ops" on one line — WeasyPrint's
+   flex sizing wrapped them. */
 .ad-name {
-  display: flex;
-  align-items: baseline;
-  gap: 1.6mm;
-  flex-wrap: wrap;
   font-weight: 600;
   font-size: 8.6pt;
   letter-spacing: -0.01em;
@@ -58,15 +67,18 @@
   line-height: 1.15;
 }
 .ad-badge {
+  display: inline-block;
+  margin-left: 1.6mm;
   font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
   font-size: 5.6pt;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--ink-mute);
   border: 0.4pt solid var(--rule-strong);
   border-radius: 0.6mm;
   padding: 0 1mm;
-  line-height: 1.5;
+  vertical-align: 0.4mm;
 }
 .ad-sub {
   font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
@@ -127,8 +139,7 @@ kbd.mouse { background: #ece4d0; }
 .note kbd { font-style: normal; }
 
 .ad-foot {
-  grid-column: 1 / -1;
-  margin-top: 2.4mm;
+  margin-top: 2.6mm;
   padding-top: 1.4mm;
   border-top: 0.5pt solid var(--rule);
   font-style: italic;

@@ -119,10 +119,15 @@ def render_component_body(slug: str) -> str:
 
 
 def render_addon_body(slug: str) -> str:
-    """Addon-cheatsheet layout: a flat ordered list of band / menu / card /
-    footer items from <slug>.json. One card per addon, full-width category
-    bands, 2-col grid (component-addons.css). Inline-HTML fields (desc, keys,
-    what, when, notes) are passed through raw; plain-text fields are escaped."""
+    """Addon-cheatsheet layout from <slug>.json: a flat ordered list of
+    band / menu / card / footer items. The menu card, category bands, and
+    footer render as full-width BLOCK elements; each category's cards sit in
+    their own 2-col grid (.ad-cat). This deliberately avoids full-width grid
+    spanning (grid-column: 1 / -1), which WeasyPrint's grid implementation
+    does not handle — spanning items there collapse and corrupt track sizing.
+    Inline-HTML fields (desc, keys, notes) pass through raw; what/when and the
+    plain-text fields (name, title, category, sub, num) are escaped — matching
+    how the web component (BlenderAddonsManual) renders them."""
     data_path = DATA_DIR / f"{slug}.json"
     if not data_path.exists():
         raise FileNotFoundError(
@@ -131,16 +136,44 @@ def render_addon_body(slug: str) -> str:
     items = json.loads(data_path.read_text(encoding="utf-8"))
 
     out = []
+    cat_open = False
+
+    def close_cat() -> None:
+        nonlocal cat_open
+        if cat_open:
+            out.append("</div>")
+            cat_open = False
+
+    def card_html(it: dict) -> str:
+        badge = '<span class="ad-badge">menu-only</span>' if it.get("menuOnly") else ""
+        sub = f'<div class="ad-sub">{html_lib.escape(it["sub"])}</div>' if it.get("sub") else ""
+        what = f'<p class="ad-what">{html_lib.escape(it["what"])}</p>' if it.get("what") else ""
+        when = (
+            f'<p class="ad-when"><span>When</span> {html_lib.escape(it["when"])}</p>'
+            if it.get("when") else ""
+        )
+        notes = "".join(f'<div class="note">{n}</div>' for n in it.get("notes", []))
+        return (
+            '<section class="ad-card">'
+            f'<h2 class="ad-name">{html_lib.escape(it["name"])}{badge}</h2>'
+            f'{sub}{what}{when}{_rows_html(it.get("shortcuts", []))}{notes}'
+            "</section>"
+        )
+
     for it in items:
         kind = it.get("kind")
         if kind == "band":
+            close_cat()
             out.append(
                 '<div class="ad-band">'
                 f'<span>{html_lib.escape(it["category"])}</span>'
                 f'<span class="ad-band-num">{html_lib.escape(it.get("num", ""))}</span>'
                 "</div>"
             )
+            out.append('<div class="ad-cat">')
+            cat_open = True
         elif kind == "menu":
+            close_cat()
             out.append(
                 '<section class="ad-card ad-menu">'
                 f'<h2 class="ad-name">{html_lib.escape(it["title"])}</h2>'
@@ -148,23 +181,12 @@ def render_addon_body(slug: str) -> str:
                 "</section>"
             )
         elif kind == "footer":
+            close_cat()
             out.append(f'<div class="ad-foot">{html_lib.escape(it["text"])}</div>')
         else:  # card
-            badge = '<span class="ad-badge">menu-only</span>' if it.get("menuOnly") else ""
-            sub = f'<div class="ad-sub">{html_lib.escape(it["sub"])}</div>' if it.get("sub") else ""
-            what = f'<p class="ad-what">{html_lib.escape(it["what"])}</p>' if it.get("what") else ""
-            when = (
-                f'<p class="ad-when"><span>When</span> {html_lib.escape(it["when"])}</p>'
-                if it.get("when") else ""
-            )
-            notes = "".join(f'<div class="note">{n}</div>' for n in it.get("notes", []))
-            out.append(
-                '<section class="ad-card">'
-                f'<h2 class="ad-name"><span>{html_lib.escape(it["name"])}</span>{badge}</h2>'
-                f'{sub}{what}{when}{_rows_html(it.get("shortcuts", []))}{notes}'
-                "</section>"
-            )
-    return f'<div class="sheet-body ad-grid">{"".join(out)}</div>'
+            out.append(card_html(it))
+    close_cat()
+    return f'<div class="sheet-body">{"".join(out)}</div>'
 
 
 def render_prose_body(slug: str) -> str:
