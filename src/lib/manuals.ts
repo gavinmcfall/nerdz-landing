@@ -39,6 +39,10 @@ const FrontmatterSchema = z
     // orientation and the printed sheet wants another (e.g. landscape
     // grid on screen, portrait print).
     printPaperSize: PaperSize.optional(),
+    // Optional: selects a specialised print body renderer in
+    // scripts/render_pdf.py (e.g. "addons"). Falls back to `type`.
+    // Web-irrelevant — only the PDF renderer reads it.
+    printLayout: z.string().optional(),
     category: z.string().min(1),
     tags: z.array(z.string()).default([]),
     updated: IsoDateString,
