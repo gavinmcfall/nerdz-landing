@@ -50,12 +50,12 @@ Item shape: chapter → `{ "id": "eos-17", "book": "eos", "label": "Empire of St
 **Interfaces:**
 - Produces: `type ReadingGuide = { slug: string; title: string; summary: string; intro: string; updated: string; books: { key: string; title: string; accent: "gold" | "glow" }[]; items: { id: string; book: string; label: string }[] }`; `listGuides(): Promise<ReadingGuide[]>`; `getGuide(slug: string): Promise<ReadingGuide | null>`.
 
-- [ ] **Step 1: Write the generator** embedding the run-length sequence above; it expands items, asserts the invariants (145/76/69, no duplicate ids), and writes `src/lib/reading.data.json` containing one guide:
+- [x] **Step 1: Write the generator** embedding the run-length sequence above; it expands items, asserts the invariants (145/76/69, no duplicate ids), and writes `src/lib/reading.data.json` containing one guide:
   - slug `eos-tod-reading-order`; title `Empire of Storms & Tower of Dawn — Tandem Reading Order`; summary `Read EOS and ToD together in alternating chronological order — an interactive checklist that remembers your place.`; intro (own words): `Empire of Storms and Tower of Dawn run in parallel — two stories in two places over the same stretch of time, with no overlap. You can read either first, but reading them in tandem keeps the timeline in sync: follow this list top to bottom, ticking chapters as you go. Your progress is saved in this browser.`; updated `2026-08-26`; books: eos/`Empire of Storms`/accent `gold`, tod/`Tower of Dawn`/accent `glow`.
-- [ ] **Step 2: Run it** (`node scripts/gen-reading-eos-tod.mjs`) — expect the assertion summary and the JSON file. Spot-check against the image: first 8 items, the seam around EOS CH51→TOD CH36, ToD 52–53 adjacency, last 13 items.
-- [ ] **Step 3: Write `src/lib/reading.ts`** — zod schema mirroring `src/lib/manuals.ts` (validate at module load, throw with slug context; `.refine` that every `item.book` matches a `books[].key` and ids are unique), export types + `listGuides` / `getGuide`.
-- [ ] **Step 4: Verify** — `npx tsc --noEmit` clean; `node` one-liner loading the JSON and printing counts.
-- [ ] **Step 5: Commit** `feat(reading): EOS/ToD tandem reading-order data + typed accessor`.
+- [x] **Step 2: Run it** (`node scripts/gen-reading-eos-tod.mjs`) — expect the assertion summary and the JSON file. Spot-check against the image: first 8 items, the seam around EOS CH51→TOD CH36, ToD 52–53 adjacency, last 13 items.
+- [x] **Step 3: Write `src/lib/reading.ts`** — zod schema mirroring `src/lib/manuals.ts` (validate at module load, throw with slug context; `.refine` that every `item.book` matches a `books[].key` and ids are unique), export types + `listGuides` / `getGuide`.
+- [x] **Step 4: Verify** — `npx tsc --noEmit` clean; `node` one-liner loading the JSON and printing counts.
+- [x] **Step 5: Commit** `feat(reading): EOS/ToD tandem reading-order data + typed accessor`.
 
 ### Task 2: `/reading` pages + interactive checklist + nav
 
@@ -67,18 +67,18 @@ Item shape: chapter → `{ "id": "eos-17", "book": "eos", "label": "Empire of St
 - Consumes: `listGuides` / `getGuide` / `ReadingGuide` from Task 1.
 - Produces: routes `/reading` and `/reading/eos-tod-reading-order`; PDF download links point at `/reading/<slug>.pdf` (Task 3's output path).
 
-- [ ] **Step 1: `layout.tsx`** — metadata (`Reading — nerdz.cloud`, summary description) + `import "./reading.css"`, children passthrough (pattern: `src/app/manuals/layout.tsx`, minus AccessibilityMenu).
-- [ ] **Step 2: Hub `page.tsx`** — server component; `section.section > div.frame > SectionHead` (title `The Reading <em>shelf</em>`, caption `reading guides · checklists · what i'm reading (soon)`), then a card per guide (`rg-hub__card`): title, summary, mono meta line (`145 steps · updated 2026-08-26 · PDF`), whole card links to `/reading/<slug>`.
-- [ ] **Step 3: `[slug]/page.tsx`** — `force-dynamic`, `generateMetadata` from guide, `notFound()` on unknown slug, renders `<ReadingGuide guide={guide} />` inside `section.section > div.frame`.
-- [ ] **Step 4: `ReadingGuide.tsx`** (`"use client"`) — props `{ guide: ReadingGuide }`:
+- [x] **Step 1: `layout.tsx`** — metadata (`Reading — nerdz.cloud`, summary description) + `import "./reading.css"`, children passthrough (pattern: `src/app/manuals/layout.tsx`, minus AccessibilityMenu).
+- [x] **Step 2: Hub `page.tsx`** — server component; `section.section > div.frame > SectionHead` (title `The Reading <em>shelf</em>`, caption `reading guides · checklists · what i'm reading (soon)`), then a card per guide (`rg-hub__card`): title, summary, mono meta line (`145 steps · updated 2026-08-26 · PDF`), whole card links to `/reading/<slug>`.
+- [x] **Step 3: `[slug]/page.tsx`** — `force-dynamic`, `generateMetadata` from guide, `notFound()` on unknown slug, renders `<ReadingGuide guide={guide} />` inside `section.section > div.frame`.
+- [x] **Step 4: `ReadingGuide.tsx`** (`"use client"`) — props `{ guide: ReadingGuide }`:
   - `checked: Set<string>` state; on mount (effect) hydrate from `localStorage[nerdz.reading.<slug>]` inside try/catch, filtering to known ids; first paint renders unticked (no hydration mismatch).
   - `toggle(id)` updates the set and persists `{ v: 1, checked: [...] }` (try/catch — storage denied just means no persistence).
   - Sticky header bar: `<progress>`-style bar (div width %), `N / 145 · P%` mono counter, buttons: `Jump to my place` (scrollIntoView on first unchecked item's `li` id `rg-item-<id>`, smooth/center), `Download PDF` (`<a href="/reading/<slug>.pdf" download>`), `Reset` (`window.confirm` guarded, clears set + storage).
   - Intro paragraph, then `<ol className="rg-list">`; each `<li id>` → `<label>` with a real `<input type="checkbox">` (visually replaced) + label text; `rg-item--gold` / `rg-item--glow` class from the item's book accent; checked rows dim + strike.
-- [ ] **Step 5: `reading.css`** — hub cards; sticky progress bar (`--paper-soft` bg, `--glow` fill); list as CSS columns (1 col mobile, 2 ≥720px, 3 ≥1100px, `break-inside: avoid` on items); custom checkbox (accent border, tick via `::after`); accents `color: var(--gold)` / `var(--glow)`; tokens only.
-- [ ] **Step 6: Nav edits** in `nav.ts` + `Colophon.tsx` as listed.
-- [ ] **Step 7: Verify** — `npm run lint`, `npm run build`; dev-server interaction pass: tick several, reload (persists), jump scrolls to first unchecked, reset clears after confirm, both themes legible, mobile width sane.
-- [ ] **Step 8: Commit** `feat(reading): /reading hub + interactive EOS/ToD checklist with saved progress`.
+- [x] **Step 5: `reading.css`** — hub cards; sticky progress bar (`--paper-soft` bg, `--glow` fill); list as CSS columns (1 col mobile, 2 ≥720px, 3 ≥1100px, `break-inside: avoid` on items); custom checkbox (accent border, tick via `::after`); accents `color: var(--gold)` / `var(--glow)`; tokens only.
+- [x] **Step 6: Nav edits** in `nav.ts` + `Colophon.tsx` as listed.
+- [x] **Step 7: Verify** — `npm run lint`, `npm run build`; dev-server interaction pass: tick several, reload (persists), jump scrolls to first unchecked, reset clears after confirm, both themes legible, mobile width sane.
+- [x] **Step 8: Commit** `feat(reading): /reading hub + interactive EOS/ToD checklist with saved progress`.
 
 ### Task 3: Fillable/printable PDF
 
@@ -90,18 +90,18 @@ Item shape: chapter → `{ "id": "eos-17", "book": "eos", "label": "Empire of St
 - Consumes: `src/lib/reading.data.json`.
 - Produces: `public/reading/<slug>.pdf` — the path Task 2's download links already use.
 
-- [ ] **Step 1: Probe the toolchain** — `wsl -e /home/gavin/home-ops/.venv/bin/python3 -c "import weasyprint; print(weasyprint.__version__)"`. PDF form support needs ≥ 57 (`write_pdf(pdf_forms=True)`); if older, `pip install -U weasyprint` in that venv; if WSL/venv unreachable from this machine, STOP and tell Gavin what's needed rather than switching PDF tech.
-- [ ] **Step 2: `scripts/print/reading.css`** — `@page A4 landscape` with the field-manual margin-box header style (reuse conventions from `scripts/print/base.css`; check whether base.css can be reused directly with `__PAGE_SIZE__`/`__SHEET_TITLE__` replaced, as `render_pdf.py` does); body: intro paragraph full-width, then checklist in `columns: 5` at ~7.5pt (matches the source image's 5-column landscape density); row = checkbox input + label, `.rg-eos { color: #1c1420 }`, `.rg-tod { color: #5a0e93 }`; `break-inside: avoid`.
-- [ ] **Step 3: `render_reading_pdf.py`** — argparse over guide slug / `--all`; loads `reading.data.json`, builds HTML (escaped labels, `<input type="checkbox" name="<id>">` per item), assembles with the print CSS, `HTML(string=..., base_url=ROOT).write_pdf(out, pdf_forms=True)` → `public/reading/<slug>.pdf`. Same per-slug error reporting shape as `render_pdf.py`.
-- [ ] **Step 4: Render + verify** — run it via the WSL venv python; open the PDF: 1–2 pages, all 145 rows present (count them programmatically via a PDF lib or visual column check), checkboxes are clickable form fields (verify AcroForm entries exist, e.g. `grep -c '/FT /Btn'` on the uncompressed PDF or open in a viewer), colour split correct, prints clean in grayscale.
-- [ ] **Step 5: Commit** `feat(reading): fillable/printable EOS-ToD checklist PDF via WeasyPrint`.
+- [x] **Step 1: Probe the toolchain** — `wsl -e /home/gavin/home-ops/.venv/bin/python3 -c "import weasyprint; print(weasyprint.__version__)"`. PDF form support needs ≥ 57 (`write_pdf(pdf_forms=True)`); if older, `pip install -U weasyprint` in that venv; if WSL/venv unreachable from this machine, STOP and tell Gavin what's needed rather than switching PDF tech.
+- [x] **Step 2: `scripts/print/reading.css`** — `@page A4 landscape` with the field-manual margin-box header style (reuse conventions from `scripts/print/base.css`; check whether base.css can be reused directly with `__PAGE_SIZE__`/`__SHEET_TITLE__` replaced, as `render_pdf.py` does); body: intro paragraph full-width, then checklist in `columns: 5` at ~7.5pt (matches the source image's 5-column landscape density); row = checkbox input + label, `.rg-eos { color: #1c1420 }`, `.rg-tod { color: #5a0e93 }`; `break-inside: avoid`.
+- [x] **Step 3: `render_reading_pdf.py`** — argparse over guide slug / `--all`; loads `reading.data.json`, builds HTML (escaped labels, `<input type="checkbox" name="<id>">` per item), assembles with the print CSS, `HTML(string=..., base_url=ROOT).write_pdf(out, pdf_forms=True)` → `public/reading/<slug>.pdf`. Same per-slug error reporting shape as `render_pdf.py`.
+- [x] **Step 4: Render + verify** — run it via the WSL venv python; open the PDF: 1–2 pages, all 145 rows present (count them programmatically via a PDF lib or visual column check), checkboxes are clickable form fields (verify AcroForm entries exist, e.g. `grep -c '/FT /Btn'` on the uncompressed PDF or open in a viewer), colour split correct, prints clean in grayscale.
+- [x] **Step 5: Commit** `feat(reading): fillable/printable EOS-ToD checklist PDF via WeasyPrint`.
 
 ### Task 4: Final verification + housekeeping
 
-- [ ] **Step 1:** Full pass: `npm run lint`, `npm run build`, browser pass over `/reading` + guide + PDF link 200s in dev.
-- [ ] **Step 2:** Update `.claude/session-journal.md` (Current state is stale — references `feat/hub-redesign`; rewrite to reflect main + this feature) and log the completion entry; worklog `CMT` entries after commits.
-- [ ] **Step 3:** Check `git status` for stray files (other sessions are active — commit only files from this plan).
-- [ ] **Step 4:** Commit any journal/doc remainder `chore(reading): journal + plan checkboxes`.
+- [x] **Step 1:** Full pass: `npm run lint`, `npm run build`, browser pass over `/reading` + guide + PDF link 200s in dev.
+- [x] **Step 2:** Update `.claude/session-journal.md` (Current state is stale — references `feat/hub-redesign`; rewrite to reflect main + this feature) and log the completion entry; worklog `CMT` entries after commits.
+- [x] **Step 3:** Check `git status` for stray files (other sessions are active — commit only files from this plan).
+- [x] **Step 4:** Commit any journal/doc remainder `chore(reading): journal + plan checkboxes`.
 
 ## Self-Review
 

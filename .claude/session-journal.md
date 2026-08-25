@@ -2,7 +2,14 @@
 
 ## Current state
 
-**Branch:** `feat/hub-redesign` (uncommitted). Branched from `main`.
+**Branch:** `main`. The hub redesign shipped long ago; the site is the personal-hub design (Topbar/Hero/Workshop/Workbench/Ramblings/Cluster/Colophon) with `/about`, `/projects`, `/lab`, `/manuals`, `/agentic-engineering` — and now `/reading`.
+
+**Newest area — `/reading` (2026-08-26):** book reading guides. Hub at `/reading`, first guide `/reading/eos-tod-reading-order` (EOS/ToD tandem reading order, 145 steps). One data source `src/lib/reading.data.json` (+ zod accessor `src/lib/reading.ts`, generator `scripts/gen-reading-eos-tod.mjs`) drives both the interactive web checklist (`src/components/reading/ReadingGuide.tsx`, localStorage key `nerdz.reading.<slug>`, versioned payload, useSyncExternalStore) and the fillable PDF (`scripts/render_reading_pdf.py` + `scripts/print/reading.css` → `public/reading/<slug>.pdf`, WeasyPrint `pdf_forms=True` from the home-ops WSL venv at `/home/gavin/code/home-ops/.venv`, repo reachable at `/mnt/g/code/nerdz/nerdz-landing`). Spec + plan under `docs/superpowers/`. Future phase noted in spec: live "what I'm reading" data (Hardcover/Audiobookshelf) on the reading hub.
+
+<details>
+<summary>Historical: hub-redesign build notes (2026-05-17, superseded)</summary>
+
+**Branch:** `feat/hub-redesign` (since merged).
 
 **What changed:** Full visual rebuild of the landing page from the homelab-focused "Nerdz Cloud — Homelab Infrastructure" portfolio into Gavin's personal hub per the claude.ai design handoff bundle at `C:\Users\gavin\Downloads\Nerdz\design_handoff_nerdz_home`.
 
@@ -57,6 +64,8 @@
 - Project status windows show invented placeholder values (`v0.4-rc1`, `412 commits`, etc.) — Phase 2 will wire these to real GitHub via build-time fetch
 - Logo animation deferred to Phase 2 (no WebGPU boot sequence yet — just CSS halo + drop-shadows + concentric rings)
 
+</details>
+
 ## What's outstanding (Phase 2 work)
 
 1. **Real copy interview** — every line of marketing copy is claude.ai's invention. Sit with Gavin and replace with his actual voice.
@@ -68,6 +77,12 @@
 7. **`/about` and `/projects` deep pages** — explicitly out of scope of this first build per the handoff README
 
 ## Log
+
+### 2026-08-26 — Reading guides (/reading): Completed
+- New `/reading` area per Gavin's request: interactive EOS/ToD tandem reading-order checklist + fillable PDF. Brainstormed (single anonymous reader per browser — no profiles; area named `/reading` because live reading-stack data joins it later), spec'd, planned, built inline. 4 commits on `main` (`90830f8`..`0767815`).
+- **Decisions:** item ids content-derived not positional (progress survives data fixes); localStorage payload versioned `{v:1, checked:[]}`; `useSyncExternalStore` over localStorage (repo's React 19 purity lint forbids setState-in-effect — first draft tripped it); PDF is A4 landscape × 5 columns to match the classic fan sheet; source image's "CH55T/ower of Dawn CH56" typo corrected.
+- **Gotchas:** home-ops WSL venv moved — it's `/home/gavin/code/home-ops/.venv` (render_pdf.py's shebang `/home/gavin/home-ops/.venv` is stale); invoke as `wsl -d home-ops` (default distro lacks WeasyPrint). Browser-pane screenshots unavailable this session (pane not displayed) — verified via DOM/JS instead; PDF eyeballed via Ghostscript raster (no poppler on Windows).
+- Verified: lint clean on touched files, `npm run build` clean (15 routes incl. `/reading` + dynamic slug), tick/persist/reload/jump/reset/404 all exercised in dev, PDF has 145 AcroForm checkbox fields on 1 page, serves 200.
 
 ### 2026-06-21 — Blender Addons field manual: Completed
 - New second Blender manual at `/manuals/blender-addons` + PDF `/manuals/blender-addons.pdf`, on branch `feat/manuals-blender-addons` (off `main`). Spec/plan under `docs/superpowers/`.
