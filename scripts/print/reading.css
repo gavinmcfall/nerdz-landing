@@ -1,0 +1,46 @@
+/* Reading-guide checklist layout, appended after base.css.
+   A4 landscape, five columns — same density and down-then-across flow as
+   the classic fan checklist sheet. Checkboxes are real <input> elements so
+   WeasyPrint (pdf_forms=True) emits them as tickable AcroForm fields. */
+
+.rg-intro {
+  font-size: 8pt;
+  line-height: 1.45;
+  color: var(--ink-mid);
+  margin: 0 0 2.5mm;
+  max-width: 190mm;
+}
+
+.rg-legend {
+  font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
+  font-size: 6.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 2mm;
+}
+.rg-legend .rg-eos { margin-right: 8mm; }
+
+.rg-cols {
+  columns: 5;
+  column-gap: 5mm;
+  column-fill: auto;
+}
+
+.rg-row {
+  display: flex;
+  align-items: center;
+  gap: 1.6mm;
+  break-inside: avoid;
+  padding: 0.55mm 0;
+  font-size: 7.5pt;
+  line-height: 1.25;
+}
+.rg-row input {
+  width: 2.8mm;
+  height: 2.8mm;
+  flex: none;
+  margin: 0;
+}
+
+.rg-eos { color: var(--ink-mid); }
+.rg-tod { color: var(--purple); }
