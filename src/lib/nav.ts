@@ -17,6 +17,7 @@ export type NavItem = {
 export const NAV: NavItem[] = [
   { label: "projects", href: "/projects" },
   { label: "field manuals", href: "/manuals" },
+  { label: "reading", href: "/reading" },
   { label: "blog", href: blogLink.href, external: blogLink.external },
   { label: "agentic", href: "/agentic-engineering" },
   { label: "about", href: "/about" },

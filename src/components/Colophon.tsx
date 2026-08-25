@@ -91,6 +91,11 @@ export function Colophon() {
                 </Link>
               </li>
               <li>
+                <Link href="/reading">
+                  Reading <span className="arr">→</span>
+                </Link>
+              </li>
+              <li>
                 {blogLink.external ? (
                   <a
                     href={blogLink.href}
