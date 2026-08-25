@@ -78,6 +78,11 @@
 
 ## Log
 
+### 2026-08-26 — Reading guides deployed + deploy incident
+- Pushed the 5 reading commits; CI (deploy.yaml) shipped them — `/reading`, the guide, and the PDF all 200 on nerdz.cloud, 145 items verified live.
+- **Incident:** first tried `npm run cf:deploy` locally on Windows — worker uploaded but EVERY route 500'd ("components.ComponentMod.handler is not a function"). OpenNext's worker bundle mis-builds on Windows. Recovery: push to main → CI (Linux) redeploys good build (~1 min). Captured as repo concept `rule/DeployViaCiOnly`. Never deploy this site from Windows again; rollback alternative: `npx wrangler rollback <prev-version-id>`.
+- Wrangler on this machine is OAuth-authenticated (infrastructure@nerdz.co.nz) — no ~/.secrets needed for wrangler reads; ~/.secrets lives only in the home-ops WSL distro.
+
 ### 2026-08-26 — Reading guides (/reading): Completed
 - New `/reading` area per Gavin's request: interactive EOS/ToD tandem reading-order checklist + fillable PDF. Brainstormed (single anonymous reader per browser — no profiles; area named `/reading` because live reading-stack data joins it later), spec'd, planned, built inline. 4 commits on `main` (`90830f8`..`0767815`).
 - **Decisions:** item ids content-derived not positional (progress survives data fixes); localStorage payload versioned `{v:1, checked:[]}`; `useSyncExternalStore` over localStorage (repo's React 19 purity lint forbids setState-in-effect — first draft tripped it); PDF is A4 landscape × 5 columns to match the classic fan sheet; source image's "CH55T/ower of Dawn CH56" typo corrected.
