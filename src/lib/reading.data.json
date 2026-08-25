@@ -1,0 +1,748 @@
+[
+  {
+    "slug": "eos-tod-reading-order",
+    "title": "Empire of Storms & Tower of Dawn — Tandem Reading Order",
+    "summary": "Read EOS and ToD together in alternating chronological order — an interactive checklist that remembers your place.",
+    "intro": "Empire of Storms and Tower of Dawn run in parallel — two stories in two places over the same stretch of time, with no overlap. You can read either first, but reading them in tandem keeps the timeline in sync: follow this list top to bottom, ticking chapters as you go. Your progress is saved in this browser.",
+    "updated": "2026-08-26",
+    "books": [
+      {
+        "key": "eos",
+        "title": "Empire of Storms",
+        "accent": "gold"
+      },
+      {
+        "key": "tod",
+        "title": "Tower of Dawn",
+        "accent": "glow"
+      }
+    ],
+    "items": [
+      {
+        "id": "eos-nightfall",
+        "book": "eos",
+        "label": "EOS — Nightfall"
+      },
+      {
+        "id": "eos-1",
+        "book": "eos",
+        "label": "Empire of Storms CH1"
+      },
+      {
+        "id": "eos-2",
+        "book": "eos",
+        "label": "Empire of Storms CH2"
+      },
+      {
+        "id": "eos-3",
+        "book": "eos",
+        "label": "Empire of Storms CH3"
+      },
+      {
+        "id": "eos-4",
+        "book": "eos",
+        "label": "Empire of Storms CH4"
+      },
+      {
+        "id": "eos-5",
+        "book": "eos",
+        "label": "Empire of Storms CH5"
+      },
+      {
+        "id": "tod-1",
+        "book": "tod",
+        "label": "Tower of Dawn CH1"
+      },
+      {
+        "id": "eos-6",
+        "book": "eos",
+        "label": "Empire of Storms CH6"
+      },
+      {
+        "id": "eos-7",
+        "book": "eos",
+        "label": "Empire of Storms CH7"
+      },
+      {
+        "id": "eos-8",
+        "book": "eos",
+        "label": "Empire of Storms CH8"
+      },
+      {
+        "id": "tod-2",
+        "book": "tod",
+        "label": "Tower of Dawn CH2"
+      },
+      {
+        "id": "tod-3",
+        "book": "tod",
+        "label": "Tower of Dawn CH3"
+      },
+      {
+        "id": "eos-9",
+        "book": "eos",
+        "label": "Empire of Storms CH9"
+      },
+      {
+        "id": "eos-10",
+        "book": "eos",
+        "label": "Empire of Storms CH10"
+      },
+      {
+        "id": "tod-4",
+        "book": "tod",
+        "label": "Tower of Dawn CH4"
+      },
+      {
+        "id": "tod-5",
+        "book": "tod",
+        "label": "Tower of Dawn CH5"
+      },
+      {
+        "id": "tod-6",
+        "book": "tod",
+        "label": "Tower of Dawn CH6"
+      },
+      {
+        "id": "eos-11",
+        "book": "eos",
+        "label": "Empire of Storms CH11"
+      },
+      {
+        "id": "tod-7",
+        "book": "tod",
+        "label": "Tower of Dawn CH7"
+      },
+      {
+        "id": "eos-12",
+        "book": "eos",
+        "label": "Empire of Storms CH12"
+      },
+      {
+        "id": "eos-13",
+        "book": "eos",
+        "label": "Empire of Storms CH13"
+      },
+      {
+        "id": "tod-8",
+        "book": "tod",
+        "label": "Tower of Dawn CH8"
+      },
+      {
+        "id": "tod-9",
+        "book": "tod",
+        "label": "Tower of Dawn CH9"
+      },
+      {
+        "id": "tod-10",
+        "book": "tod",
+        "label": "Tower of Dawn CH10"
+      },
+      {
+        "id": "eos-14",
+        "book": "eos",
+        "label": "Empire of Storms CH14"
+      },
+      {
+        "id": "eos-15",
+        "book": "eos",
+        "label": "Empire of Storms CH15"
+      },
+      {
+        "id": "eos-16",
+        "book": "eos",
+        "label": "Empire of Storms CH16"
+      },
+      {
+        "id": "tod-11",
+        "book": "tod",
+        "label": "Tower of Dawn CH11"
+      },
+      {
+        "id": "tod-12",
+        "book": "tod",
+        "label": "Tower of Dawn CH12"
+      },
+      {
+        "id": "eos-17",
+        "book": "eos",
+        "label": "Empire of Storms CH17"
+      },
+      {
+        "id": "eos-18",
+        "book": "eos",
+        "label": "Empire of Storms CH18"
+      },
+      {
+        "id": "tod-13",
+        "book": "tod",
+        "label": "Tower of Dawn CH13"
+      },
+      {
+        "id": "tod-14",
+        "book": "tod",
+        "label": "Tower of Dawn CH14"
+      },
+      {
+        "id": "tod-15",
+        "book": "tod",
+        "label": "Tower of Dawn CH15"
+      },
+      {
+        "id": "tod-16",
+        "book": "tod",
+        "label": "Tower of Dawn CH16"
+      },
+      {
+        "id": "eos-19",
+        "book": "eos",
+        "label": "Empire of Storms CH19"
+      },
+      {
+        "id": "tod-17",
+        "book": "tod",
+        "label": "Tower of Dawn CH17"
+      },
+      {
+        "id": "eos-20",
+        "book": "eos",
+        "label": "Empire of Storms CH20"
+      },
+      {
+        "id": "eos-21",
+        "book": "eos",
+        "label": "Empire of Storms CH21"
+      },
+      {
+        "id": "eos-22",
+        "book": "eos",
+        "label": "Empire of Storms CH22"
+      },
+      {
+        "id": "eos-23",
+        "book": "eos",
+        "label": "Empire of Storms CH23"
+      },
+      {
+        "id": "tod-18",
+        "book": "tod",
+        "label": "Tower of Dawn CH18"
+      },
+      {
+        "id": "tod-19",
+        "book": "tod",
+        "label": "Tower of Dawn CH19"
+      },
+      {
+        "id": "tod-20",
+        "book": "tod",
+        "label": "Tower of Dawn CH20"
+      },
+      {
+        "id": "tod-21",
+        "book": "tod",
+        "label": "Tower of Dawn CH21"
+      },
+      {
+        "id": "eos-24",
+        "book": "eos",
+        "label": "Empire of Storms CH24"
+      },
+      {
+        "id": "eos-25",
+        "book": "eos",
+        "label": "Empire of Storms CH25"
+      },
+      {
+        "id": "tod-22",
+        "book": "tod",
+        "label": "Tower of Dawn CH22"
+      },
+      {
+        "id": "tod-23",
+        "book": "tod",
+        "label": "Tower of Dawn CH23"
+      },
+      {
+        "id": "eos-26",
+        "book": "eos",
+        "label": "Empire of Storms CH26"
+      },
+      {
+        "id": "tod-24",
+        "book": "tod",
+        "label": "Tower of Dawn CH24"
+      },
+      {
+        "id": "eos-27",
+        "book": "eos",
+        "label": "Empire of Storms CH27"
+      },
+      {
+        "id": "eos-28",
+        "book": "eos",
+        "label": "Empire of Storms CH28"
+      },
+      {
+        "id": "eos-29",
+        "book": "eos",
+        "label": "Empire of Storms CH29"
+      },
+      {
+        "id": "tod-25",
+        "book": "tod",
+        "label": "Tower of Dawn CH25"
+      },
+      {
+        "id": "tod-26",
+        "book": "tod",
+        "label": "Tower of Dawn CH26"
+      },
+      {
+        "id": "tod-27",
+        "book": "tod",
+        "label": "Tower of Dawn CH27"
+      },
+      {
+        "id": "tod-28",
+        "book": "tod",
+        "label": "Tower of Dawn CH28"
+      },
+      {
+        "id": "eos-30",
+        "book": "eos",
+        "label": "Empire of Storms CH30"
+      },
+      {
+        "id": "tod-29",
+        "book": "tod",
+        "label": "Tower of Dawn CH29"
+      },
+      {
+        "id": "tod-30",
+        "book": "tod",
+        "label": "Tower of Dawn CH30"
+      },
+      {
+        "id": "tod-31",
+        "book": "tod",
+        "label": "Tower of Dawn CH31"
+      },
+      {
+        "id": "eos-31",
+        "book": "eos",
+        "label": "Empire of Storms CH31"
+      },
+      {
+        "id": "tod-32",
+        "book": "tod",
+        "label": "Tower of Dawn CH32"
+      },
+      {
+        "id": "eos-32",
+        "book": "eos",
+        "label": "Empire of Storms CH32"
+      },
+      {
+        "id": "tod-33",
+        "book": "tod",
+        "label": "Tower of Dawn CH33"
+      },
+      {
+        "id": "tod-34",
+        "book": "tod",
+        "label": "Tower of Dawn CH34"
+      },
+      {
+        "id": "tod-35",
+        "book": "tod",
+        "label": "Tower of Dawn CH35"
+      },
+      {
+        "id": "eos-33",
+        "book": "eos",
+        "label": "Empire of Storms CH33"
+      },
+      {
+        "id": "eos-34",
+        "book": "eos",
+        "label": "Empire of Storms CH34"
+      },
+      {
+        "id": "eos-35",
+        "book": "eos",
+        "label": "Empire of Storms CH35"
+      },
+      {
+        "id": "eos-36",
+        "book": "eos",
+        "label": "Empire of Storms CH36"
+      },
+      {
+        "id": "eos-37",
+        "book": "eos",
+        "label": "Empire of Storms CH37"
+      },
+      {
+        "id": "eos-38",
+        "book": "eos",
+        "label": "Empire of Storms CH38"
+      },
+      {
+        "id": "eos-39",
+        "book": "eos",
+        "label": "Empire of Storms CH39"
+      },
+      {
+        "id": "eos-40",
+        "book": "eos",
+        "label": "Empire of Storms CH40"
+      },
+      {
+        "id": "eos-41",
+        "book": "eos",
+        "label": "Empire of Storms CH41"
+      },
+      {
+        "id": "eos-42",
+        "book": "eos",
+        "label": "Empire of Storms CH42"
+      },
+      {
+        "id": "eos-43",
+        "book": "eos",
+        "label": "Empire of Storms CH43"
+      },
+      {
+        "id": "eos-44",
+        "book": "eos",
+        "label": "Empire of Storms CH44"
+      },
+      {
+        "id": "eos-45",
+        "book": "eos",
+        "label": "Empire of Storms CH45"
+      },
+      {
+        "id": "eos-46",
+        "book": "eos",
+        "label": "Empire of Storms CH46"
+      },
+      {
+        "id": "eos-47",
+        "book": "eos",
+        "label": "Empire of Storms CH47"
+      },
+      {
+        "id": "eos-48",
+        "book": "eos",
+        "label": "Empire of Storms CH48"
+      },
+      {
+        "id": "eos-49",
+        "book": "eos",
+        "label": "Empire of Storms CH49"
+      },
+      {
+        "id": "eos-50",
+        "book": "eos",
+        "label": "Empire of Storms CH50"
+      },
+      {
+        "id": "eos-51",
+        "book": "eos",
+        "label": "Empire of Storms CH51"
+      },
+      {
+        "id": "tod-36",
+        "book": "tod",
+        "label": "Tower of Dawn CH36"
+      },
+      {
+        "id": "tod-37",
+        "book": "tod",
+        "label": "Tower of Dawn CH37"
+      },
+      {
+        "id": "eos-52",
+        "book": "eos",
+        "label": "Empire of Storms CH52"
+      },
+      {
+        "id": "tod-38",
+        "book": "tod",
+        "label": "Tower of Dawn CH38"
+      },
+      {
+        "id": "tod-39",
+        "book": "tod",
+        "label": "Tower of Dawn CH39"
+      },
+      {
+        "id": "tod-40",
+        "book": "tod",
+        "label": "Tower of Dawn CH40"
+      },
+      {
+        "id": "eos-53",
+        "book": "eos",
+        "label": "Empire of Storms CH53"
+      },
+      {
+        "id": "tod-41",
+        "book": "tod",
+        "label": "Tower of Dawn CH41"
+      },
+      {
+        "id": "tod-42",
+        "book": "tod",
+        "label": "Tower of Dawn CH42"
+      },
+      {
+        "id": "eos-54",
+        "book": "eos",
+        "label": "Empire of Storms CH54"
+      },
+      {
+        "id": "eos-55",
+        "book": "eos",
+        "label": "Empire of Storms CH55"
+      },
+      {
+        "id": "eos-56",
+        "book": "eos",
+        "label": "Empire of Storms CH56"
+      },
+      {
+        "id": "tod-43",
+        "book": "tod",
+        "label": "Tower of Dawn CH43"
+      },
+      {
+        "id": "eos-57",
+        "book": "eos",
+        "label": "Empire of Storms CH57"
+      },
+      {
+        "id": "eos-58",
+        "book": "eos",
+        "label": "Empire of Storms CH58"
+      },
+      {
+        "id": "eos-59",
+        "book": "eos",
+        "label": "Empire of Storms CH59"
+      },
+      {
+        "id": "tod-44",
+        "book": "tod",
+        "label": "Tower of Dawn CH44"
+      },
+      {
+        "id": "tod-45",
+        "book": "tod",
+        "label": "Tower of Dawn CH45"
+      },
+      {
+        "id": "tod-46",
+        "book": "tod",
+        "label": "Tower of Dawn CH46"
+      },
+      {
+        "id": "tod-47",
+        "book": "tod",
+        "label": "Tower of Dawn CH47"
+      },
+      {
+        "id": "tod-48",
+        "book": "tod",
+        "label": "Tower of Dawn CH48"
+      },
+      {
+        "id": "eos-60",
+        "book": "eos",
+        "label": "Empire of Storms CH60"
+      },
+      {
+        "id": "eos-61",
+        "book": "eos",
+        "label": "Empire of Storms CH61"
+      },
+      {
+        "id": "tod-49",
+        "book": "tod",
+        "label": "Tower of Dawn CH49"
+      },
+      {
+        "id": "tod-50",
+        "book": "tod",
+        "label": "Tower of Dawn CH50"
+      },
+      {
+        "id": "tod-51",
+        "book": "tod",
+        "label": "Tower of Dawn CH51"
+      },
+      {
+        "id": "eos-62",
+        "book": "eos",
+        "label": "Empire of Storms CH62"
+      },
+      {
+        "id": "eos-63",
+        "book": "eos",
+        "label": "Empire of Storms CH63"
+      },
+      {
+        "id": "tod-52",
+        "book": "tod",
+        "label": "Tower of Dawn CH52"
+      },
+      {
+        "id": "tod-53",
+        "book": "tod",
+        "label": "Tower of Dawn CH53"
+      },
+      {
+        "id": "eos-64",
+        "book": "eos",
+        "label": "Empire of Storms CH64"
+      },
+      {
+        "id": "eos-65",
+        "book": "eos",
+        "label": "Empire of Storms CH65"
+      },
+      {
+        "id": "tod-54",
+        "book": "tod",
+        "label": "Tower of Dawn CH54"
+      },
+      {
+        "id": "tod-55",
+        "book": "tod",
+        "label": "Tower of Dawn CH55"
+      },
+      {
+        "id": "tod-56",
+        "book": "tod",
+        "label": "Tower of Dawn CH56"
+      },
+      {
+        "id": "eos-66",
+        "book": "eos",
+        "label": "Empire of Storms CH66"
+      },
+      {
+        "id": "eos-67",
+        "book": "eos",
+        "label": "Empire of Storms CH67"
+      },
+      {
+        "id": "tod-57",
+        "book": "tod",
+        "label": "Tower of Dawn CH57"
+      },
+      {
+        "id": "eos-68",
+        "book": "eos",
+        "label": "Empire of Storms CH68"
+      },
+      {
+        "id": "eos-69",
+        "book": "eos",
+        "label": "Empire of Storms CH69"
+      },
+      {
+        "id": "eos-70",
+        "book": "eos",
+        "label": "Empire of Storms CH70"
+      },
+      {
+        "id": "eos-71",
+        "book": "eos",
+        "label": "Empire of Storms CH71"
+      },
+      {
+        "id": "eos-72",
+        "book": "eos",
+        "label": "Empire of Storms CH72"
+      },
+      {
+        "id": "eos-73",
+        "book": "eos",
+        "label": "Empire of Storms CH73"
+      },
+      {
+        "id": "eos-74",
+        "book": "eos",
+        "label": "Empire of Storms CH74"
+      },
+      {
+        "id": "eos-75",
+        "book": "eos",
+        "label": "Empire of Storms CH75"
+      },
+      {
+        "id": "tod-58",
+        "book": "tod",
+        "label": "Tower of Dawn CH58"
+      },
+      {
+        "id": "tod-59",
+        "book": "tod",
+        "label": "Tower of Dawn CH59"
+      },
+      {
+        "id": "tod-60",
+        "book": "tod",
+        "label": "Tower of Dawn CH60"
+      },
+      {
+        "id": "tod-61",
+        "book": "tod",
+        "label": "Tower of Dawn CH61"
+      },
+      {
+        "id": "tod-62",
+        "book": "tod",
+        "label": "Tower of Dawn CH62"
+      },
+      {
+        "id": "tod-63",
+        "book": "tod",
+        "label": "Tower of Dawn CH63"
+      },
+      {
+        "id": "tod-64",
+        "book": "tod",
+        "label": "Tower of Dawn CH64"
+      },
+      {
+        "id": "tod-65",
+        "book": "tod",
+        "label": "Tower of Dawn CH65"
+      },
+      {
+        "id": "tod-66",
+        "book": "tod",
+        "label": "Tower of Dawn CH66"
+      },
+      {
+        "id": "tod-67",
+        "book": "tod",
+        "label": "Tower of Dawn CH67"
+      },
+      {
+        "id": "tod-68",
+        "book": "tod",
+        "label": "Tower of Dawn CH68"
+      },
+      {
+        "id": "tod-fireheart",
+        "book": "tod",
+        "label": "TOD — Fireheart"
+      }
+    ]
+  }
+]
