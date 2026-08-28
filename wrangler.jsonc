@@ -8,6 +8,14 @@
     "binding": "ASSETS",
     "directory": ".open-next/assets"
   },
+  "kv_namespaces": [
+    {
+      // Reading-checklist progress keyed by opaque OAuth uid (see
+      // docs/superpowers/specs/2026-08-28-reading-sync-auth-design.md).
+      "binding": "READING_SYNC",
+      "id": "e428a370d1b747fdb94fa9663aaa9d11"
+    }
+  ],
   "observability": {
     "enabled": true
   }
