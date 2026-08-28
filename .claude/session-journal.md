@@ -78,6 +78,12 @@
 
 ## Log
 
+### 2026-08-28 — Reading sync (OAuth + KV): shipped, awaiting provider credentials
+- Cross-device sync for the reading checklist: hand-rolled OAuth (Google `openid` / Discord `identify`, PKCE+state, sealed HMAC cookies, NO next-auth — Next16/OpenNext compat risk) + KV namespace `READING_SYNC` (id e428a370d1b747fdb94fa9663aaa9d11, NERDZ account 4214879ee537a4840de659aafb7bf201). Only opaque uid `provider:id` is ever stored. Spec/plan: docs/superpowers/{specs,plans}/2026-08-28-reading-sync-auth*.
+- Client: merge-union on first sign-in per device (flag `nerdz.reading.synced.<slug>`), cloud-wins on later loads, debounced pushes, offline degradation. All verified locally (miniflare KV + hand-sealed dev cookie); signed-out UX unchanged.
+- Deployed via CI (5 commits, df5a210..83bd621). Prod: session endpoint live; login/progress 503 by design until secrets exist.
+- **NEXT STEP (blocking):** create Google + Discord OAuth apps (walkthrough with Gavin, via his Chrome), then `wrangler secret put` AUTH_SECRET/GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET/DISCORD_CLIENT_ID/DISCORD_CLIENT_SECRET (needs CLOUDFLARE_ACCOUNT_ID=4214879ee537a4840de659aafb7bf201; wrangler here is OAuth-authed), mirror into .dev.vars (gitignored), then live E2E. Callback URLs: https://nerdz.cloud/api/auth/callback/{google,discord} + http://localhost:3000 twins.
+
 ### 2026-08-26 — Reading guides deployed + deploy incident
 - Pushed the 5 reading commits; CI (deploy.yaml) shipped them — `/reading`, the guide, and the PDF all 200 on nerdz.cloud, 145 items verified live.
 - **Incident:** first tried `npm run cf:deploy` locally on Windows — worker uploaded but EVERY route 500'd ("components.ComponentMod.handler is not a function"). OpenNext's worker bundle mis-builds on Windows. Recovery: push to main → CI (Linux) redeploys good build (~1 min). Captured as repo concept `rule/DeployViaCiOnly`. Never deploy this site from Windows again; rollback alternative: `npx wrangler rollback <prev-version-id>`.
