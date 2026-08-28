@@ -1,0 +1,32 @@
+/* /privacy — simple readable prose in the shell's voice. */
+.prose-block {
+  max-width: 72ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-mid);
+}
+.prose-block h3 {
+  margin: 28px 0 10px;
+  font-size: 17px;
+  color: var(--ink);
+}
+.prose-block ul {
+  margin: 0 0 18px;
+  padding-left: 22px;
+}
+.prose-block li {
+  margin-bottom: 8px;
+}
+.prose-block a {
+  color: var(--glow);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-block strong {
+  color: var(--ink);
+}
+.prose-block__updated {
+  margin-top: 34px;
+  font-size: 12px;
+  color: var(--ink-mute);
+}

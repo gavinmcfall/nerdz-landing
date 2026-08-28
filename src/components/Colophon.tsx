@@ -115,6 +115,11 @@ export function Colophon() {
                   About <span className="arr">→</span>
                 </Link>
               </li>
+              <li>
+                <Link href="/privacy">
+                  Privacy <span className="arr">→</span>
+                </Link>
+              </li>
             </ul>
           </div>
 
