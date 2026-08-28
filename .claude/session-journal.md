@@ -78,7 +78,14 @@
 
 ## Log
 
-### 2026-08-28 — Reading sync (OAuth + KV): shipped, awaiting provider credentials
+### 2026-08-28 — Reading sync: LIVE end-to-end (credentials done via Chrome walkthrough)
+- Drove Gavin's Chrome through both consoles. Google: existing project `nerdz-488001`; the new console is "Google Auth Platform" (Branding/Audience/Clients — old consent-screen page is gone). Created Web client `nerdz.cloud reading sync` (prod+localhost callbacks); renamed stale branding app "plane"→"nerdz.cloud"; **publishing to production required a privacy-policy URL** → built + shipped `/privacy` (also linked in colophon); published — status "In production", openid-only so no verification.
+- Discord: app `nerdz.cloud reading` (ID 1542713131510267904), both callbacks saved; Gavin clicked ToS + reset/copied secret himself.
+- Gavin loaded all 5 secrets via `wrangler secret put` (saved in 1Password). Live E2E: Google sign-in on nerdz.cloud → "Syncing ✓", merge-union lifted his real 45/145 local ticks into KV (`progress:google:<uid>:eos-tod-reading-order`, verified via `wrangler kv key get --remote`).
+- Note: each provider = separate identity/progress; sign-out clears the synced flag so switching providers re-merges (no loss), but sticking to one provider per person is the sane path.
+- Claude-in-Chrome gotcha: its javascript_exec does NOT await promises (returns {}) — the Browser-pane one does; verify fetch-y things via wrangler/curl instead.
+
+### 2026-08-28 — Reading sync (OAuth + KV): shipped, awaiting provider credentials (superseded — completed above)
 - Cross-device sync for the reading checklist: hand-rolled OAuth (Google `openid` / Discord `identify`, PKCE+state, sealed HMAC cookies, NO next-auth — Next16/OpenNext compat risk) + KV namespace `READING_SYNC` (id e428a370d1b747fdb94fa9663aaa9d11, NERDZ account 4214879ee537a4840de659aafb7bf201). Only opaque uid `provider:id` is ever stored. Spec/plan: docs/superpowers/{specs,plans}/2026-08-28-reading-sync-auth*.
 - Client: merge-union on first sign-in per device (flag `nerdz.reading.synced.<slug>`), cloud-wins on later loads, debounced pushes, offline degradation. All verified locally (miniflare KV + hand-sealed dev cookie); signed-out UX unchanged.
 - Deployed via CI (5 commits, df5a210..83bd621). Prod: session endpoint live; login/progress 503 by design until secrets exist.
