@@ -32,9 +32,9 @@ PRINT_DIR = ROOT / "scripts" / "print"
 OUT_DIR = ROOT / "public" / "reading"
 
 # Two layouts: dense chapter grids (EOS/ToD's 145 rows) get A4 landscape ×
-# 5 columns; book-level orders (a dozen-ish rows, often with notes) get a
-# roomier A4 portrait list. Chosen by item count — no per-guide config.
-BOOK_LIST_THRESHOLD = 30
+# 5 columns; book-level orders (up to a few dozen rows, often with notes)
+# get a roomier A4 portrait list. Chosen by item count — no per-guide config.
+BOOK_LIST_THRESHOLD = 60
 
 
 def is_book_list(guide: dict) -> bool:

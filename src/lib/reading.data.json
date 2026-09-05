@@ -1103,5 +1103,206 @@
         "note": "the latest entry"
       }
     ]
+  },
+  {
+    "slug": "breeds-reading-order",
+    "title": "Breeds — Chronological Reading Order",
+    "summary": "Lora Leigh's Breeds untangled — publication order, cover numbering, and chronology all disagree, so this is the author's own chronological list.",
+    "intro": "The Breeds books were published out of story order across multiple publishers, with Feline, Wolf and Coyote arcs originally numbered as separate series — which is why every numbering on the covers disagrees. This list is the author's own chronological order, novellas and anthology stories slotted where they belong. Colour shows which arc each entry leans on.",
+    "updated": "2026-09-05",
+    "books": [
+      {
+        "key": "feline",
+        "title": "Feline Breeds",
+        "accent": "gold"
+      },
+      {
+        "key": "wolf",
+        "title": "Wolf Breeds",
+        "accent": "glow"
+      },
+      {
+        "key": "coyote",
+        "title": "Coyote Breeds",
+        "accent": "magenta"
+      }
+    ],
+    "items": [
+      {
+        "id": "breeds-tempting-the-beast",
+        "book": "feline",
+        "label": "Tempting the Beast"
+      },
+      {
+        "id": "breeds-the-man-within",
+        "book": "feline",
+        "label": "The Man Within"
+      },
+      {
+        "id": "breeds-elizabeth-s-wolf",
+        "book": "wolf",
+        "label": "Elizabeth's Wolf"
+      },
+      {
+        "id": "breeds-kiss-of-heat",
+        "book": "feline",
+        "label": "Kiss of Heat"
+      },
+      {
+        "id": "breeds-soul-deep",
+        "book": "coyote",
+        "label": "Soul Deep"
+      },
+      {
+        "id": "breeds-the-breed-next-door",
+        "book": "feline",
+        "label": "The Breed Next Door",
+        "note": "novella"
+      },
+      {
+        "id": "breeds-megan-s-mark",
+        "book": "feline",
+        "label": "Megan's Mark"
+      },
+      {
+        "id": "breeds-harmony-s-way",
+        "book": "feline",
+        "label": "Harmony's Way"
+      },
+      {
+        "id": "breeds-tanner-s-scheme",
+        "book": "feline",
+        "label": "Tanner's Scheme"
+      },
+      {
+        "id": "breeds-wolfe-s-hope",
+        "book": "wolf",
+        "label": "Wolfe's Hope"
+      },
+      {
+        "id": "breeds-jacob-s-faith",
+        "book": "wolf",
+        "label": "Jacob's Faith"
+      },
+      {
+        "id": "breeds-aiden-s-charity",
+        "book": "wolf",
+        "label": "Aiden's Charity"
+      },
+      {
+        "id": "breeds-in-a-wolf-s-embrace",
+        "book": "wolf",
+        "label": "In a Wolf's Embrace",
+        "note": "novella — in the Beyond the Dark anthology"
+      },
+      {
+        "id": "breeds-dawn-s-awakening",
+        "book": "feline",
+        "label": "Dawn's Awakening"
+      },
+      {
+        "id": "breeds-a-jaguar-s-kiss",
+        "book": "feline",
+        "label": "A Jaguar's Kiss",
+        "note": "novella — in the Shifter anthology"
+      },
+      {
+        "id": "breeds-mercury-s-war",
+        "book": "feline",
+        "label": "Mercury's War"
+      },
+      {
+        "id": "breeds-christmas-heat",
+        "book": "feline",
+        "label": "Christmas Heat",
+        "note": "novella — in The Magical Christmas Cat anthology"
+      },
+      {
+        "id": "breeds-coyote-s-mate",
+        "book": "coyote",
+        "label": "Coyote's Mate"
+      },
+      {
+        "id": "breeds-christmas-kiss",
+        "book": "wolf",
+        "label": "Christmas Kiss",
+        "note": "novella — in the Hot for the Holidays anthology"
+      },
+      {
+        "id": "breeds-bengal-s-heart",
+        "book": "feline",
+        "label": "Bengal's Heart"
+      },
+      {
+        "id": "breeds-lion-s-heat",
+        "book": "feline",
+        "label": "Lion's Heat"
+      },
+      {
+        "id": "breeds-styx-s-storm",
+        "book": "wolf",
+        "label": "Styx's Storm"
+      },
+      {
+        "id": "breeds-primal-kiss",
+        "book": "feline",
+        "label": "Primal Kiss",
+        "note": "novella — in the Primal anthology"
+      },
+      {
+        "id": "breeds-navarro-s-promise",
+        "book": "wolf",
+        "label": "Navarro's Promise"
+      },
+      {
+        "id": "breeds-an-inconvenient-mate",
+        "book": "coyote",
+        "label": "An Inconvenient Mate",
+        "note": "novella — in the Tied with a Bow anthology"
+      },
+      {
+        "id": "breeds-lawe-s-justice",
+        "book": "feline",
+        "label": "Lawe's Justice"
+      },
+      {
+        "id": "breeds-stygian-s-honor",
+        "book": "wolf",
+        "label": "Stygian's Honor"
+      },
+      {
+        "id": "breeds-the-devil-s-due",
+        "book": "wolf",
+        "label": "The Devil's Due",
+        "note": "novella — in the Enthralled anthology"
+      },
+      {
+        "id": "breeds-rule-breaker",
+        "book": "feline",
+        "label": "Rule Breaker"
+      },
+      {
+        "id": "breeds-bengal-s-quest",
+        "book": "feline",
+        "label": "Bengal's Quest"
+      },
+      {
+        "id": "breeds-wake-a-sleeping-tiger",
+        "book": "feline",
+        "label": "Wake a Sleeping Tiger"
+      },
+      {
+        "id": "breeds-cross-breed",
+        "book": "coyote",
+        "label": "Cross Breed",
+        "note": "wolf/coyote hybrid story"
+      },
+      {
+        "id": "breeds-dane-s-mark",
+        "book": "feline",
+        "label": "Dane's Mark",
+        "note": "hybrid Breed story — the latest entry"
+      }
+    ]
   }
 ]
