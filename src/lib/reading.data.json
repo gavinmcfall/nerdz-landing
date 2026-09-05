@@ -1574,5 +1574,107 @@
         "note": "Dream-Hunter arc — newest entry (2022), postdates Kenyon's numbered list"
       }
     ]
+  },
+  {
+    "slug": "iron-fey-reading-order",
+    "title": "The Iron Fey — Reading Order",
+    "summary": "Julie Kagawa's faery saga in full — the three novellas slotted where they belong, then the Call of the Forgotten and Evenfall arcs in sequence.",
+    "intro": "The Iron Fey runs as three arcs with novellas tucked between the original books: Winter's Passage bridges The Iron King and The Iron Daughter, Summer's Crossing sets up The Iron Knight, and Iron's Prophecy hands the story to the next generation. Call of the Forgotten follows Meghan's brother Ethan, and Evenfall — which assumes you've read both earlier arcs — closes the saga.",
+    "updated": "2026-09-05",
+    "books": [
+      {
+        "key": "original",
+        "title": "The Iron Fey",
+        "accent": "gold"
+      },
+      {
+        "key": "forgotten",
+        "title": "Call of the Forgotten",
+        "accent": "glow"
+      },
+      {
+        "key": "evenfall",
+        "title": "Evenfall",
+        "accent": "magenta"
+      },
+      {
+        "key": "novella",
+        "title": "Novellas",
+        "accent": "ink"
+      }
+    ],
+    "items": [
+      {
+        "id": "if-iron-king",
+        "book": "original",
+        "label": "The Iron King"
+      },
+      {
+        "id": "if-winters-passage",
+        "book": "novella",
+        "label": "Winter's Passage",
+        "note": "novella — bridges into The Iron Daughter"
+      },
+      {
+        "id": "if-iron-daughter",
+        "book": "original",
+        "label": "The Iron Daughter"
+      },
+      {
+        "id": "if-iron-queen",
+        "book": "original",
+        "label": "The Iron Queen"
+      },
+      {
+        "id": "if-summers-crossing",
+        "book": "novella",
+        "label": "Summer's Crossing",
+        "note": "novella — Puck's setup for The Iron Knight"
+      },
+      {
+        "id": "if-iron-knight",
+        "book": "original",
+        "label": "The Iron Knight"
+      },
+      {
+        "id": "if-irons-prophecy",
+        "book": "novella",
+        "label": "Iron's Prophecy",
+        "note": "novella — hands off to the next generation"
+      },
+      {
+        "id": "if-lost-prince",
+        "book": "forgotten",
+        "label": "The Lost Prince",
+        "note": "Ethan's arc begins"
+      },
+      {
+        "id": "if-iron-traitor",
+        "book": "forgotten",
+        "label": "The Iron Traitor"
+      },
+      {
+        "id": "if-iron-warrior",
+        "book": "forgotten",
+        "label": "The Iron Warrior"
+      },
+      {
+        "id": "if-iron-raven",
+        "book": "evenfall",
+        "label": "The Iron Raven",
+        "note": "assumes both earlier arcs"
+      },
+      {
+        "id": "if-iron-sword",
+        "book": "evenfall",
+        "label": "The Iron Sword"
+      },
+      {
+        "id": "if-iron-vow",
+        "book": "evenfall",
+        "label": "The Iron Vow",
+        "note": "the saga's finale"
+      }
+    ]
   }
 ]
