@@ -960,5 +960,148 @@
         "note": "read last — it follows Stormlight's endgame"
       }
     ]
+  },
+  {
+    "slug": "immortals-after-dark-reading-order",
+    "title": "Immortals After Dark — Reading Order",
+    "summary": "Kresley Cole's Lore in the right sequence — the hidden anthology novellas, the Dacians books that run in parallel, and every numbering trap untangled.",
+    "intro": "IAD's numbering is famously slippery: the series opens with a novella buried in an anthology, Untouchable hides inside the Deep Kiss of Winter collection, and the Dacians books interleave with the main arc. Ignore the conflicting numbers on the covers — this is the sequence. Dacians entries are marked; they're part of the same story, not optional.",
+    "updated": "2026-09-05",
+    "books": [
+      {
+        "key": "iad",
+        "title": "Immortals After Dark",
+        "accent": "gold"
+      },
+      {
+        "key": "dacians",
+        "title": "The Dacians",
+        "accent": "glow"
+      },
+      {
+        "key": "novella",
+        "title": "Novellas & anthology stories",
+        "accent": "ink"
+      }
+    ],
+    "items": [
+      {
+        "id": "iad-warlord",
+        "book": "novella",
+        "label": "The Warlord Wants Forever",
+        "note": "novella — the series opener (Nikolai & Myst)"
+      },
+      {
+        "id": "iad-hunger",
+        "book": "iad",
+        "label": "A Hunger Like No Other"
+      },
+      {
+        "id": "iad-no-rest",
+        "book": "iad",
+        "label": "No Rest for the Wicked"
+      },
+      {
+        "id": "iad-wicked-deeds",
+        "book": "iad",
+        "label": "Wicked Deeds on a Winter's Night"
+      },
+      {
+        "id": "iad-dark-needs",
+        "book": "iad",
+        "label": "Dark Needs at Night's Edge"
+      },
+      {
+        "id": "iad-dark-desires",
+        "book": "iad",
+        "label": "Dark Desires After Dusk"
+      },
+      {
+        "id": "iad-demon-king",
+        "book": "iad",
+        "label": "Kiss of a Demon King"
+      },
+      {
+        "id": "iad-untouchable",
+        "book": "novella",
+        "label": "Untouchable",
+        "note": "novella — inside the Deep Kiss of Winter anthology"
+      },
+      {
+        "id": "iad-dark-prince",
+        "book": "iad",
+        "label": "Pleasure of a Dark Prince"
+      },
+      {
+        "id": "iad-demon-dark",
+        "book": "iad",
+        "label": "Demon from the Dark"
+      },
+      {
+        "id": "iad-dark-warrior",
+        "book": "iad",
+        "label": "Dreams of a Dark Warrior"
+      },
+      {
+        "id": "iad-lothaire",
+        "book": "iad",
+        "label": "Lothaire"
+      },
+      {
+        "id": "dacians-shadows-claim",
+        "book": "dacians",
+        "label": "Shadow's Claim",
+        "note": "Dacians #1 — runs parallel to the main arc"
+      },
+      {
+        "id": "iad-macrieve",
+        "book": "iad",
+        "label": "MacRieve"
+      },
+      {
+        "id": "iad-dark-skye",
+        "book": "iad",
+        "label": "Dark Skye"
+      },
+      {
+        "id": "iad-sweet-ruin",
+        "book": "iad",
+        "label": "Sweet Ruin"
+      },
+      {
+        "id": "dacians-shadows-seduction",
+        "book": "dacians",
+        "label": "Shadow's Seduction",
+        "note": "Dacians #2"
+      },
+      {
+        "id": "iad-wicked-abyss",
+        "book": "iad",
+        "label": "Wicked Abyss"
+      },
+      {
+        "id": "iad-munro",
+        "book": "iad",
+        "label": "Munro"
+      },
+      {
+        "id": "iad-witch-queen",
+        "book": "novella",
+        "label": "The Witch Queen of Halloween",
+        "note": "novella"
+      },
+      {
+        "id": "dacians-shadows-heart",
+        "book": "dacians",
+        "label": "Shadow's Heart",
+        "note": "Dacians #3"
+      },
+      {
+        "id": "iad-ravenous",
+        "book": "iad",
+        "label": "Ravenous",
+        "note": "the latest entry"
+      }
+    ]
   }
 ]
