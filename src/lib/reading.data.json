@@ -1304,5 +1304,275 @@
         "note": "hybrid Breed story — the latest entry"
       }
     ]
+  },
+  {
+    "slug": "dark-hunter-reading-order",
+    "title": "Dark-Hunter Universe — Official Reading Order",
+    "summary": "Sherrilyn Kenyon's Hunter Legends in her own published order — Dark-, Were- and Dream-Hunters interleaved, the twin epics flagged, every anthology story placed.",
+    "intro": "Kenyon publishes an official reading order because this universe genuinely can't be navigated without one: Were- and Dream-Hunter books interleave with the main arc, short stories hide in anthologies (most are collected in Dark Bites), the Lords of Avalon books cross over under her Kinley MacGregor pen name, and Acheron and Styxx are twin epics telling the same centuries from opposite sides. This is her list, with Shadow Fallen appended where its 2022 release lands.",
+    "updated": "2026-09-05",
+    "books": [
+      {
+        "key": "dh",
+        "title": "Dark-Hunter universe novels",
+        "accent": "gold"
+      },
+      {
+        "key": "avalon",
+        "title": "Lords of Avalon",
+        "accent": "magenta"
+      },
+      {
+        "key": "story",
+        "title": "Short stories & collections",
+        "accent": "ink"
+      }
+    ],
+    "items": [
+      {
+        "id": "dh-the-beginning",
+        "book": "story",
+        "label": "The Beginning",
+        "note": "short story — also printed inside Acheron and Styxx"
+      },
+      {
+        "id": "dh-where-angels-fear-to-tread",
+        "book": "story",
+        "label": "Where Angels Fear to Tread",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-fantasy-lover",
+        "book": "dh",
+        "label": "Fantasy Lover",
+        "note": "Kenyon's list calls this one 'Julian of Macedon'"
+      },
+      {
+        "id": "dh-night-pleasures",
+        "book": "dh",
+        "label": "Night Pleasures"
+      },
+      {
+        "id": "dh-dragonswan",
+        "book": "story",
+        "label": "Dragonswan",
+        "note": "novella — in the In Other Worlds anthology"
+      },
+      {
+        "id": "dh-night-embrace",
+        "book": "dh",
+        "label": "Night Embrace"
+      },
+      {
+        "id": "dh-phantom-lover",
+        "book": "story",
+        "label": "Phantom Lover",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-a-dark-hunter-christmas",
+        "book": "story",
+        "label": "A Dark-Hunter Christmas",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-dance-with-the-devil",
+        "book": "dh",
+        "label": "Dance with the Devil"
+      },
+      {
+        "id": "dh-kiss-of-the-night",
+        "book": "dh",
+        "label": "Kiss of the Night"
+      },
+      {
+        "id": "dh-sword-of-darkness",
+        "book": "avalon",
+        "label": "Sword of Darkness",
+        "note": "Lords of Avalon — written as Kinley MacGregor"
+      },
+      {
+        "id": "dh-knight-of-darkness",
+        "book": "avalon",
+        "label": "Knight of Darkness",
+        "note": "Lords of Avalon — written as Kinley MacGregor"
+      },
+      {
+        "id": "dh-the-wager",
+        "book": "avalon",
+        "label": "The Wager",
+        "note": "short story — in the Elemental anthology"
+      },
+      {
+        "id": "dh-night-play",
+        "book": "dh",
+        "label": "Night Play"
+      },
+      {
+        "id": "dh-winter-born",
+        "book": "story",
+        "label": "Winter Born",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-seize-the-night",
+        "book": "dh",
+        "label": "Seize the Night"
+      },
+      {
+        "id": "dh-sins-of-the-night",
+        "book": "dh",
+        "label": "Sins of the Night"
+      },
+      {
+        "id": "dh-a-hard-day-s-night-searcher",
+        "book": "story",
+        "label": "A Hard Day's Night-Searcher",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-unleash-the-night",
+        "book": "dh",
+        "label": "Unleash the Night"
+      },
+      {
+        "id": "dh-dark-side-of-the-moon",
+        "book": "dh",
+        "label": "Dark Side of the Moon"
+      },
+      {
+        "id": "dh-until-death-we-do-part",
+        "book": "story",
+        "label": "Until Death We Do Part",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-the-dream-hunter",
+        "book": "dh",
+        "label": "The Dream-Hunter",
+        "note": "the Dream-Hunter arc begins"
+      },
+      {
+        "id": "dh-fear-the-darkness",
+        "book": "story",
+        "label": "Fear the Darkness",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-devil-may-cry",
+        "book": "dh",
+        "label": "Devil May Cry"
+      },
+      {
+        "id": "dh-upon-the-midnight-clear",
+        "book": "dh",
+        "label": "Upon the Midnight Clear",
+        "note": "Dream-Hunter arc"
+      },
+      {
+        "id": "dh-shadow-of-the-moon",
+        "book": "story",
+        "label": "Shadow of the Moon",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-dream-chaser",
+        "book": "dh",
+        "label": "Dream Chaser",
+        "note": "Dream-Hunter arc"
+      },
+      {
+        "id": "dh-acheron",
+        "book": "dh",
+        "label": "Acheron",
+        "note": "twin epic #1 — Styxx later retells these centuries from the other side"
+      },
+      {
+        "id": "dh-one-silent-night",
+        "book": "dh",
+        "label": "One Silent Night"
+      },
+      {
+        "id": "dh-dream-warrior",
+        "book": "dh",
+        "label": "Dream Warrior",
+        "note": "Dream-Hunter arc"
+      },
+      {
+        "id": "dh-bad-moon-rising",
+        "book": "dh",
+        "label": "Bad Moon Rising"
+      },
+      {
+        "id": "dh-no-mercy",
+        "book": "dh",
+        "label": "No Mercy"
+      },
+      {
+        "id": "dh-retribution",
+        "book": "dh",
+        "label": "Retribution"
+      },
+      {
+        "id": "dh-the-guardian",
+        "book": "dh",
+        "label": "The Guardian",
+        "note": "Dream-Hunter arc"
+      },
+      {
+        "id": "dh-time-untime",
+        "book": "dh",
+        "label": "Time Untime"
+      },
+      {
+        "id": "dh-styxx",
+        "book": "dh",
+        "label": "Styxx",
+        "note": "twin epic #2 — Acheron's story from his brother's side"
+      },
+      {
+        "id": "dh-dark-bites",
+        "book": "story",
+        "label": "Dark Bites",
+        "note": "collection — gathers the short stories listed above"
+      },
+      {
+        "id": "dh-house-of-the-rising-son",
+        "book": "story",
+        "label": "House of the Rising Son",
+        "note": "short story — in Dark Bites"
+      },
+      {
+        "id": "dh-son-of-no-one",
+        "book": "dh",
+        "label": "Son of No One"
+      },
+      {
+        "id": "dh-dragonbane",
+        "book": "dh",
+        "label": "Dragonbane"
+      },
+      {
+        "id": "dh-dragonmark",
+        "book": "dh",
+        "label": "Dragonmark"
+      },
+      {
+        "id": "dh-dragonsworn",
+        "book": "dh",
+        "label": "Dragonsworn"
+      },
+      {
+        "id": "dh-stygian",
+        "book": "dh",
+        "label": "Stygian"
+      },
+      {
+        "id": "dh-shadow-fallen",
+        "book": "dh",
+        "label": "Shadow Fallen",
+        "note": "Dream-Hunter arc — newest entry (2022), postdates Kenyon's numbered list"
+      }
+    ]
   }
 ]
