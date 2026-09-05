@@ -814,5 +814,151 @@
         "note": "Riftwake #1 (2026) — sequel trilogy, start here after Defiant"
       }
     ]
+  },
+  {
+    "slug": "cosmere-reading-order",
+    "title": "The Cosmere — Reading Order",
+    "summary": "A spoiler-conscious path through Sanderson's connected universe — Mistborn eras, Stormlight, the standalones, and where the trap novellas actually belong.",
+    "intro": "Sanderson says there's no single mandatory Cosmere order — several books work as entry points. This is the spoiler-conscious path: Mistborn Era 1 first, Secret History only after The Bands of Mourning (his own rule — it torpedoes Era 1 otherwise), Warbreaker before Words of Radiance for a quiet payoff, and The Sunlit Man last. Notes flag the slots that are genuinely flexible. (The Frugal Wizard's Handbook isn't Cosmere, so it isn't here.)",
+    "updated": "2026-09-05",
+    "books": [
+      {
+        "key": "era1",
+        "title": "Mistborn — Era 1",
+        "accent": "gold"
+      },
+      {
+        "key": "era2",
+        "title": "Mistborn — Era 2",
+        "accent": "magenta"
+      },
+      {
+        "key": "stormlight",
+        "title": "The Stormlight Archive",
+        "accent": "glow"
+      },
+      {
+        "key": "standalone",
+        "title": "Standalones & novellas",
+        "accent": "ink"
+      }
+    ],
+    "items": [
+      {
+        "id": "era1-final-empire",
+        "book": "era1",
+        "label": "Mistborn: The Final Empire"
+      },
+      {
+        "id": "era1-well-of-ascension",
+        "book": "era1",
+        "label": "The Well of Ascension"
+      },
+      {
+        "id": "era1-hero-of-ages",
+        "book": "era1",
+        "label": "The Hero of Ages"
+      },
+      {
+        "id": "sa-tress",
+        "book": "standalone",
+        "label": "Tress of the Emerald Sea",
+        "note": "flexible — works any time after Mistborn Era 1"
+      },
+      {
+        "id": "era2-alloy-of-law",
+        "book": "era2",
+        "label": "The Alloy of Law"
+      },
+      {
+        "id": "era2-shadows-of-self",
+        "book": "era2",
+        "label": "Shadows of Self"
+      },
+      {
+        "id": "era2-bands-of-mourning",
+        "book": "era2",
+        "label": "The Bands of Mourning"
+      },
+      {
+        "id": "era2-secret-history",
+        "book": "era2",
+        "label": "Mistborn: Secret History",
+        "note": "Sanderson's rule: only after The Bands of Mourning — massive Era 1 spoilers"
+      },
+      {
+        "id": "sa-warbreaker",
+        "book": "standalone",
+        "label": "Warbreaker",
+        "note": "read before Words of Radiance for a payoff; free ebook on Sanderson's site"
+      },
+      {
+        "id": "sa-elantris",
+        "book": "standalone",
+        "label": "Elantris",
+        "note": "flexible — Sanderson's first novel, readable anywhere"
+      },
+      {
+        "id": "sa-emperors-soul",
+        "book": "standalone",
+        "label": "The Emperor's Soul",
+        "note": "Hugo-winning novella in the Elantris world"
+      },
+      {
+        "id": "sla-way-of-kings",
+        "book": "stormlight",
+        "label": "The Way of Kings"
+      },
+      {
+        "id": "sla-words-of-radiance",
+        "book": "stormlight",
+        "label": "Words of Radiance"
+      },
+      {
+        "id": "sla-edgedancer",
+        "book": "stormlight",
+        "label": "Edgedancer",
+        "note": "novella — read before Oathbringer"
+      },
+      {
+        "id": "sla-oathbringer",
+        "book": "stormlight",
+        "label": "Oathbringer"
+      },
+      {
+        "id": "sla-dawnshard",
+        "book": "stormlight",
+        "label": "Dawnshard",
+        "note": "novella — read before Rhythm of War"
+      },
+      {
+        "id": "sla-rhythm-of-war",
+        "book": "stormlight",
+        "label": "Rhythm of War"
+      },
+      {
+        "id": "sa-yumi",
+        "book": "standalone",
+        "label": "Yumi and the Nightmare Painter",
+        "note": "best after Rhythm of War"
+      },
+      {
+        "id": "era2-lost-metal",
+        "book": "era2",
+        "label": "The Lost Metal",
+        "note": "heavy Cosmere crossover — lands hardest this late in the path"
+      },
+      {
+        "id": "sla-wind-and-truth",
+        "book": "stormlight",
+        "label": "Wind and Truth"
+      },
+      {
+        "id": "sa-sunlit-man",
+        "book": "standalone",
+        "label": "The Sunlit Man",
+        "note": "read last — it follows Stormlight's endgame"
+      }
+    ]
   }
 ]
