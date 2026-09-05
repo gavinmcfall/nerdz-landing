@@ -78,6 +78,12 @@
 
 ## Log
 
+### 2026-09-05 — Five new reading guides shipped (batch from shelve cache)
+- Mined `G:\code\Projects\nerdz-reading\data\_shelve_cache.json` (908 series) for non-obvious reading orders; shipped Skyward, Cosmere, Immortals After Dark, Breeds, Dark-Hunter, Iron Fey (plan: docs/superpowers/plans/2026-09-05-reading-guides-batch.md). All orders web-verified against official/author sources (loraleigh.com and sherrilynkenyon.com publish their own lists; Secret History placement is Sanderson's stated rule; Blightfall (Riftwake #1, Sep 2026) caught during research).
+- Infra: accents now gold/glow/magenta/ink; items take optional `note`; gen-reading-eos-tod upserts; PDF renderer auto-picks A4-portrait book-list layout under 60 items.
+- **Gotchas:** home-ops WSL distro wouldn't start (HCS_E_CONNECTION_TIMEOUT; did NOT `wsl --shutdown` — lighthouse was live). PDFs rendered via throwaway venv `/tmp/wpvenv` in the `lighthouse` distro, repo files tar-piped in (no /mnt/g there), PDFs tar-piped back; pypdf in same venv for verification (no gs/poppler anywhere). pypdf text extraction can split glyphs ("T empting") — don't trust exact-substring checks.
+- Outstanding: Feehan-universe guide needs a format decision from Gavin (universe map vs checklist).
+
 ### 2026-08-28 — Reading sync: LIVE end-to-end (credentials done via Chrome walkthrough)
 - Drove Gavin's Chrome through both consoles. Google: existing project `nerdz-488001`; the new console is "Google Auth Platform" (Branding/Audience/Clients — old consent-screen page is gone). Created Web client `nerdz.cloud reading sync` (prod+localhost callbacks); renamed stale branding app "plane"→"nerdz.cloud"; **publishing to production required a privacy-policy URL** → built + shipped `/privacy` (also linked in colophon); published — status "In production", openid-only so no verification.
 - Discord: app `nerdz.cloud reading` (ID 1542713131510267904), both callbacks saved; Gavin clicked ToS + reset/copied secret himself.
