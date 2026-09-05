@@ -744,5 +744,75 @@
         "label": "TOD — Fireheart"
       }
     ]
+  },
+  {
+    "slug": "skyward-reading-order",
+    "title": "Skyward — Reading Order",
+    "summary": "Sanderson's Cytoverse in the intended order — the three Skyward Flight novellas slot between the novels, and Defiant assumes you've read them.",
+    "intro": "The Skyward Flight novellas aren't optional side stories: Sanderson's intended sequence interleaves them with the novels — Sunreach and ReDawn after Starsight, Evershore after Cytonic — because they follow the rest of the flight while Spensa is away, and Defiant picks up threads from all three. Blightfall then opens Riftwake, the sequel trilogy that puts Skyward Flight at the centre.",
+    "updated": "2026-09-05",
+    "books": [
+      {
+        "key": "novel",
+        "title": "Skyward novels",
+        "accent": "gold"
+      },
+      {
+        "key": "flight",
+        "title": "Skyward Flight novellas",
+        "accent": "glow"
+      },
+      {
+        "key": "riftwake",
+        "title": "Riftwake (sequel trilogy)",
+        "accent": "magenta"
+      }
+    ],
+    "items": [
+      {
+        "id": "skyward-1",
+        "book": "novel",
+        "label": "Skyward"
+      },
+      {
+        "id": "skyward-2",
+        "book": "novel",
+        "label": "Starsight"
+      },
+      {
+        "id": "flight-sunreach",
+        "book": "flight",
+        "label": "Sunreach",
+        "note": "Skyward Flight #1 (with Janci Patterson) — FM's story"
+      },
+      {
+        "id": "flight-redawn",
+        "book": "flight",
+        "label": "ReDawn",
+        "note": "Skyward Flight #2 — Alanik's story"
+      },
+      {
+        "id": "skyward-3",
+        "book": "novel",
+        "label": "Cytonic"
+      },
+      {
+        "id": "flight-evershore",
+        "book": "flight",
+        "label": "Evershore",
+        "note": "Skyward Flight #3 — Jorgen's story; overlaps Cytonic's timeline, read before Defiant"
+      },
+      {
+        "id": "skyward-4",
+        "book": "novel",
+        "label": "Defiant"
+      },
+      {
+        "id": "riftwake-blightfall",
+        "book": "riftwake",
+        "label": "Blightfall",
+        "note": "Riftwake #1 (2026) — sequel trilogy, start here after Defiant"
+      }
+    ]
   }
 ]
