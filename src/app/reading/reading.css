@@ -240,6 +240,8 @@
 /* Accent per book: one custom property, used by box, dot and text. */
 .rg-accent--gold { --rg-accent: var(--gold); }
 .rg-accent--glow { --rg-accent: var(--glow); }
+.rg-accent--magenta { --rg-accent: var(--magenta); }
+.rg-accent--ink { --rg-accent: var(--ink-mid); }
 
 .rg-item__box {
   appearance: none;
@@ -281,6 +283,16 @@
   color: var(--ink-dim);
   text-decoration: line-through;
   text-decoration-color: var(--rg-accent);
+  opacity: 0.75;
+}
+.rg-item__note {
+  display: block;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-mute);
+}
+.rg-item--done .rg-item__note {
+  color: var(--ink-dim);
   opacity: 0.75;
 }
 

@@ -341,7 +341,12 @@ export function ReadingGuideChecklist({ guide }: { guide: ReadingGuide }) {
                   checked={isChecked}
                   onChange={() => toggle(item.id)}
                 />
-                <span className="rg-item__text">{item.label}</span>
+                <span className="rg-item__text">
+                  {item.label}
+                  {item.note && (
+                    <span className="rg-item__note">{item.note}</span>
+                  )}
+                </span>
               </label>
             </li>
           );

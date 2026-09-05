@@ -63,7 +63,7 @@ for (let ch = 1; ch <= 68; ch++)
 if (items[0].id !== "eos-nightfall" || items[144].id !== "tod-fireheart")
   throw new Error("endpoints out of place");
 
-const guides = [
+const guide =
   {
     slug: "eos-tod-reading-order",
     title: "Empire of Storms & Tower of Dawn — Tandem Reading Order",
@@ -77,10 +77,21 @@ const guides = [
       { key: "tod", title: "Tower of Dawn", accent: "glow" },
     ],
     items,
-  },
-];
+  };
+
+// Upsert into the shared data file: other guides are hand-authored directly
+// in reading.data.json, so this script must never clobber them.
+let guides = [];
+try {
+  guides = JSON.parse(await fs.readFile(OUT, "utf8"));
+} catch {
+  // First run / missing file — start fresh.
+}
+const idx = guides.findIndex((g) => g.slug === guide.slug);
+if (idx >= 0) guides[idx] = guide;
+else guides.unshift(guide);
 
 await fs.writeFile(OUT, JSON.stringify(guides, null, 2) + "\n", "utf8");
 console.log(
-  `gen-reading: ${items.length} items (${eos.length} EOS / ${tod.length} ToD) → ${path.relative(process.cwd(), OUT)}`,
+  `gen-reading: ${items.length} items (${eos.length} EOS / ${tod.length} ToD) upserted → ${path.relative(process.cwd(), OUT)} (${guides.length} guide(s) total)`,
 );

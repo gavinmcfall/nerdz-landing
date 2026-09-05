@@ -42,5 +42,36 @@
   margin: 0;
 }
 
+/* Accent palette for book-level guides (print-legible tones). */
+.rg-a-gold { color: var(--gold); }
+.rg-a-glow { color: var(--purple); }
+.rg-a-magenta { color: #8b1a6b; }
+.rg-a-ink { color: var(--ink-mid); }
+
+/* EOS/ToD keeps its original colors (declared after, so these win). */
 .rg-eos { color: var(--ink-mid); }
 .rg-tod { color: var(--purple); }
+
+/* ─ Book-list layout (guides under 30 items): A4 portrait, roomy rows ─ */
+.rg-cols--list {
+  columns: 1;
+  max-width: 150mm;
+}
+.rg-cols--list .rg-row {
+  font-size: 11pt;
+  padding: 1.6mm 0;
+  gap: 3mm;
+  border-bottom: 0.3pt solid var(--rule);
+  align-items: flex-start;
+}
+.rg-cols--list .rg-row input {
+  width: 4mm;
+  height: 4mm;
+  margin-top: 0.8mm;
+}
+.rg-note {
+  display: block;
+  font-size: 8pt;
+  line-height: 1.35;
+  color: var(--ink-mute);
+}

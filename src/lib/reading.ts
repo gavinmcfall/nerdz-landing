@@ -8,7 +8,7 @@ import rawData from "./reading.data.json";
 // manuals.ts. Item ids are stable and content-derived (eos-17, tod-fireheart),
 // never positional: they key saved progress in visitors' localStorage.
 
-const Accent = z.enum(["gold", "glow"]);
+const Accent = z.enum(["gold", "glow", "magenta", "ink"]);
 
 const BookSchema = z.object({
   key: z
@@ -26,6 +26,9 @@ const ItemSchema = z.object({
     .regex(/^[a-z0-9-]+$/, "item id must be kebab-case"),
   book: z.string().min(1),
   label: z.string().min(1),
+  // Short annotation shown under the label (e.g. "novella — read before
+  // Defiant"). Used by book-level guides; chapter grids omit it.
+  note: z.string().optional(),
 });
 
 const GuideSchema = z
