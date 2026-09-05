@@ -324,7 +324,12 @@ export function ReadingGuideChecklist({ guide }: { guide: ReadingGuide }) {
         ))}
       </div>
 
-      <ol className="rg-list">
+      {/* Book-level guides get visible step numbers and fewer columns —
+          a dozen unnumbered items across three columns reads ambiguously
+          (down-the-column vs across). Chapter grids stay dense/unnumbered. */}
+      <ol
+        className={`rg-list${guide.items.length < 60 ? " rg-list--books" : ""}`}
+      >
         {guide.items.map((item) => {
           const isChecked = checked.has(item.id);
           const accent = accentByBook.get(item.book) ?? "gold";

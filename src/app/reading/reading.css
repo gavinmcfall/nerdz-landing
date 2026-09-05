@@ -224,6 +224,39 @@
   break-inside: avoid;
   border-bottom: 1px solid var(--rule);
 }
+
+/* Book-level guides: numbered steps, max 2 columns (short lists across 3
+   columns give no cue that order flows down each column). */
+.rg-list--books {
+  counter-reset: rg-step;
+}
+.rg-list--books,
+.rg-list--books.rg-list {
+  columns: 1;
+}
+@media (min-width: 900px) {
+  .rg-list--books.rg-list {
+    columns: 2;
+  }
+}
+.rg-list--books .rg-item {
+  counter-increment: rg-step;
+}
+.rg-list--books .rg-item__label::before {
+  content: counter(rg-step, decimal-leading-zero);
+  flex: none;
+  min-width: 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  padding-top: 3px;
+}
+.rg-list--books .rg-item__label {
+  align-items: flex-start;
+}
+.rg-list--books .rg-item__box {
+  margin-top: 2px;
+}
 .rg-item__label {
   display: flex;
   align-items: center;

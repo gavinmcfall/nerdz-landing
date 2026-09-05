@@ -53,16 +53,20 @@ def load_css(name: str) -> str:
     return (PRINT_DIR / name).read_text(encoding="utf-8")
 
 
-def row_html(item: dict, accent: str, with_notes: bool) -> str:
+def row_html(item: dict, accent: str, with_notes: bool, num: int | None) -> str:
     note = (
         f'<span class="rg-note">{html_lib.escape(item["note"])}</span>'
         if with_notes and item.get("note")
         else ""
     )
+    # Book-list rows carry a visible step number — short lists without one
+    # read ambiguously. Chapter grids stay unnumbered.
+    num_html = f'<span class="rg-num">{num:02d}</span>' if num is not None else ""
     # Both classes: rg-<book key> keeps EOS/ToD's original colors; rg-a-<accent>
     # colors every other guide from its declared accent.
     return (
         f'<label class="rg-row rg-a-{accent} rg-{html_lib.escape(item["book"])}">'
+        f"{num_html}"
         f'<input type="checkbox" id="{html_lib.escape(item["id"])}" '
         f'name="{html_lib.escape(item["id"])}">'
         f'<span>{html_lib.escape(item["label"])}{note}</span></label>'
@@ -73,8 +77,13 @@ def build_html(guide: dict) -> str:
     book_list = is_book_list(guide)
     accent_by_book = {b["key"]: b.get("accent", "gold") for b in guide["books"]}
     rows = "".join(
-        row_html(item, accent_by_book.get(item["book"], "gold"), with_notes=book_list)
-        for item in guide["items"]
+        row_html(
+            item,
+            accent_by_book.get(item["book"], "gold"),
+            with_notes=book_list,
+            num=(i + 1) if book_list else None,
+        )
+        for i, item in enumerate(guide["items"])
     )
     legend = " ".join(
         f'<span class="rg-a-{b.get("accent", "gold")} rg-{html_lib.escape(b["key"])}">'
