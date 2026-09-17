@@ -7,7 +7,9 @@ import {
   RADAR_MAX,
   RADAR_QUESTION_ID,
   SPICE_QUESTION_ID,
+  answerIds,
   spiceApplies,
+  type Answers,
   type Pick,
 } from "@/lib/bookclub";
 
@@ -22,7 +24,7 @@ type ClubData = {
   memberNames: string[];
   isAdmin: boolean;
   me?: { name: string };
-  quizzes?: { name: string; mine: boolean; answers: Record<string, string>; updatedAt: string }[];
+  quizzes?: { name: string; mine: boolean; answers: Answers; updatedAt: string }[];
 };
 
 type PickForm = {
@@ -405,8 +407,18 @@ function QuizSection({
   const mine = quizzes.find((q) => q.mine);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(myName);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Answers>({});
   const [busy, setBusy] = useState(false);
+
+  const choose = (qid: string, oid: string, multi: boolean) =>
+    setAnswers((a) => {
+      if (!multi) return { ...a, [qid]: oid };
+      const current = answerIds(a[qid]);
+      const next = current.includes(oid)
+        ? current.filter((id) => id !== oid)
+        : [...current, oid];
+      return { ...a, [qid]: next };
+    });
 
   // Answers are seeded from the latest saved copy when the editor opens
   // (see startEditing) — no effect-driven sync needed.
@@ -454,6 +466,9 @@ function QuizSection({
 
       {editing && (
         <div className="bc-quiz__form">
+          <p className="bc-quiz__hint mono">
+            tick everything you&rsquo;d be happy with — more ticks, more overlap
+          </p>
           <label className="bc-field bc-field--inline">
             <span>Your name</span>
             <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Gavin" />
@@ -466,8 +481,8 @@ function QuizSection({
                   <button
                     key={o.id}
                     type="button"
-                    className={`bc-chip${answers[q.id] === o.id ? " bc-chip--on" : ""}`}
-                    onClick={() => setAnswers((a) => ({ ...a, [q.id]: o.id }))}
+                    className={`bc-chip${answerIds(answers[q.id]).includes(o.id) ? " bc-chip--on" : ""}`}
+                    onClick={() => choose(q.id, o.id, q.multi === true)}
                   >
                     {o.label}
                   </button>
@@ -480,7 +495,11 @@ function QuizSection({
             <textarea
               rows={2}
               maxLength={RADAR_MAX}
-              value={answers[RADAR_QUESTION_ID] ?? ""}
+              value={
+                typeof answers[RADAR_QUESTION_ID] === "string"
+                  ? (answers[RADAR_QUESTION_ID] as string)
+                  : ""
+              }
               onChange={(e) =>
                 setAnswers((a) => ({ ...a, [RADAR_QUESTION_ID]: e.target.value }))
               }
@@ -502,22 +521,37 @@ function MatchUp({ quizzes }: { quizzes: NonNullable<ClubData["quizzes"]> }) {
   const rows = useMemo(() => {
     if (!ready) return [];
     return QUIZ_QUESTIONS.map((q) => {
+      // Every question is pick-several: a tick means "happy with this", so
+      // agreement is set overlap, not exact equality.
       const picks = quizzes.map((z) => ({
         name: z.name,
-        option: q.options.find((o) => o.id === z.answers[q.id]) ?? null,
+        ids: answerIds(z.answers[q.id]).filter((id) =>
+          q.options.some((o) => o.id === id),
+        ),
       }));
-      if (picks.every((p) => p.option === null)) return null;
+      if (picks.every((p) => p.ids.length === 0)) return null;
+      const labelOf = (id: string) =>
+        q.options.find((o) => o.id === id)!.label;
+
       if (q.id === SPICE_QUESTION_ID) {
-        const levels = picks
-          .filter((p) => p.option)
-          .map((p) => Number(p.option!.id));
-        const allowed = levels.length ? Math.min(...levels) : 0;
-        return { q, picks, agree: false, spiceAllowed: allowed };
+        // Each person's cap = the hottest level they ticked; the club's
+        // allowed heat is the lower cap.
+        const caps = picks
+          .filter((p) => p.ids.length > 0)
+          .map((p) => Math.max(...p.ids.map(Number)));
+        const allowed = caps.length === picks.length ? Math.min(...caps) : 0;
+        return { q, picks, labelOf, shared: [], identical: false, spiceAllowed: allowed };
       }
-      const agree =
-        picks.every((p) => p.option !== null) &&
-        new Set(picks.map((p) => p.option!.id)).size === 1;
-      return { q, picks, agree, spiceAllowed: 0 };
+
+      const allAnswered = picks.every((p) => p.ids.length > 0);
+      const shared = allAnswered
+        ? picks[0].ids.filter((id) => picks.every((p) => p.ids.includes(id)))
+        : [];
+      const identical =
+        allAnswered &&
+        shared.length > 0 &&
+        picks.every((p) => p.ids.length === shared.length);
+      return { q, picks, labelOf, shared, identical, spiceAllowed: 0 };
     }).filter((r) => r !== null);
   }, [quizzes, ready]);
 
@@ -531,8 +565,10 @@ function MatchUp({ quizzes }: { quizzes: NonNullable<ClubData["quizzes"]> }) {
     );
   }
 
-  const agreements = rows.filter((r) => r.agree);
-  const radars = quizzes.filter((z) => z.answers[RADAR_QUESTION_ID]);
+  const agreements = rows.filter((r) => r.shared.length > 0);
+  const radars = quizzes.filter(
+    (z) => typeof z.answers[RADAR_QUESTION_ID] === "string",
+  );
 
   return (
     <div className="bc-match">
@@ -541,9 +577,11 @@ function MatchUp({ quizzes }: { quizzes: NonNullable<ClubData["quizzes"]> }) {
       </h4>
       {agreements.length > 0 && (
         <p className="bc-match__summary">
-          You&rsquo;re both in the mood for:{" "}
+          You&rsquo;re both happy with:{" "}
           <strong>
-            {agreements.map((r) => r.picks[0].option!.label.toLowerCase()).join(" · ")}
+            {agreements
+              .flatMap((r) => r.shared.map((id) => r.labelOf(id).toLowerCase()))
+              .join(" · ")}
           </strong>
         </p>
       )}
@@ -551,24 +589,39 @@ function MatchUp({ quizzes }: { quizzes: NonNullable<ClubData["quizzes"]> }) {
         {rows.map((r) => (
           <li
             key={r.q.id}
-            className={`bc-match__row${r.agree ? " bc-match__row--agree" : ""}`}
+            className={`bc-match__row${r.shared.length > 0 || r.spiceAllowed > 0 ? " bc-match__row--agree" : ""}`}
           >
             <span className="bc-match__q">{r.q.prompt}</span>
-            {r.q.id === SPICE_QUESTION_ID && r.spiceAllowed > 0 ? (
-              <span className="bc-match__spice">
-                allowed heat: {chilis(String(r.spiceAllowed))}{" "}
-                <span className="mono">(the lower of your two answers)</span>
+            {r.q.id === SPICE_QUESTION_ID ? (
+              r.spiceAllowed > 0 ? (
+                <span className="bc-match__spice">
+                  allowed heat: {chilis(String(r.spiceAllowed))}{" "}
+                  <span className="mono">(the lower of your two caps)</span>
+                </span>
+              ) : (
+                <SplitPicks picks={r.picks} labelOf={r.labelOf} />
+              )
+            ) : r.identical ? (
+              <span className="bc-match__a">
+                {r.shared.map((id) => r.labelOf(id)).join(", ")} ✓
               </span>
-            ) : r.agree ? (
-              <span className="bc-match__a">{r.picks[0].option!.label} ✓</span>
-            ) : (
+            ) : r.shared.length > 0 ? (
               <span className="bc-match__split">
-                {r.picks.map((p) => (
-                  <span key={p.name}>
-                    <em>{p.name}:</em> {p.option ? p.option.label : "—"}
-                  </span>
-                ))}
+                <span className="bc-match__a">
+                  both: {r.shared.map((id) => r.labelOf(id)).join(", ")} ✓
+                </span>
+                {r.picks.map((p) => {
+                  const extras = p.ids.filter((id) => !r.shared.includes(id));
+                  return extras.length ? (
+                    <span key={p.name}>
+                      <em>{p.name} also:</em>{" "}
+                      {extras.map((id) => r.labelOf(id)).join(", ")}
+                    </span>
+                  ) : null;
+                })}
               </span>
+            ) : (
+              <SplitPicks picks={r.picks} labelOf={r.labelOf} />
             )}
           </li>
         ))}
@@ -583,6 +636,25 @@ function MatchUp({ quizzes }: { quizzes: NonNullable<ClubData["quizzes"]> }) {
         </div>
       )}
     </div>
+  );
+}
+
+function SplitPicks({
+  picks,
+  labelOf,
+}: {
+  picks: { name: string; ids: string[] }[];
+  labelOf: (id: string) => string;
+}) {
+  return (
+    <span className="bc-match__split">
+      {picks.map((p) => (
+        <span key={p.name}>
+          <em>{p.name}:</em>{" "}
+          {p.ids.length ? p.ids.map(labelOf).join(", ") : "—"}
+        </span>
+      ))}
+    </span>
   );
 }
 

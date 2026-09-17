@@ -61,6 +61,8 @@ export type QuizQuestion = {
   id: string;
   prompt: string;
   options: { id: string; label: string }[];
+  /** All club questions are pick-several: a tick means "happy with this". */
+  multi?: boolean;
 };
 
 export const SPICE_QUESTION_ID = "spice";
@@ -68,7 +70,8 @@ export const SPICE_QUESTION_ID = "spice";
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "genre",
-    prompt: "What genre are you in the mood for?",
+    prompt: "What genres are you in the mood for?",
+    multi: true,
     options: [
       { id: "fantasy", label: "Fantasy" },
       { id: "romantasy", label: "Romantasy" },
@@ -81,6 +84,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "vibe",
     prompt: "What's the vibe?",
+    multi: true,
     options: [
       { id: "cozy", label: "Cozy" },
       { id: "whimsical", label: "Whimsical" },
@@ -92,6 +96,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "pace",
     prompt: "Pace?",
+    multi: true,
     options: [
       { id: "slow-burn", label: "Slow burn" },
       { id: "steady", label: "Steady" },
@@ -101,6 +106,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "weight",
     prompt: "How heavy can the themes get?",
+    multi: true,
     options: [
       { id: "light", label: "Keep it light" },
       { id: "medium", label: "Some weight is fine" },
@@ -110,6 +116,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "length",
     prompt: "Length?",
+    multi: true,
     options: [
       { id: "short", label: "Under 300 pages" },
       { id: "standard", label: "300–500 pages" },
@@ -119,6 +126,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "shape",
     prompt: "Standalone or series?",
+    multi: true,
     options: [
       { id: "standalone", label: "Standalone" },
       { id: "series-starter", label: "Start a new series" },
@@ -128,6 +136,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "romance",
     prompt: "Romance content?",
+    multi: true,
     options: [
       { id: "none", label: "None, please" },
       { id: "subplot", label: "A subplot is nice" },
@@ -137,6 +146,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: SPICE_QUESTION_ID,
     prompt: "Allowed heat level?",
+    multi: true,
     options: [
       { id: "1", label: "🌶️ Sweet — kisses only" },
       { id: "2", label: "🌶️🌶️ Warm — fade to black" },
@@ -150,33 +160,56 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
 export const RADAR_QUESTION_ID = "radar";
 export const RADAR_MAX = 500;
 
+export type AnswerValue = string | string[];
+export type Answers = Record<string, AnswerValue>;
+
+/** Normalize any stored answer to an array of option ids (legacy answers
+ * on multi questions were single strings). */
+export function answerIds(v: AnswerValue | undefined): string[] {
+  if (v === undefined) return [];
+  return Array.isArray(v) ? v : [v];
+}
+
 /** The chili question only applies when romance is in play. */
-export function spiceApplies(answers: Record<string, string>): boolean {
+export function spiceApplies(answers: Answers): boolean {
+  const genres = answerIds(answers.genre);
   return (
-    answers.genre === "romance" ||
-    answers.genre === "romantasy" ||
-    (answers.romance !== undefined && answers.romance !== "none")
+    genres.includes("romance") ||
+    genres.includes("romantasy") ||
+    answerIds(answers.romance).some((id) => id !== "none")
   );
 }
 
-const AnswersSchema = z.record(z.string(), z.string().max(RADAR_MAX));
+const AnswersSchema = z.record(
+  z.string(),
+  z.union([
+    z.string().max(RADAR_MAX),
+    z.array(z.string().max(64)).max(10),
+  ]),
+);
 
 export const SaveQuizSchema = z.object({
   name: z.string().min(1).max(60),
   answers: AnswersSchema,
 });
 
-/** Drop unknown question ids / option ids; keep radar free text. */
-export function sanitizeAnswers(
-  answers: Record<string, string>,
-): Record<string, string> {
-  const out: Record<string, string> = {};
+/** Drop unknown question ids / option ids; keep radar free text. Multi
+ * questions store arrays; single questions store one id (an array sent to
+ * a single question keeps its first valid pick). */
+export function sanitizeAnswers(answers: Answers): Answers {
+  const out: Answers = {};
   for (const q of QUIZ_QUESTIONS) {
-    const v = answers[q.id];
-    if (v !== undefined && q.options.some((o) => o.id === v)) out[q.id] = v;
+    const valid = answerIds(answers[q.id]).filter((id) =>
+      q.options.some((o) => o.id === id),
+    );
+    const unique = [...new Set(valid)];
+    if (unique.length === 0) continue;
+    if (q.multi) out[q.id] = unique;
+    else out[q.id] = unique[0];
   }
-  if (typeof answers[RADAR_QUESTION_ID] === "string") {
-    const radar = answers[RADAR_QUESTION_ID].slice(0, RADAR_MAX).trim();
+  const radarRaw = answers[RADAR_QUESTION_ID];
+  if (typeof radarRaw === "string") {
+    const radar = radarRaw.slice(0, RADAR_MAX).trim();
     if (radar) out[RADAR_QUESTION_ID] = radar;
   }
   // Spice only sticks when it applies (stale answers age out on retake).
@@ -189,7 +222,7 @@ export function sanitizeAnswers(
 export type QuizDoc = {
   v: 1;
   name: string;
-  answers: Record<string, string>;
+  answers: Answers;
   updatedAt: string;
 };
 

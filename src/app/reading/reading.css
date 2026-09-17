@@ -673,3 +673,10 @@
     flex-direction: column;
   }
 }
+.bc-quiz__hint {
+  margin: 0;
+  font-size: 11px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
