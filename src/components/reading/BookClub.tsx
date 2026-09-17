@@ -92,6 +92,11 @@ export function BookClub() {
 
   return (
     <div className="bc">
+      {data.memberNames.length > 0 && (
+        <p className="bc-readers mono">
+          the readers · {data.memberNames.join(" & ")}
+        </p>
+      )}
       <CurrentPick pick={data.current} />
       {data.isAdmin && (
         <AdminPanel currentMonth={data.current?.month} onSaved={reload} setStatus={setStatus} />

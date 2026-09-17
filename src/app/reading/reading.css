@@ -680,3 +680,10 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
+.bc-readers {
+  margin: 0 0 -10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
