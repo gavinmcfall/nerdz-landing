@@ -6,7 +6,11 @@ declare global {
   interface CloudflareEnv {
     READING_SYNC: {
       get(key: string, type: "json"): Promise<unknown>;
-      put(key: string, value: string): Promise<void>;
+      put(
+        key: string,
+        value: string,
+        options?: { expirationTtl?: number },
+      ): Promise<void>;
       delete(key: string): Promise<void>;
     };
   }

@@ -20,6 +20,18 @@ export default async function ReadingPage() {
         />
 
         <ul className="rg-hub">
+          <li>
+            <Link className="rg-hub__card" href="/reading/book-club">
+              <h3 className="rg-hub__title">The Book Club 📚</h3>
+              <p className="rg-hub__summary">
+                What Gavin &amp; Kelsie are reading this month — plus the
+                mood-match quiz that picks the next one.
+              </p>
+              <span className="rg-hub__meta mono">
+                one book a month · two readers
+              </span>
+            </Link>
+          </li>
           {guides.map((g) => (
             <li key={g.slug}>
               <Link className="rg-hub__card" href={`/reading/${g.slug}`}>

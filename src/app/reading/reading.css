@@ -349,3 +349,327 @@
     text-align: center;
   }
 }
+
+/* ── Book club (/reading/book-club) ───────────────────────────── */
+.bc {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.bc-loading,
+.bc-status {
+  font-size: 12px;
+  color: var(--ink-mute);
+}
+
+/* hero */
+.bc-hero {
+  display: flex;
+  gap: 26px;
+  padding: 24px;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+}
+.bc-hero--empty {
+  color: var(--ink-mute);
+  font-style: italic;
+}
+.bc-hero__cover {
+  flex: none;
+  width: 190px;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--rule-strong);
+}
+.bc-hero__cover--blank {
+  display: grid;
+  place-content: center;
+  width: 190px;
+  height: 280px;
+  font-size: 48px;
+  background: var(--paper-deep);
+}
+.bc-hero__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+.bc-hero__month {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+.bc-hero__title {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.bc-hero__author {
+  margin: 0;
+  color: var(--ink-mute);
+}
+.bc-hero__blurb {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-mid);
+}
+
+/* admin + forms */
+.bc-admin__form,
+.bc-redeem {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background: var(--paper-soft);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  max-width: 560px;
+}
+.bc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ink-mute);
+}
+.bc-field input,
+.bc-field textarea {
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+.bc-field input:focus-visible,
+.bc-field textarea:focus-visible {
+  outline: 2px solid var(--glow);
+  outline-offset: 1px;
+}
+.bc-admin__coverpreview {
+  width: 95px;
+  height: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--rule-strong);
+}
+.bc-invite {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ink-mute);
+}
+.bc-invite__link {
+  display: inline-flex;
+  gap: 6px;
+  flex: 1 1 320px;
+}
+.bc-invite__link input {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-mid);
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+}
+.bc-redeem h3 {
+  margin: 0;
+  color: var(--ink);
+}
+
+/* quiz */
+.bc-quiz {
+  padding: 20px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  background: var(--paper-card);
+}
+.bc-quiz__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.bc-quiz__head h3 {
+  margin: 0;
+  color: var(--ink);
+}
+.bc-quiz__form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.bc-q {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.bc-q legend {
+  font-size: 13px;
+  color: var(--ink-mid);
+  margin-bottom: 6px;
+}
+.bc-q__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.bc-chip {
+  appearance: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink-mid);
+  background: var(--paper-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 6px 14px;
+  transition: border-color 0.12s ease, color 0.12s ease;
+}
+.bc-chip:hover {
+  border-color: var(--glow);
+}
+.bc-chip--on {
+  color: var(--ink);
+  border-color: var(--glow);
+  background: var(--paper-deep);
+  box-shadow: 0 0 6px var(--glow) inset;
+}
+.bc-quiz__waiting {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: var(--ink-mute);
+}
+
+/* match-up */
+.bc-match {
+  margin-top: 18px;
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+}
+.bc-match__title {
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+.bc-match__summary {
+  margin: 0 0 12px;
+  color: var(--ink-mid);
+}
+.bc-match__summary strong {
+  color: var(--glow-soft);
+}
+.bc-match__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.bc-match__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+.bc-match__row--agree .bc-match__a {
+  color: var(--glow-soft);
+}
+.bc-match__q {
+  flex: 0 0 240px;
+  color: var(--ink-mute);
+  font-size: 13px;
+}
+.bc-match__split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: var(--ink-mid);
+}
+.bc-match__split em,
+.bc-match__radars em {
+  color: var(--ink-mute);
+  font-style: normal;
+}
+.bc-match__spice {
+  color: var(--ink);
+}
+.bc-match__spice .mono {
+  font-size: 11px;
+  color: var(--ink-mute);
+}
+.bc-match__radars {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--ink-mid);
+}
+.bc-match__radars p {
+  margin: 4px 0;
+}
+
+/* archive */
+.bc-archive__title {
+  margin: 0 0 14px;
+  color: var(--ink);
+}
+.bc-archive__shelf {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 18px;
+}
+.bc-archive__item a {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bc-archive__item img,
+.bc-archive__blank {
+  width: 95px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--rule-strong);
+}
+.bc-archive__blank {
+  display: grid;
+  place-content: center;
+  font-size: 32px;
+  background: var(--paper-deep);
+}
+.bc-archive__month {
+  font-size: 10px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.bc-archive__name {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.3;
+}
+
+@media (max-width: 620px) {
+  .bc-hero {
+    flex-direction: column;
+  }
+}
