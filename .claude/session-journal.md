@@ -78,6 +78,12 @@
 
 ## Log
 
+### 2026-09-17 — Book Club shipped (/reading/book-club)
+- Monthly pick (admin pastes StoryGraph/Goodreads/Hardcover URL → server OG-scrape → editable preview → KV), archive shelf, one-time invite links, mood-match quiz with conditional chili-heat question (match-up shows min of both as allowed level). Spec: docs/superpowers/specs/2026-09-17-book-club-design.md. KV keys `bookclub:*` in READING_SYNC.
+- **Admin bootstrap:** prod KV had SEVEN google uids with synced progress (real readers!) so Gavin's uid could not be inferred — seeded no admins; instead minted a founding invite code directly into prod KV (7-day TTL) for Gavin to redeem; he then invites Kelsie from the page. NEVER guess uids.
+- Local verification: seeded dev admins via `wrangler kv key put --local` (miniflare shares the namespace id), sealed dev cookies, exercised 401/403/preview(real Goodreads fetch)/pick/invite-single-use/quizzes/match-up in browser.
+- Gotcha: `UID` is a readonly variable in bash — name shell vars something else.
+
 ### 2026-09-05 — Five new reading guides shipped (batch from shelve cache)
 - Mined `G:\code\Projects\nerdz-reading\data\_shelve_cache.json` (908 series) for non-obvious reading orders; shipped Skyward, Cosmere, Immortals After Dark, Breeds, Dark-Hunter, Iron Fey (plan: docs/superpowers/plans/2026-09-05-reading-guides-batch.md). All orders web-verified against official/author sources (loraleigh.com and sherrilynkenyon.com publish their own lists; Secret History placement is Sanderson's stated rule; Blightfall (Riftwake #1, Sep 2026) caught during research).
 - Infra: accents now gold/glow/magenta/ink; items take optional `note`; gen-reading-eos-tod upserts; PDF renderer auto-picks A4-portrait book-list layout under 60 items.
