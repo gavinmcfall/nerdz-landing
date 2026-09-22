@@ -43,6 +43,10 @@ const GuideSchema = z
     updated: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "updated must be YYYY-MM-DD"),
     books: z.array(BookSchema).min(1),
     items: z.array(ItemSchema).min(1),
+    // Where the order came from, when it isn't ours (fan tandem guides).
+    credit: z
+      .object({ text: z.string().min(1), href: z.string().url().optional() })
+      .optional(),
   })
   .superRefine((guide, ctx) => {
     const bookKeys = new Set(guide.books.map((b) => b.key));

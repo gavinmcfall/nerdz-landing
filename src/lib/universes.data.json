@@ -1,0 +1,165 @@
+[
+  {
+    "slug": "solaria",
+    "title": "The Solaria Universe",
+    "tagline": "Zodiac Academy · Ruthless Boys · Darkmore · Sins of the Zodiac",
+    "intro": "Caroline Peckham & Susanne Valenti's Fae world spans four series, a shelf of novellas, charity-anthology stories and group-only freebies. This section gathers all of it: the reading paths, every companion story and where to find it, how the series fit on the timeline, and maps.",
+    "updated": "2026-09-23",
+    "guides": [
+      { "slug": "solaria-reading-order", "role": "main", "blurb": "The whole universe in one spoiler-safe path, every bonus story slotted in." },
+      { "slug": "sorrow-starlight-beyond-the-veil-tandem", "role": "tandem", "blurb": "Optional: ZA8 and ZA8.5 chapter by chapter (fan order — the authors suggest reading 8.5 after 8)." }
+    ],
+    "timeline": [
+      { "label": "~5 years before", "detail": "Ruthless Boys of the Zodiac — Aurora Academy and Darkmore's future inmates. Origins of an Academy Bully and Savage are prequels too." },
+      { "label": "The main story", "detail": "Zodiac Academy 1–10 with its novellas: The Big A.S.S. Party, Seth on the Moon, Night, Beyond the Veil and Live and Let Lionel." },
+      { "label": "~5 years after", "detail": "Darkmore Penitentiary — a prison story that picks up Ruthless Boys characters." },
+      { "label": "A new era", "detail": "Sins of the Zodiac — a new cast in the same world." }
+    ],
+    "crossovers": [
+      { "title": "Ruthless Boys ↔ Zodiac Academy", "detail": "A Ruthless Boys character turns out to be family to the Vega twins, revealed in Cursed Fates (ZA5). Reading Ruthless Boys before ZA4 makes that land." },
+      { "title": "Night", "detail": "The explicit bridge between the two series — the authors warn it spoils both, so it waits until after all of Ruthless Boys and Cursed Fates." },
+      { "title": "Darkmore ↔ Ruthless Boys", "detail": "Darkmore's leads, Rosalie Oscura and Roary Night, first appear in Ruthless Boys." },
+      { "title": "Sins of the Zodiac", "detail": "Mostly separate; readers report only light hints of the wider world." }
+    ],
+    "works": [
+      { "title": "Zodiac Academy 1–9", "kind": "series", "detail": "The Vega twins at Zodiac Academy — the heart of the universe.", "availability": "standard" },
+      { "title": "Ruthless Boys of the Zodiac 1–5", "kind": "series", "detail": "Set five years before ZA at Aurora Academy.", "availability": "standard" },
+      { "title": "Darkmore Penitentiary 1–4", "kind": "series", "detail": "Set five years after ZA inside Solaria's prison.", "availability": "standard" },
+      { "title": "Sins of the Zodiac", "kind": "series", "detail": "Never Keep, Echo Fort, Cinder Vale — a new-era spin-off.", "availability": "standard" },
+      { "title": "Origins of an Academy Bully (#0.5)", "kind": "novella", "detail": "Darius and Orion before the twins arrive.", "availability": "paid", "placement": "After Shadow Princess (ZA4)" },
+      { "title": "The Awakening as Told by the Boys (#1.5)", "kind": "companion", "detail": "Book 1 retold from the Heirs' and Orion's side, with 50k+ new words.", "availability": "paid", "placement": "After you know the story — the authors say after the original" },
+      { "title": "The Big A.S.S. Party (#5.5)", "kind": "novella", "detail": "Max and Geraldine during Cursed Fates.", "availability": "paid", "placement": "After Cursed Fates" },
+      { "title": "Beyond the Veil (#8.5)", "kind": "novella", "detail": "The events of book 8 among the dead.", "availability": "paid", "placement": "After Sorrow and Starlight (or in tandem)" },
+      { "title": "Live and Let Lionel (#8.6)", "kind": "companion", "detail": "A 100k-word bonus collection hosted by Lionel — includes several earlier freebies, new scenes and a new map.", "availability": "paid", "placement": "Before Restless Stars" },
+      { "title": "On the Cursed Day of Christmas (ZA10)", "kind": "upcoming", "detail": "An illustrated advent-calendar book, one sealed chapter a day.", "availability": "upcoming", "where": "October 2026 (retailers list the 13th and the 20th)", "placement": "After Restless Stars" },
+      { "title": "Savage", "kind": "bonus", "detail": "How Hail and Merissa Vega met.", "availability": "paid", "where": "Hell Hath No Fury charity anthology; Live and Let Lionel", "placement": "With the ZA4 prequels" },
+      { "title": "The Shimmering Springs", "kind": "bonus", "detail": "Caleb and Seth's did-they-didn't-they night.", "availability": "paid", "where": "Nightingale charity anthology; Live and Let Lionel", "placement": "Around ZA4" },
+      { "title": "The Tale of Geraldine and the Moon Madness", "kind": "bonus", "detail": "Geraldine at the Lunar Eclipse.", "availability": "paid", "where": "Short story — distribution unclear", "placement": "After ZA4" },
+      { "title": "Foxy Tales", "kind": "bonus", "detail": "Darius and Orion alt-POV scenes from books 2–4.", "availability": "out-of-print", "where": "Limited charity paperback", "placement": "After ZA4" },
+      { "title": "Seth on the Moon (#5.6)", "kind": "bonus", "detail": "Seth's best day ever.", "availability": "free", "where": "Authors' Reading Tribe Facebook group; Live and Let Lionel", "placement": "Between ZA5 and ZA6" },
+      { "title": "Night (#5.4)", "kind": "bonus", "detail": "The twins meet the Ruthless Boys, from Leon's side.", "availability": "free", "where": "Authors' Reading Tribe Facebook group; Live and Let Lionel", "placement": "After all of Ruthless Boys and ZA5", "warning": "Major spoilers for both Zodiac Academy and Ruthless Boys." },
+      { "title": "Print-reissue bonus chapters", "kind": "bonus", "detail": "Since 2024 each ZA print reissue carries an exclusive bonus chapter and a new world map (book 1's is an Orion POV class). Ebooks don't include them.", "availability": "edition-exclusive", "where": "2024+ paperbacks" },
+      { "title": "Luxe edition bonus chapters", "kind": "bonus", "detail": "Each Luxe edition adds a never-before-seen bonus chapter plus commissioned art and maps.", "availability": "edition-exclusive", "where": "Luxe editions (King's Hollow / Elysian Crates)" }
+    ],
+    "gallery": [
+      { "kind": "link", "title": "Official maps of Solaria", "caption": "Six maps from the authors' publishing house: Solaria, Zodiac Academy, Aurora, Darkmore, Never Keep and the world map.", "href": "https://www.kingshollow.co.uk/solaria", "credit": "King's Hollow" }
+    ],
+    "sources": [
+      { "label": "Twisted Sisters (the authors' official hub)", "href": "https://twistedsisters.world/" },
+      { "label": "King's Hollow — Solaria series pages", "href": "https://www.kingshollow.co.uk/solaria" },
+      { "label": "Caroline Peckham on reading order (Goodreads Q&A)", "href": "https://www.goodreads.com/questions/1807496-hi-caroline-is-there-any-reading-order" },
+      { "label": "Read Romantasy — bonus-aware reading order", "href": "https://readromantasy.com/posts/zodiac-academy-reading-order-the-best-way-to-read-the-solaria-universe" }
+    ],
+    "related": []
+  },
+  {
+    "slug": "throne-of-glass",
+    "title": "Throne of Glass",
+    "tagline": "Erilea · eight books · six hidden scenes",
+    "intro": "Sarah J. Maas's first series — Celaena Sardothien's story across eight books and a prequel collection. Beyond the books there are six bonus scenes scattered across blog tours and retailer exclusives, and one famous fan-made tandem read.",
+    "updated": "2026-09-23",
+    "guides": [
+      { "slug": "throne-of-glass-reading-order", "role": "main", "blurb": "All eight books with the six bonus scenes in their slots." },
+      { "slug": "eos-tod-reading-order", "role": "tandem", "blurb": "Empire of Storms and Tower of Dawn chapter by chapter." },
+      { "slug": "maasverse-reading-order", "role": "combined", "blurb": "Throne of Glass, ACOTAR and Crescent City in one spoiler-safe order." }
+    ],
+    "timeline": [
+      { "label": "Before the series", "detail": "The Assassin's Blade — five novellas of Celaena's life before Endovier." },
+      { "label": "Books 1–4", "detail": "Throne of Glass, Crown of Midnight, Heir of Fire, Queen of Shadows." },
+      { "label": "Books 5–6, side by side", "detail": "Empire of Storms and Tower of Dawn cover the same stretch of time in different places." },
+      { "label": "The finale", "detail": "Kingdom of Ash." }
+    ],
+    "crossovers": [
+      { "title": "Crescent City", "detail": "House of Flame and Shadow drops easter-egg nods to Throne of Glass's world — no plot spoilers either way." }
+    ],
+    "works": [
+      { "title": "Throne of Glass 1–8", "kind": "series", "detail": "The main series, finishing with Kingdom of Ash.", "availability": "standard" },
+      { "title": "The Assassin's Blade", "kind": "novella", "detail": "Five prequel novellas, collected.", "availability": "standard", "placement": "After Crown of Midnight (author's order); before Queen of Shadows at the latest" },
+      { "title": "The Captain and the Prince", "kind": "bonus", "detail": "Dorian and Chaol discuss the competition.", "availability": "out-of-print", "where": "US Throne of Glass paperback", "placement": "Before book 1" },
+      { "title": "The Assassin and the Princess", "kind": "bonus", "detail": "Celaena and Nehemia go dress shopping in Rifthold.", "availability": "out-of-print", "where": "2013 Crown of Midnight blog tour", "placement": "Between books 1 and 2" },
+      { "title": "The Assassin and the Captain", "kind": "bonus", "detail": "Celaena and Chaol after her first job as Champion.", "availability": "out-of-print", "where": "2013 Crown of Midnight blog tour", "placement": "Between books 1 and 2, or early book 2" },
+      { "title": "Heir of Fire deleted scene", "kind": "bonus", "detail": "Fae nobles visit Mistward.", "availability": "edition-exclusive", "where": "Target edition of Empire of Storms", "placement": "Around Heir of Fire ch. 45" },
+      { "title": "Chaol & Nesryn at sea", "kind": "bonus", "detail": "The voyage to Antica.", "availability": "edition-exclusive", "where": "WHSmith (UK) edition of Empire of Storms", "placement": "Before Tower of Dawn" },
+      { "title": "Aelin in Terrasen", "kind": "bonus", "detail": "Aelin's company crosses Oakwald toward Orynth.", "availability": "edition-exclusive", "where": "Barnes & Noble edition of Empire of Storms", "placement": "As Empire of Storms opens" }
+    ],
+    "gallery": [],
+    "sources": [
+      { "label": "Sarah J. Maas — official reading guide", "href": "https://sarahjmaas.com/reading-guide/" },
+      { "label": "Between Pages & Friends — the bonus chapters, part 2", "href": "https://audioboom.com/posts/8599756-bonus-throne-of-glass-bonus-chapters-part-two" },
+      { "label": "Jenna Clare — the EoS/ToD tandem's origin", "href": "https://www.jennaclarek.com/about" }
+    ],
+    "related": ["acotar", "crescent-city"]
+  },
+  {
+    "slug": "acotar",
+    "title": "A Court of Thorns and Roses",
+    "tagline": "Prythian · the Night Court · three bonus chapters",
+    "intro": "Feyre's story and the Night Court's, now heading into The Valkyrie Cycle. ACOTAR has exactly three official bonus chapters — there's no official Rhysand-POV chapter, whatever the internet says.",
+    "updated": "2026-09-23",
+    "guides": [
+      { "slug": "acotar-reading-order", "role": "main", "blurb": "The series with its three bonus chapters split in by chapter." },
+      { "slug": "maasverse-reading-order", "role": "combined", "blurb": "Throne of Glass, ACOTAR and Crescent City in one spoiler-safe order." }
+    ],
+    "timeline": [
+      { "label": "Books 1–3", "detail": "A Court of Thorns and Roses, A Court of Mist and Fury, A Court of Wings and Ruin." },
+      { "label": "Solstice", "detail": "A Court of Frost and Starlight — a novella bridging to the next arc." },
+      { "label": "Nesta's book", "detail": "A Court of Silver Flames." },
+      { "label": "The Valkyrie Cycle", "detail": "A Court of Splintered Harmony (Oct 2026) and A Court of Forgotten Melody (Jan 2027)." }
+    ],
+    "crossovers": [
+      { "title": "Crescent City", "detail": "Bryce lands in Prythian at the end of House of Sky and Breath, and House of Flame and Shadow spends its first third there — built on A Court of Silver Flames' plot. Finish ACOTAR 1–5 first." }
+    ],
+    "works": [
+      { "title": "ACOTAR 1–5", "kind": "series", "detail": "Including the Solstice novella A Court of Frost and Starlight.", "availability": "standard" },
+      { "title": "Wings and Embers", "kind": "bonus", "detail": "Cassian delivers Rhys's letter to the Archeron estate — and meets Nesta.", "availability": "edition-exclusive", "where": "Target edition of A Court of Mist and Fury; Bloomsbury once shared it free as a PDF", "placement": "After A Court of Mist and Fury ch. 38" },
+      { "title": "Feyre & Rhys bonus chapter", "kind": "bonus", "detail": "A quiet talk after a family gathering.", "availability": "edition-exclusive", "where": "Barnes & Noble edition of A Court of Silver Flames", "placement": "After ch. 21" },
+      { "title": "Azriel bonus chapter", "kind": "bonus", "detail": "Solstice night at the River House, from Azriel's side.", "availability": "edition-exclusive", "where": "Books-A-Million edition of A Court of Silver Flames", "placement": "After ch. 58" },
+      { "title": "A Court of Splintered Harmony", "kind": "upcoming", "detail": "The Valkyrie Cycle: Movement I.", "availability": "upcoming", "where": "October 27, 2026" },
+      { "title": "A Court of Forgotten Melody", "kind": "upcoming", "detail": "The Valkyrie Cycle: Movements II & III.", "availability": "upcoming", "where": "January 12, 2027" }
+    ],
+    "gallery": [],
+    "sources": [
+      { "label": "Sarah J. Maas — ACOTAR series page", "href": "https://sarahjmaas.com/a-court-of-thorns-and-roses/" },
+      { "label": "The Mary Sue — the ACOTAR bonus chapters", "href": "https://www.themarysue.com/a-court-of-thorns-and-roses-all-acotar-bonus-chapters-explained/" }
+    ],
+    "related": ["throne-of-glass", "crescent-city"]
+  },
+  {
+    "slug": "crescent-city",
+    "title": "Crescent City",
+    "tagline": "Midgard · Lunathion · eight exclusive chapters",
+    "intro": "Bryce Quinlan's modern-fantasy city — and the place Sarah J. Maas's worlds finally collide. Book 1 has no extras, but books 2 and 3 carry eight bonus chapters between them, spread across half a dozen retailers.",
+    "updated": "2026-09-23",
+    "guides": [
+      { "slug": "crescent-city-reading-order", "role": "main", "blurb": "All three books with the eight bonus chapters split in by chapter." },
+      { "slug": "maasverse-reading-order", "role": "combined", "blurb": "Throne of Glass, ACOTAR and Crescent City in one spoiler-safe order." }
+    ],
+    "timeline": [
+      { "label": "Book 1", "detail": "House of Earth and Blood — no bonus chapters." },
+      { "label": "Book 2", "detail": "House of Sky and Breath — ends with a crossover." },
+      { "label": "Book 3", "detail": "House of Flame and Shadow — largely set in Prythian." },
+      { "label": "Book 4", "detail": "Confirmed by the author; no title or date yet." }
+    ],
+    "crossovers": [
+      { "title": "ACOTAR", "detail": "The House of Sky and Breath ending and much of House of Flame and Shadow happen in Prythian with the Night Court — read ACOTAR 1–5 first." },
+      { "title": "Throne of Glass", "detail": "House of Flame and Shadow nods to Erilea — easter eggs, no spoilers." }
+    ],
+    "works": [
+      { "title": "Crescent City 1–3", "kind": "series", "detail": "House of Earth and Blood, House of Sky and Breath, House of Flame and Shadow.", "availability": "standard" },
+      { "title": "Ruhn bonus chapter", "kind": "bonus", "detail": "A surprise visitor and a talk with his mother.", "availability": "edition-exclusive", "where": "Books-A-Million edition of House of Sky and Breath", "placement": "After ch. 8" },
+      { "title": "Bryce & Hunt bonus chapter", "kind": "bonus", "detail": "Letting off steam after a Fae luncheon.", "availability": "edition-exclusive", "where": "B&N / Waterstones / Indigo editions of House of Sky and Breath", "placement": "After ch. 22 (single source)" },
+      { "title": "Tharion bonus chapter", "kind": "bonus", "detail": "An otter messenger and worries about Hypaxia.", "availability": "edition-exclusive", "where": "Target edition of House of Sky and Breath", "placement": "After ch. 57 (single source)" },
+      { "title": "Bryce, Nesta & Azriel bonus chapter", "kind": "bonus", "detail": "A quiet stop in the tunnels under Prythian.", "availability": "edition-exclusive", "where": "Walmart edition; UK WHSmith booklet", "placement": "After House of Flame and Shadow ch. 16", "warning": "Spoils A Court of Silver Flames." },
+      { "title": "Ember & Randall bonus chapter", "kind": "bonus", "detail": "Bryce's parents in Prythian during the final battle.", "availability": "edition-exclusive", "where": "Books-A-Million / Indigo editions; UK Eason booklet", "placement": "After ch. 80", "warning": "Spoils A Court of Silver Flames." },
+      { "title": "Ruhn & Lidia bonus chapter", "kind": "bonus", "detail": "A gallery outing with a question at the end.", "availability": "edition-exclusive", "where": "Target edition; UK Forbidden Planet booklet", "placement": "After the book" },
+      { "title": "Bryce & Hunt Solstice bonus chapter", "kind": "bonus", "detail": "Their first Solstice together.", "availability": "edition-exclusive", "where": "B&N / Waterstones editions; B&N paperback", "placement": "After the book" },
+      { "title": "Bryce & Danika bonus chapter", "kind": "bonus", "detail": "The night Bryce got her tattoo.", "availability": "edition-exclusive", "where": "Indie edition; UK Blackwell's booklet", "placement": "Anywhere after book 1" }
+    ],
+    "gallery": [],
+    "sources": [
+      { "label": "TIME — the Maas multiverse explained", "href": "https://time.com/6588963/house-of-flame-and-shadow-sarah-j-maas-multiverse-explained/" },
+      { "label": "thebookfeed — Crescent City bonus chapters", "href": "https://thebookfeed.com/crescent-city-bonus-chapters-complete-reading-guide/" }
+    ],
+    "related": ["throne-of-glass", "acotar"]
+  }
+]

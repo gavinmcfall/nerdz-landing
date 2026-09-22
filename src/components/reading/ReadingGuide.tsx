@@ -312,6 +312,17 @@ export function ReadingGuideChecklist({ guide }: { guide: ReadingGuide }) {
       </div>
 
       <p className="rg-intro">{guide.intro}</p>
+      {guide.credit && (
+        <p className="rg-credit mono">
+          {guide.credit.href ? (
+            <a href={guide.credit.href} target="_blank" rel="noreferrer noopener">
+              {guide.credit.text} ↗
+            </a>
+          ) : (
+            guide.credit.text
+          )}
+        </p>
+      )}
 
       <div className="rg-legend mono" aria-hidden="true">
         {guide.books.map((b) => (
