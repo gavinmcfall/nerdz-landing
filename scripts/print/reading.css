@@ -47,6 +47,7 @@
 .rg-a-glow { color: var(--purple); }
 .rg-a-magenta { color: #8b1a6b; }
 .rg-a-ink { color: var(--ink-mid); }
+.rg-a-glow-soft { color: #7c4fa0; }
 
 /* EOS/ToD keeps its original colors (declared after, so these win). */
 .rg-eos { color: var(--ink-mid); }

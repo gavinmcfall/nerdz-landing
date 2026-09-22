@@ -1676,5 +1676,187 @@
         "note": "the saga's finale"
       }
     ]
+  },
+  {
+    "slug": "solaria-reading-order",
+    "title": "The Solaria Universe — Reading Order",
+    "summary": "Zodiac Academy and everything orbiting it — Ruthless Boys, Darkmore Penitentiary, Sins of the Zodiac, and the novellas — in one recommended path.",
+    "intro": "Peckham & Valenti's Solaria sprawls across four series and a pile of novellas, and the authors themselves say there's no single right order. This is the path most guides recommend for a first read: start with The Awakening, weave in Ruthless Boys (set five years earlier) once you know the world, keep Darkmore Penitentiary until after the finale — it runs five years later — and finish with the Sins of the Zodiac spin-off. Notes flag every slot you can legitimately move.",
+    "updated": "2026-09-22",
+    "books": [
+      {
+        "key": "za",
+        "title": "Zodiac Academy",
+        "accent": "gold"
+      },
+      {
+        "key": "rb",
+        "title": "Ruthless Boys of the Zodiac",
+        "accent": "glow"
+      },
+      {
+        "key": "dp",
+        "title": "Darkmore Penitentiary",
+        "accent": "magenta"
+      },
+      {
+        "key": "sz",
+        "title": "Sins of the Zodiac",
+        "accent": "glow-soft"
+      },
+      {
+        "key": "novella",
+        "title": "Novellas & bonus",
+        "accent": "ink"
+      }
+    ],
+    "items": [
+      {
+        "id": "sol-origins-of-an-academy-bully",
+        "book": "novella",
+        "label": "Origins of an Academy Bully",
+        "note": "prequel novella — read first, or right after The Awakening"
+      },
+      {
+        "id": "sol-zodiac-academy-the-awakening",
+        "book": "za",
+        "label": "Zodiac Academy: The Awakening",
+        "note": "the starting point"
+      },
+      {
+        "id": "sol-the-awakening-as-told-by-the-boys",
+        "book": "novella",
+        "label": "The Awakening as Told by the Boys",
+        "note": "book 1 from the Heirs' POV — optional here, great on a reread"
+      },
+      {
+        "id": "sol-ruthless-fae",
+        "book": "za",
+        "label": "Ruthless Fae"
+      },
+      {
+        "id": "sol-the-reckoning",
+        "book": "za",
+        "label": "The Reckoning"
+      },
+      {
+        "id": "sol-dark-fae",
+        "book": "rb",
+        "label": "Dark Fae",
+        "note": "Ruthless Boys runs ~5 years before ZA — weave it in here for the crossover payoff, or read straight through ZA first"
+      },
+      {
+        "id": "sol-savage-fae",
+        "book": "rb",
+        "label": "Savage Fae"
+      },
+      {
+        "id": "sol-vicious-fae",
+        "book": "rb",
+        "label": "Vicious Fae"
+      },
+      {
+        "id": "sol-broken-fae",
+        "book": "rb",
+        "label": "Broken Fae"
+      },
+      {
+        "id": "sol-warrior-fae",
+        "book": "rb",
+        "label": "Warrior Fae"
+      },
+      {
+        "id": "sol-shadow-princess",
+        "book": "za",
+        "label": "Shadow Princess"
+      },
+      {
+        "id": "sol-cursed-fates",
+        "book": "za",
+        "label": "Cursed Fates"
+      },
+      {
+        "id": "sol-the-big-a-s-s-party",
+        "book": "novella",
+        "label": "The Big A.S.S. Party",
+        "note": "novella — after Cursed Fates"
+      },
+      {
+        "id": "sol-fated-throne",
+        "book": "za",
+        "label": "Fated Throne"
+      },
+      {
+        "id": "sol-heartless-sky",
+        "book": "za",
+        "label": "Heartless Sky"
+      },
+      {
+        "id": "sol-sorrow-and-starlight",
+        "book": "za",
+        "label": "Sorrow and Starlight"
+      },
+      {
+        "id": "sol-beyond-the-veil",
+        "book": "za",
+        "label": "Beyond the Veil",
+        "note": "bridging book 8.5"
+      },
+      {
+        "id": "sol-live-and-let-lionel",
+        "book": "novella",
+        "label": "Live and Let Lionel",
+        "note": "bonus stories — before the finale"
+      },
+      {
+        "id": "sol-restless-stars",
+        "book": "za",
+        "label": "Restless Stars",
+        "note": "the finale"
+      },
+      {
+        "id": "sol-on-the-cursed-day-of-christmas",
+        "book": "za",
+        "label": "On the Cursed Day of Christmas",
+        "note": "illustrated advent-calendar special — out Oct 2026"
+      },
+      {
+        "id": "sol-caged-wolf",
+        "book": "dp",
+        "label": "Caged Wolf",
+        "note": "Darkmore Penitentiary runs ~5 years after ZA — save until after Restless Stars"
+      },
+      {
+        "id": "sol-alpha-wolf",
+        "book": "dp",
+        "label": "Alpha Wolf"
+      },
+      {
+        "id": "sol-feral-wolf",
+        "book": "dp",
+        "label": "Feral Wolf"
+      },
+      {
+        "id": "sol-wild-wolf",
+        "book": "dp",
+        "label": "Wild Wolf"
+      },
+      {
+        "id": "sol-never-keep",
+        "book": "sz",
+        "label": "Never Keep",
+        "note": "Sins of the Zodiac — new-era spin-off in the same world, ongoing"
+      },
+      {
+        "id": "sol-echo-fort",
+        "book": "sz",
+        "label": "Echo Fort"
+      },
+      {
+        "id": "sol-cinder-vale",
+        "book": "sz",
+        "label": "Cinder Vale"
+      }
+    ]
   }
 ]

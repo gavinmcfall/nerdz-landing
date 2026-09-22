@@ -8,7 +8,7 @@ import rawData from "./reading.data.json";
 // manuals.ts. Item ids are stable and content-derived (eos-17, tod-fireheart),
 // never positional: they key saved progress in visitors' localStorage.
 
-const Accent = z.enum(["gold", "glow", "magenta", "ink"]);
+const Accent = z.enum(["gold", "glow", "magenta", "ink", "glow-soft"]);
 
 const BookSchema = z.object({
   key: z

@@ -275,6 +275,7 @@
 .rg-accent--glow { --rg-accent: var(--glow); }
 .rg-accent--magenta { --rg-accent: var(--magenta); }
 .rg-accent--ink { --rg-accent: var(--ink-mid); }
+.rg-accent--glow-soft { --rg-accent: var(--glow-soft); }
 
 .rg-item__box {
   appearance: none;
