@@ -10,7 +10,9 @@ import path from "node:path";
 const OUT = path.join(process.cwd(), "src", "lib", "reading.data.json");
 
 // Each entry: [book, from, to] for chapter runs, or [book, name] for the
-// novella endpoints. Order is the reading order.
+// named bookends: "Nightfall" is EoS's prologue and "Fireheart" is ToD's
+// epilogue — standard-edition text, not bonus content. Order is the
+// reading order (it matches the T.L. Branson and Mae Polzine sequences).
 const SEQUENCE = [
   ["eos", "Nightfall"],
   ["eos", 1, 5], ["tod", 1, 1], ["eos", 6, 8], ["tod", 2, 3],
@@ -30,17 +32,23 @@ const SEQUENCE = [
 ];
 
 const BOOK_TITLE = { eos: "Empire of Storms", tod: "Tower of Dawn" };
-const BOOK_SHORT = { eos: "EOS", tod: "TOD" };
+const BOOKEND = {
+  "eos-nightfall": {
+    label: "Empire of Storms — Prologue: Nightfall",
+    note: "the prologue, not a bonus chapter",
+  },
+  "tod-fireheart": {
+    label: "Tower of Dawn — Epilogue: Fireheart",
+    note: "read last — it spoils Empire of Storms' ending",
+  },
+};
 
 const items = [];
 for (const run of SEQUENCE) {
   const [book, a, b] = run;
   if (typeof a === "string") {
-    items.push({
-      id: `${book}-${a.toLowerCase()}`,
-      book,
-      label: `${BOOK_SHORT[book]} — ${a}`,
-    });
+    const id = `${book}-${a.toLowerCase()}`;
+    items.push({ id, book, ...BOOKEND[id] });
     continue;
   }
   for (let ch = a; ch <= b; ch++) {
@@ -70,8 +78,12 @@ const guide =
     summary:
       "Read EOS and ToD together in alternating chronological order — an interactive checklist that remembers your place.",
     intro:
-      "Empire of Storms and Tower of Dawn run in parallel — two stories in two places over the same stretch of time, with no overlap. You can read either first, but reading them in tandem keeps the timeline in sync: follow this list top to bottom, ticking chapters as you go. Your progress is saved in this browser.",
-    updated: "2026-08-26",
+      "Empire of Storms and Tower of Dawn run in parallel — two stories in two places over the same stretch of time, with no overlap. You can read either first, but reading them in tandem keeps the timeline in sync: follow this list top to bottom, ticking chapters as you go. Want the extra scenes too? Two Empire of Storms exclusive-edition stories (Chaol & Nesryn at sea, and Aelin in Terrasen) fit just before you start — see the Throne of Glass guide.",
+    updated: "2026-09-23",
+    credit: {
+      text: "Tandem order as popularised by Jenna Clare (2018)",
+      href: "https://www.jennaclarek.com/about",
+    },
     books: [
       { key: "eos", title: "Empire of Storms", accent: "gold" },
       { key: "tod", title: "Tower of Dawn", accent: "glow" },

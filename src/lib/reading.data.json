@@ -3,8 +3,12 @@
     "slug": "eos-tod-reading-order",
     "title": "Empire of Storms & Tower of Dawn — Tandem Reading Order",
     "summary": "Read EOS and ToD together in alternating chronological order — an interactive checklist that remembers your place.",
-    "intro": "Empire of Storms and Tower of Dawn run in parallel — two stories in two places over the same stretch of time, with no overlap. You can read either first, but reading them in tandem keeps the timeline in sync: follow this list top to bottom, ticking chapters as you go. Your progress is saved in this browser.",
-    "updated": "2026-08-26",
+    "intro": "Empire of Storms and Tower of Dawn run in parallel — two stories in two places over the same stretch of time, with no overlap. You can read either first, but reading them in tandem keeps the timeline in sync: follow this list top to bottom, ticking chapters as you go. Want the extra scenes too? Two Empire of Storms exclusive-edition stories (Chaol & Nesryn at sea, and Aelin in Terrasen) fit just before you start — see the Throne of Glass guide.",
+    "updated": "2026-09-23",
+    "credit": {
+      "text": "Tandem order as popularised by Jenna Clare (2018)",
+      "href": "https://www.jennaclarek.com/about"
+    },
     "books": [
       {
         "key": "eos",
@@ -21,7 +25,8 @@
       {
         "id": "eos-nightfall",
         "book": "eos",
-        "label": "EOS — Nightfall"
+        "label": "Empire of Storms — Prologue: Nightfall",
+        "note": "the prologue, not a bonus chapter"
       },
       {
         "id": "eos-1",
@@ -741,7 +746,8 @@
       {
         "id": "tod-fireheart",
         "book": "tod",
-        "label": "TOD — Fireheart"
+        "label": "Tower of Dawn — Epilogue: Fireheart",
+        "note": "read last — it spoils Empire of Storms' ending"
       }
     ]
   },
@@ -1680,9 +1686,9 @@
   {
     "slug": "solaria-reading-order",
     "title": "The Solaria Universe — Reading Order",
-    "summary": "Zodiac Academy and everything orbiting it — Ruthless Boys, Darkmore Penitentiary, Sins of the Zodiac, and the novellas — in one recommended path.",
-    "intro": "Peckham & Valenti's Solaria sprawls across four series and a pile of novellas, and the authors themselves say there's no single right order. This is the path most guides recommend for a first read: start with The Awakening, weave in Ruthless Boys (set five years earlier) once you know the world, keep Darkmore Penitentiary until after the finale — it runs five years later — and finish with the Sins of the Zodiac spin-off. Notes flag every slot you can legitimately move.",
-    "updated": "2026-09-22",
+    "summary": "Zodiac Academy and everything orbiting it — Ruthless Boys, Darkmore, Sins of the Zodiac, every novella and bonus story — in one spoiler-safe path.",
+    "intro": "Peckham & Valenti say there's no single right way to read Solaria, so this is the path the bonus-aware guides converge on: three Zodiac Academy books to learn the world, all of Ruthless Boys (set five years earlier), then the rest of ZA with every companion story slotted where it lands safely. Darkmore (five years later) waits until after the finale, and Sins of the Zodiac comes last. Several bonus stories were later collected in Live and Let Lionel — the notes say which, so you can skip repeats.",
+    "updated": "2026-09-23",
     "books": [
       {
         "key": "za",
@@ -1706,28 +1712,16 @@
       },
       {
         "key": "novella",
-        "title": "Novellas & bonus",
+        "title": "Novellas & bonus stories",
         "accent": "ink"
       }
     ],
     "items": [
       {
-        "id": "sol-origins-of-an-academy-bully",
-        "book": "novella",
-        "label": "Origins of an Academy Bully",
-        "note": "prequel novella — read first, or right after The Awakening"
-      },
-      {
         "id": "sol-zodiac-academy-the-awakening",
         "book": "za",
         "label": "Zodiac Academy: The Awakening",
         "note": "the starting point"
-      },
-      {
-        "id": "sol-the-awakening-as-told-by-the-boys",
-        "book": "novella",
-        "label": "The Awakening as Told by the Boys",
-        "note": "book 1 from the Heirs' POV — optional here, great on a reread"
       },
       {
         "id": "sol-ruthless-fae",
@@ -1743,7 +1737,7 @@
         "id": "sol-dark-fae",
         "book": "rb",
         "label": "Dark Fae",
-        "note": "Ruthless Boys runs ~5 years before ZA — weave it in here for the crossover payoff, or read straight through ZA first"
+        "note": "Ruthless Boys is set ~5 years before ZA — reading it here makes ZA's later crossovers land"
       },
       {
         "id": "sol-savage-fae",
@@ -1771,6 +1765,42 @@
         "label": "Shadow Princess"
       },
       {
+        "id": "sol-origins-of-an-academy-bully",
+        "book": "novella",
+        "label": "Origins of an Academy Bully",
+        "note": "#0.5 prequel (Darius & Orion) — reads best once you know them"
+      },
+      {
+        "id": "sol-savage",
+        "book": "novella",
+        "label": "Savage",
+        "note": "Hail & Merissa Vega — from the Hell Hath No Fury anthology; also in Live and Let Lionel"
+      },
+      {
+        "id": "sol-the-shimmering-springs",
+        "book": "novella",
+        "label": "The Shimmering Springs",
+        "note": "Caleb & Seth — from the Nightingale anthology; also in Live and Let Lionel"
+      },
+      {
+        "id": "sol-the-tale-of-geraldine-and-the-moon-madness",
+        "book": "novella",
+        "label": "The Tale of Geraldine and the Moon Madness",
+        "note": "short Geraldine story set at the Lunar Eclipse; availability varies"
+      },
+      {
+        "id": "sol-the-awakening-as-told-by-the-boys",
+        "book": "novella",
+        "label": "The Awakening as Told by the Boys",
+        "note": "book 1 retold by the Heirs & Orion — the authors say read it after the original"
+      },
+      {
+        "id": "sol-foxy-tales",
+        "book": "novella",
+        "label": "Foxy Tales",
+        "note": "limited charity paperback — alt-POV scenes from books 2–4"
+      },
+      {
         "id": "sol-cursed-fates",
         "book": "za",
         "label": "Cursed Fates"
@@ -1779,7 +1809,19 @@
         "id": "sol-the-big-a-s-s-party",
         "book": "novella",
         "label": "The Big A.S.S. Party",
-        "note": "novella — after Cursed Fates"
+        "note": "#5.5 — Max & Geraldine during Cursed Fates"
+      },
+      {
+        "id": "sol-seth-on-the-moon",
+        "book": "novella",
+        "label": "Seth on the Moon",
+        "note": "#5.6 — free in the authors' Reading Tribe group; also in Live and Let Lionel"
+      },
+      {
+        "id": "sol-night",
+        "book": "novella",
+        "label": "Night",
+        "note": "⚠ the twins meet the Ruthless Boys — major spoilers for BOTH series; only after all of Ruthless Boys and Cursed Fates. Also in Live and Let Lionel"
       },
       {
         "id": "sol-fated-throne",
@@ -1794,19 +1836,20 @@
       {
         "id": "sol-sorrow-and-starlight",
         "book": "za",
-        "label": "Sorrow and Starlight"
+        "label": "Sorrow and Starlight",
+        "note": "optional: read it chapter-by-chapter with Beyond the Veil — see the tandem guide"
       },
       {
         "id": "sol-beyond-the-veil",
         "book": "za",
         "label": "Beyond the Veil",
-        "note": "bridging book 8.5"
+        "note": "#8.5 — the authors say read after book 8"
       },
       {
         "id": "sol-live-and-let-lionel",
         "book": "novella",
         "label": "Live and Let Lionel",
-        "note": "bonus stories — before the finale"
+        "note": "#8.6 — collects Savage, Shimmering Springs, Seth on the Moon and Night plus new scenes and a new map; skip what you've read"
       },
       {
         "id": "sol-restless-stars",
@@ -1818,13 +1861,13 @@
         "id": "sol-on-the-cursed-day-of-christmas",
         "book": "za",
         "label": "On the Cursed Day of Christmas",
-        "note": "illustrated advent-calendar special — out Oct 2026"
+        "note": "ZA10 — illustrated advent-calendar book, October 2026"
       },
       {
         "id": "sol-caged-wolf",
         "book": "dp",
         "label": "Caged Wolf",
-        "note": "Darkmore Penitentiary runs ~5 years after ZA — save until after Restless Stars"
+        "note": "Darkmore is set ~5 years after ZA — save it for after the finale"
       },
       {
         "id": "sol-alpha-wolf",
@@ -1845,7 +1888,7 @@
         "id": "sol-never-keep",
         "book": "sz",
         "label": "Never Keep",
-        "note": "Sins of the Zodiac — new-era spin-off in the same world, ongoing"
+        "note": "Sins of the Zodiac — a new cast in the same world"
       },
       {
         "id": "sol-echo-fort",
@@ -1856,6 +1899,1052 @@
         "id": "sol-cinder-vale",
         "book": "sz",
         "label": "Cinder Vale"
+      }
+    ]
+  },
+  {
+    "slug": "sorrow-starlight-beyond-the-veil-tandem",
+    "title": "Sorrow and Starlight & Beyond the Veil — Tandem Read",
+    "summary": "Zodiac Academy 8 and 8.5 chapter by chapter — follow the living and the dead through the same days.",
+    "intro": "Beyond the Veil tells what happens among the dead while Sorrow and Starlight unfolds, so fans read them interleaved: mostly one Beyond the Veil chapter between runs of Sorrow and Starlight. Two pairs are read out of order on purpose (15 before 14, 24 before 23). Heads up: the authors' own advice is to read Beyond the Veil after book 8, so this is a fan way to read it — on a first read, the main Solaria path keeps them separate.",
+    "updated": "2026-09-23",
+    "credit": {
+      "text": "Tandem order by SQUIB (\"S.T.R.A.P.O.N.\" checklist)"
+    },
+    "books": [
+      {
+        "key": "ss",
+        "title": "Sorrow and Starlight (ZA8)",
+        "accent": "gold"
+      },
+      {
+        "key": "btv",
+        "title": "Beyond the Veil (ZA8.5)",
+        "accent": "glow"
+      }
+    ],
+    "items": [
+      {
+        "id": "btvss-btv-1",
+        "book": "btv",
+        "label": "Beyond the Veil CH1"
+      },
+      {
+        "id": "btvss-btv-2",
+        "book": "btv",
+        "label": "Beyond the Veil CH2"
+      },
+      {
+        "id": "btvss-ss-1",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH1"
+      },
+      {
+        "id": "btvss-btv-3",
+        "book": "btv",
+        "label": "Beyond the Veil CH3"
+      },
+      {
+        "id": "btvss-ss-2",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH2"
+      },
+      {
+        "id": "btvss-ss-3",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH3"
+      },
+      {
+        "id": "btvss-ss-4",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH4"
+      },
+      {
+        "id": "btvss-ss-5",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH5"
+      },
+      {
+        "id": "btvss-ss-6",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH6"
+      },
+      {
+        "id": "btvss-btv-4",
+        "book": "btv",
+        "label": "Beyond the Veil CH4"
+      },
+      {
+        "id": "btvss-ss-7",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH7"
+      },
+      {
+        "id": "btvss-ss-8",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH8"
+      },
+      {
+        "id": "btvss-ss-9",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH9"
+      },
+      {
+        "id": "btvss-ss-10",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH10"
+      },
+      {
+        "id": "btvss-ss-11",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH11"
+      },
+      {
+        "id": "btvss-btv-5",
+        "book": "btv",
+        "label": "Beyond the Veil CH5"
+      },
+      {
+        "id": "btvss-ss-12",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH12"
+      },
+      {
+        "id": "btvss-ss-13",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH13"
+      },
+      {
+        "id": "btvss-ss-14",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH14"
+      },
+      {
+        "id": "btvss-ss-15",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH15"
+      },
+      {
+        "id": "btvss-ss-16",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH16"
+      },
+      {
+        "id": "btvss-ss-17",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH17"
+      },
+      {
+        "id": "btvss-ss-18",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH18"
+      },
+      {
+        "id": "btvss-btv-6",
+        "book": "btv",
+        "label": "Beyond the Veil CH6"
+      },
+      {
+        "id": "btvss-btv-7",
+        "book": "btv",
+        "label": "Beyond the Veil CH7"
+      },
+      {
+        "id": "btvss-ss-19",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH19"
+      },
+      {
+        "id": "btvss-ss-20",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH20"
+      },
+      {
+        "id": "btvss-ss-21",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH21"
+      },
+      {
+        "id": "btvss-ss-22",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH22"
+      },
+      {
+        "id": "btvss-ss-23",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH23"
+      },
+      {
+        "id": "btvss-btv-8",
+        "book": "btv",
+        "label": "Beyond the Veil CH8"
+      },
+      {
+        "id": "btvss-ss-24",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH24"
+      },
+      {
+        "id": "btvss-btv-9",
+        "book": "btv",
+        "label": "Beyond the Veil CH9"
+      },
+      {
+        "id": "btvss-ss-25",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH25"
+      },
+      {
+        "id": "btvss-ss-26",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH26"
+      },
+      {
+        "id": "btvss-btv-10",
+        "book": "btv",
+        "label": "Beyond the Veil CH10"
+      },
+      {
+        "id": "btvss-ss-27",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH27"
+      },
+      {
+        "id": "btvss-ss-28",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH28"
+      },
+      {
+        "id": "btvss-btv-11",
+        "book": "btv",
+        "label": "Beyond the Veil CH11"
+      },
+      {
+        "id": "btvss-ss-29",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH29"
+      },
+      {
+        "id": "btvss-ss-30",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH30"
+      },
+      {
+        "id": "btvss-btv-12",
+        "book": "btv",
+        "label": "Beyond the Veil CH12"
+      },
+      {
+        "id": "btvss-ss-31",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH31"
+      },
+      {
+        "id": "btvss-ss-32",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH32"
+      },
+      {
+        "id": "btvss-btv-13",
+        "book": "btv",
+        "label": "Beyond the Veil CH13"
+      },
+      {
+        "id": "btvss-ss-33",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH33"
+      },
+      {
+        "id": "btvss-ss-34",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH34"
+      },
+      {
+        "id": "btvss-btv-15",
+        "book": "btv",
+        "label": "Beyond the Veil CH15 (out of order)",
+        "note": "the guide deliberately reads this out of order"
+      },
+      {
+        "id": "btvss-ss-35",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH35"
+      },
+      {
+        "id": "btvss-btv-14",
+        "book": "btv",
+        "label": "Beyond the Veil CH14 (out of order)",
+        "note": "the guide deliberately reads this out of order"
+      },
+      {
+        "id": "btvss-ss-36",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH36"
+      },
+      {
+        "id": "btvss-ss-37",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH37"
+      },
+      {
+        "id": "btvss-ss-38",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH38"
+      },
+      {
+        "id": "btvss-ss-39",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH39"
+      },
+      {
+        "id": "btvss-ss-40",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH40"
+      },
+      {
+        "id": "btvss-btv-16",
+        "book": "btv",
+        "label": "Beyond the Veil CH16"
+      },
+      {
+        "id": "btvss-ss-41",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH41"
+      },
+      {
+        "id": "btvss-ss-42",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH42"
+      },
+      {
+        "id": "btvss-ss-43",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH43"
+      },
+      {
+        "id": "btvss-btv-17",
+        "book": "btv",
+        "label": "Beyond the Veil CH17"
+      },
+      {
+        "id": "btvss-ss-44",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH44"
+      },
+      {
+        "id": "btvss-ss-45",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH45"
+      },
+      {
+        "id": "btvss-ss-46",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH46"
+      },
+      {
+        "id": "btvss-ss-47",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH47"
+      },
+      {
+        "id": "btvss-ss-48",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH48"
+      },
+      {
+        "id": "btvss-btv-18",
+        "book": "btv",
+        "label": "Beyond the Veil CH18"
+      },
+      {
+        "id": "btvss-ss-49",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH49"
+      },
+      {
+        "id": "btvss-ss-50",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH50"
+      },
+      {
+        "id": "btvss-ss-51",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH51"
+      },
+      {
+        "id": "btvss-ss-52",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH52"
+      },
+      {
+        "id": "btvss-btv-19",
+        "book": "btv",
+        "label": "Beyond the Veil CH19"
+      },
+      {
+        "id": "btvss-ss-53",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH53"
+      },
+      {
+        "id": "btvss-btv-20",
+        "book": "btv",
+        "label": "Beyond the Veil CH20"
+      },
+      {
+        "id": "btvss-ss-54",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH54"
+      },
+      {
+        "id": "btvss-ss-55",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH55"
+      },
+      {
+        "id": "btvss-ss-56",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH56"
+      },
+      {
+        "id": "btvss-btv-21",
+        "book": "btv",
+        "label": "Beyond the Veil CH21"
+      },
+      {
+        "id": "btvss-ss-57",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH57"
+      },
+      {
+        "id": "btvss-ss-58",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH58"
+      },
+      {
+        "id": "btvss-btv-22",
+        "book": "btv",
+        "label": "Beyond the Veil CH22"
+      },
+      {
+        "id": "btvss-ss-59",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH59"
+      },
+      {
+        "id": "btvss-ss-60",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH60"
+      },
+      {
+        "id": "btvss-ss-61",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH61"
+      },
+      {
+        "id": "btvss-btv-24",
+        "book": "btv",
+        "label": "Beyond the Veil CH24 (out of order)",
+        "note": "the guide deliberately reads this out of order"
+      },
+      {
+        "id": "btvss-ss-62",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH62"
+      },
+      {
+        "id": "btvss-btv-23",
+        "book": "btv",
+        "label": "Beyond the Veil CH23 (out of order)",
+        "note": "the guide deliberately reads this out of order"
+      },
+      {
+        "id": "btvss-ss-63",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH63"
+      },
+      {
+        "id": "btvss-ss-64",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH64"
+      },
+      {
+        "id": "btvss-ss-65",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH65"
+      },
+      {
+        "id": "btvss-btv-25",
+        "book": "btv",
+        "label": "Beyond the Veil CH25"
+      },
+      {
+        "id": "btvss-ss-66",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH66"
+      },
+      {
+        "id": "btvss-ss-67",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH67"
+      },
+      {
+        "id": "btvss-ss-68",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH68"
+      },
+      {
+        "id": "btvss-ss-69",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH69"
+      },
+      {
+        "id": "btvss-ss-70",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH70"
+      },
+      {
+        "id": "btvss-ss-71",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH71"
+      },
+      {
+        "id": "btvss-ss-72",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH72"
+      },
+      {
+        "id": "btvss-btv-26",
+        "book": "btv",
+        "label": "Beyond the Veil CH26"
+      },
+      {
+        "id": "btvss-ss-73",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH73"
+      },
+      {
+        "id": "btvss-btv-27",
+        "book": "btv",
+        "label": "Beyond the Veil CH27"
+      },
+      {
+        "id": "btvss-ss-74",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH74"
+      },
+      {
+        "id": "btvss-btv-28",
+        "book": "btv",
+        "label": "Beyond the Veil CH28"
+      },
+      {
+        "id": "btvss-ss-75",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH75"
+      },
+      {
+        "id": "btvss-ss-76",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH76"
+      },
+      {
+        "id": "btvss-ss-77",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH77"
+      },
+      {
+        "id": "btvss-ss-78",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH78"
+      },
+      {
+        "id": "btvss-ss-79",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH79"
+      },
+      {
+        "id": "btvss-ss-80",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH80"
+      },
+      {
+        "id": "btvss-ss-81",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH81"
+      },
+      {
+        "id": "btvss-ss-82",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH82"
+      },
+      {
+        "id": "btvss-btv-29",
+        "book": "btv",
+        "label": "Beyond the Veil CH29"
+      },
+      {
+        "id": "btvss-btv-epilogue",
+        "book": "btv",
+        "label": "Beyond the Veil — Epilogue"
+      },
+      {
+        "id": "btvss-ss-83",
+        "book": "ss",
+        "label": "Sorrow and Starlight CH83"
+      }
+    ]
+  },
+  {
+    "slug": "throne-of-glass-reading-order",
+    "title": "Throne of Glass — Reading Order with Bonus Chapters",
+    "summary": "All eight books plus the six scattered bonus chapters — blog-tour scenes, a deleted scene and three Empire of Storms exclusives — each in its slot.",
+    "intro": "Throne of Glass has six extra scenes that never made the standard editions: two from the 2013 Crown of Midnight blog tour, one from the US Throne of Glass paperback, and three from Empire of Storms retailer exclusives (one of them a deleted Heir of Fire scene). They're optional and mostly out of print, so they're marked as bonus. The Assassin's Blade goes where Sarah J. Maas lists it — after Crown of Midnight — but anywhere before Queen of Shadows works. When you reach Empire of Storms, consider the chapter-by-chapter tandem with Tower of Dawn.",
+    "updated": "2026-09-23",
+    "books": [
+      {
+        "key": "tog",
+        "title": "Throne of Glass",
+        "accent": "gold"
+      },
+      {
+        "key": "bonus",
+        "title": "Bonus chapters",
+        "accent": "glow"
+      },
+      {
+        "key": "novella",
+        "title": "The Assassin's Blade",
+        "accent": "magenta"
+      }
+    ],
+    "items": [
+      {
+        "id": "tog-the-captain-and-the-prince",
+        "book": "bonus",
+        "label": "The Captain and the Prince",
+        "note": "Dorian & Chaol — US Throne of Glass paperback extra; read before book 1"
+      },
+      {
+        "id": "tog-throne-of-glass",
+        "book": "tog",
+        "label": "Throne of Glass"
+      },
+      {
+        "id": "tog-the-assassin-and-the-princess",
+        "book": "bonus",
+        "label": "The Assassin and the Princess",
+        "note": "Celaena & Nehemia — 2013 blog-tour scene"
+      },
+      {
+        "id": "tog-the-assassin-and-the-captain",
+        "book": "bonus",
+        "label": "The Assassin and the Captain",
+        "note": "Celaena & Chaol — 2013 blog-tour scene; fits here or early in Crown of Midnight"
+      },
+      {
+        "id": "tog-crown-of-midnight",
+        "book": "tog",
+        "label": "Crown of Midnight"
+      },
+      {
+        "id": "tog-the-assassin-s-blade",
+        "book": "novella",
+        "label": "The Assassin's Blade",
+        "note": "five prequel novellas — the author's slot; after Heir of Fire also works, but read before Queen of Shadows"
+      },
+      {
+        "id": "tog-heir-of-fire-ch-1-to-45",
+        "book": "tog",
+        "label": "Heir of Fire — ch. 1 to ~45"
+      },
+      {
+        "id": "tog-heir-of-fire-deleted-scene-visitors-at-mistward",
+        "book": "bonus",
+        "label": "Heir of Fire deleted scene: visitors at Mistward",
+        "note": "Target exclusive of Empire of Storms — a deleted scene, approximate slot"
+      },
+      {
+        "id": "tog-heir-of-fire-ch-46-to-end",
+        "book": "tog",
+        "label": "Heir of Fire — ~ch. 46 to end"
+      },
+      {
+        "id": "tog-queen-of-shadows",
+        "book": "tog",
+        "label": "Queen of Shadows"
+      },
+      {
+        "id": "tog-chaol-nesryn-at-sea",
+        "book": "bonus",
+        "label": "Chaol & Nesryn at sea",
+        "note": "WHSmith (UK) exclusive of Empire of Storms — sets up Tower of Dawn"
+      },
+      {
+        "id": "tog-aelin-in-terrasen",
+        "book": "bonus",
+        "label": "Aelin in Terrasen",
+        "note": "B&N exclusive of Empire of Storms — set as the book opens"
+      },
+      {
+        "id": "tog-empire-of-storms",
+        "book": "tog",
+        "label": "Empire of Storms",
+        "note": "or read it in tandem with Tower of Dawn — see the tandem guide"
+      },
+      {
+        "id": "tog-tower-of-dawn",
+        "book": "tog",
+        "label": "Tower of Dawn",
+        "note": "happens at the same time as Empire of Storms"
+      },
+      {
+        "id": "tog-kingdom-of-ash",
+        "book": "tog",
+        "label": "Kingdom of Ash",
+        "note": "the finale — no bonus chapters exist for it"
+      }
+    ]
+  },
+  {
+    "slug": "acotar-reading-order",
+    "title": "A Court of Thorns and Roses — Reading Order with Bonus Chapters",
+    "summary": "The Court series with its three official bonus chapters slotted in by chapter — Wings and Embers, the Feyre & Rhys chapter and Azriel's Solstice.",
+    "intro": "ACOTAR has exactly three official bonus chapters: Wings and Embers (Cassian meets Nesta at the Archeron estate) from a Target edition of A Court of Mist and Fury, and two A Court of Silver Flames exclusives — a Feyre & Rhys chapter and Azriel's Solstice night. They're split into the books at the chapters where fans read them. A Court of Frost and Starlight is part of the series, not a bonus. Reading Crescent City too? Finish A Court of Silver Flames before House of Sky and Breath — see the Maasverse order.",
+    "updated": "2026-09-23",
+    "books": [
+      {
+        "key": "acotar",
+        "title": "A Court of Thorns and Roses",
+        "accent": "gold"
+      },
+      {
+        "key": "bonus",
+        "title": "Bonus chapters",
+        "accent": "glow"
+      },
+      {
+        "key": "upcoming",
+        "title": "The Valkyrie Cycle (upcoming)",
+        "accent": "magenta"
+      }
+    ],
+    "items": [
+      {
+        "id": "acotar-a-court-of-thorns-and-roses",
+        "book": "acotar",
+        "label": "A Court of Thorns and Roses"
+      },
+      {
+        "id": "acotar-a-court-of-mist-and-fury-ch-1-38",
+        "book": "acotar",
+        "label": "A Court of Mist and Fury — ch. 1–38"
+      },
+      {
+        "id": "acotar-wings-and-embers",
+        "book": "bonus",
+        "label": "Wings and Embers",
+        "note": "Cassian & Nesta — Target edition extra; Bloomsbury once shared it free"
+      },
+      {
+        "id": "acotar-a-court-of-mist-and-fury-ch-39-to-end",
+        "book": "acotar",
+        "label": "A Court of Mist and Fury — ch. 39 to end"
+      },
+      {
+        "id": "acotar-a-court-of-wings-and-ruin",
+        "book": "acotar",
+        "label": "A Court of Wings and Ruin"
+      },
+      {
+        "id": "acotar-a-court-of-frost-and-starlight",
+        "book": "acotar",
+        "label": "A Court of Frost and Starlight",
+        "note": "the Solstice novella — part of the series"
+      },
+      {
+        "id": "acotar-a-court-of-silver-flames-ch-1-21",
+        "book": "acotar",
+        "label": "A Court of Silver Flames — ch. 1–21"
+      },
+      {
+        "id": "acotar-feyre-rhys-bonus-chapter",
+        "book": "bonus",
+        "label": "Feyre & Rhys bonus chapter",
+        "note": "B&N exclusive — the pregnancy talk"
+      },
+      {
+        "id": "acotar-a-court-of-silver-flames-ch-22-58",
+        "book": "acotar",
+        "label": "A Court of Silver Flames — ch. 22–58"
+      },
+      {
+        "id": "acotar-azriel-bonus-chapter",
+        "book": "bonus",
+        "label": "Azriel bonus chapter",
+        "note": "Books-A-Million exclusive — Solstice night at the River House"
+      },
+      {
+        "id": "acotar-a-court-of-silver-flames-ch-59-to-end",
+        "book": "acotar",
+        "label": "A Court of Silver Flames — ch. 59 to end"
+      },
+      {
+        "id": "acotar-a-court-of-splintered-harmony",
+        "book": "upcoming",
+        "label": "A Court of Splintered Harmony",
+        "note": "book 6 — The Valkyrie Cycle, October 27, 2026"
+      },
+      {
+        "id": "acotar-a-court-of-forgotten-melody",
+        "book": "upcoming",
+        "label": "A Court of Forgotten Melody",
+        "note": "book 7 — January 12, 2027"
+      }
+    ]
+  },
+  {
+    "slug": "crescent-city-reading-order",
+    "title": "Crescent City — Reading Order with Bonus Chapters",
+    "summary": "All three Crescent City books with the eight exclusive-edition bonus chapters slotted in by chapter — and the ACOTAR reading you need first.",
+    "intro": "House of Earth and Blood has no bonus chapters; House of Sky and Breath has three and House of Flame and Shadow five, spread across retailer editions. Each sits at the chapter fans read it. Important: House of Flame and Shadow is set largely in Prythian and leans on A Court of Silver Flames, so read all five ACOTAR books before House of Sky and Breath. Two of the anchors (House of Sky and Breath ch. 22 and 57) come from a single fan source.",
+    "updated": "2026-09-23",
+    "books": [
+      {
+        "key": "cc",
+        "title": "Crescent City",
+        "accent": "gold"
+      },
+      {
+        "key": "bonus",
+        "title": "Bonus chapters",
+        "accent": "glow"
+      }
+    ],
+    "items": [
+      {
+        "id": "cc-house-of-earth-and-blood",
+        "book": "cc",
+        "label": "House of Earth and Blood",
+        "note": "no bonus chapters exist for book 1"
+      },
+      {
+        "id": "cc-house-of-sky-and-breath-ch-1-8",
+        "book": "cc",
+        "label": "House of Sky and Breath — ch. 1–8",
+        "note": "read all five ACOTAR books first"
+      },
+      {
+        "id": "cc-ruhn-bonus-chapter",
+        "book": "bonus",
+        "label": "Ruhn bonus chapter",
+        "note": "Books-A-Million exclusive"
+      },
+      {
+        "id": "cc-house-of-sky-and-breath-ch-9-22",
+        "book": "cc",
+        "label": "House of Sky and Breath — ch. 9–22"
+      },
+      {
+        "id": "cc-bryce-hunt-bonus-chapter",
+        "book": "bonus",
+        "label": "Bryce & Hunt bonus chapter",
+        "note": "B&N / Waterstones / Indigo exclusive — single-source placement"
+      },
+      {
+        "id": "cc-house-of-sky-and-breath-ch-23-57",
+        "book": "cc",
+        "label": "House of Sky and Breath — ch. 23–57"
+      },
+      {
+        "id": "cc-tharion-bonus-chapter",
+        "book": "bonus",
+        "label": "Tharion bonus chapter",
+        "note": "Target exclusive — single-source placement"
+      },
+      {
+        "id": "cc-house-of-sky-and-breath-ch-58-to-end",
+        "book": "cc",
+        "label": "House of Sky and Breath — ch. 58 to end"
+      },
+      {
+        "id": "cc-house-of-flame-and-shadow-ch-1-16",
+        "book": "cc",
+        "label": "House of Flame and Shadow — ch. 1–16"
+      },
+      {
+        "id": "cc-bryce-nesta-azriel-bonus-chapter",
+        "book": "bonus",
+        "label": "Bryce, Nesta & Azriel bonus chapter",
+        "note": "Walmart / WHSmith — spoils A Court of Silver Flames"
+      },
+      {
+        "id": "cc-house-of-flame-and-shadow-ch-17-80",
+        "book": "cc",
+        "label": "House of Flame and Shadow — ch. 17–80"
+      },
+      {
+        "id": "cc-ember-randall-bonus-chapter",
+        "book": "bonus",
+        "label": "Ember & Randall bonus chapter",
+        "note": "Books-A-Million / Indigo / Eason — spoils A Court of Silver Flames"
+      },
+      {
+        "id": "cc-house-of-flame-and-shadow-ch-81-to-end",
+        "book": "cc",
+        "label": "House of Flame and Shadow — ch. 81 to end"
+      },
+      {
+        "id": "cc-ruhn-lidia-bonus-chapter",
+        "book": "bonus",
+        "label": "Ruhn & Lidia bonus chapter",
+        "note": "Target / Forbidden Planet — an epilogue"
+      },
+      {
+        "id": "cc-bryce-hunt-solstice-bonus-chapter",
+        "book": "bonus",
+        "label": "Bryce & Hunt Solstice bonus chapter",
+        "note": "B&N / Waterstones — an epilogue"
+      },
+      {
+        "id": "cc-bryce-danika-bonus-chapter",
+        "book": "bonus",
+        "label": "Bryce & Danika bonus chapter",
+        "note": "indie / Blackwell's — a flashback; anywhere after book 1"
+      }
+    ]
+  },
+  {
+    "slug": "maasverse-reading-order",
+    "title": "The Maasverse — Combined Reading Order",
+    "summary": "Throne of Glass, ACOTAR and Crescent City in publication order — the one sequence that keeps every cross-universe reveal safe.",
+    "intro": "Sarah J. Maas says you can start any of her three series first, but they aren't sealed off: Crescent City crosses into Prythian and leans on A Court of Silver Flames, and it nods to Throne of Glass. Reading everything in publication order guarantees you meet each crossover after the book it depends on. Prefer to binge one series at a time? Read ACOTAR 1–5 and Throne of Glass in either order, then Crescent City — just never Crescent City 2–3 before A Court of Silver Flames. Bonus chapters live in each series' own guide.",
+    "updated": "2026-09-23",
+    "books": [
+      {
+        "key": "tog",
+        "title": "Throne of Glass",
+        "accent": "gold"
+      },
+      {
+        "key": "acotar",
+        "title": "A Court of Thorns and Roses",
+        "accent": "glow"
+      },
+      {
+        "key": "cc",
+        "title": "Crescent City",
+        "accent": "magenta"
+      }
+    ],
+    "items": [
+      {
+        "id": "mv-throne-of-glass",
+        "book": "tog",
+        "label": "Throne of Glass",
+        "note": "2012"
+      },
+      {
+        "id": "mv-crown-of-midnight",
+        "book": "tog",
+        "label": "Crown of Midnight",
+        "note": "2013"
+      },
+      {
+        "id": "mv-the-assassin-s-blade",
+        "book": "tog",
+        "label": "The Assassin's Blade",
+        "note": "2014"
+      },
+      {
+        "id": "mv-heir-of-fire",
+        "book": "tog",
+        "label": "Heir of Fire",
+        "note": "2014"
+      },
+      {
+        "id": "mv-a-court-of-thorns-and-roses",
+        "book": "acotar",
+        "label": "A Court of Thorns and Roses",
+        "note": "2015"
+      },
+      {
+        "id": "mv-queen-of-shadows",
+        "book": "tog",
+        "label": "Queen of Shadows",
+        "note": "2015"
+      },
+      {
+        "id": "mv-a-court-of-mist-and-fury",
+        "book": "acotar",
+        "label": "A Court of Mist and Fury",
+        "note": "2016"
+      },
+      {
+        "id": "mv-empire-of-storms",
+        "book": "tog",
+        "label": "Empire of Storms",
+        "note": "2016 — tandem with Tower of Dawn if you like"
+      },
+      {
+        "id": "mv-a-court-of-wings-and-ruin",
+        "book": "acotar",
+        "label": "A Court of Wings and Ruin",
+        "note": "2017"
+      },
+      {
+        "id": "mv-tower-of-dawn",
+        "book": "tog",
+        "label": "Tower of Dawn",
+        "note": "2017"
+      },
+      {
+        "id": "mv-a-court-of-frost-and-starlight",
+        "book": "acotar",
+        "label": "A Court of Frost and Starlight",
+        "note": "2018"
+      },
+      {
+        "id": "mv-kingdom-of-ash",
+        "book": "tog",
+        "label": "Kingdom of Ash",
+        "note": "2018"
+      },
+      {
+        "id": "mv-house-of-earth-and-blood",
+        "book": "cc",
+        "label": "House of Earth and Blood",
+        "note": "2020"
+      },
+      {
+        "id": "mv-a-court-of-silver-flames",
+        "book": "acotar",
+        "label": "A Court of Silver Flames",
+        "note": "2021 — must come before House of Sky and Breath"
+      },
+      {
+        "id": "mv-house-of-sky-and-breath",
+        "book": "cc",
+        "label": "House of Sky and Breath",
+        "note": "2022 — ends with a crossover into Prythian"
+      },
+      {
+        "id": "mv-house-of-flame-and-shadow",
+        "book": "cc",
+        "label": "House of Flame and Shadow",
+        "note": "2024 — largely set in Prythian"
+      },
+      {
+        "id": "mv-a-court-of-splintered-harmony",
+        "book": "acotar",
+        "label": "A Court of Splintered Harmony",
+        "note": "October 27, 2026"
+      },
+      {
+        "id": "mv-a-court-of-forgotten-melody",
+        "book": "acotar",
+        "label": "A Court of Forgotten Melody",
+        "note": "January 12, 2027"
       }
     ]
   }
