@@ -7,6 +7,8 @@
     "updated": "2026-09-23",
     "guides": [
       { "slug": "solaria-reading-order", "role": "main", "blurb": "The whole universe in one spoiler-safe path, every bonus story slotted in." },
+      { "slug": "solaria-chronological-order", "role": "alternate", "blurb": "Story order: Ruthless Boys first, then Zodiac Academy and its novellas as they happen, then Darkmore." },
+      { "slug": "solaria-publication-order", "role": "alternate", "blurb": "Release order, dated from first editions — the authors' journey. Best for a reread." },
       { "slug": "sorrow-starlight-beyond-the-veil-tandem", "role": "tandem", "blurb": "ZA8 and ZA8.5 chapter by chapter — the two books happen at the same time. Recommended by many reviewers even on a first read." }
     ],
     "timeline": [

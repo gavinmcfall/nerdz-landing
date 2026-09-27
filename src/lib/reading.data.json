@@ -2929,5 +2929,433 @@
         "note": "January 12, 2027"
       }
     ]
+  },
+  {
+    "slug": "solaria-chronological-order",
+    "title": "The Solaria Universe — Chronological Order",
+    "summary": "Solaria in story order — Ruthless Boys first, Zodiac Academy with its novellas in sequence, then Darkmore five years on.",
+    "intro": "For readers who want the timeline straight: Ruthless Boys happens five years before Zodiac Academy, so it comes first, then the prequel novella, then Zodiac Academy with every companion story where it falls in time. In this order the Sorrow and Starlight / Beyond the Veil tandem matters most — the two books happen at the same moment. Heads up: reading Ruthless Boys first means Zodiac Academy's crossover reveals won't surprise you. For maximum impact on a first read, use the main path instead.",
+    "updated": "2026-09-23",
+    "books": [
+      {
+        "key": "za",
+        "title": "Zodiac Academy",
+        "accent": "gold"
+      },
+      {
+        "key": "rb",
+        "title": "Ruthless Boys of the Zodiac",
+        "accent": "glow"
+      },
+      {
+        "key": "dp",
+        "title": "Darkmore Penitentiary",
+        "accent": "magenta"
+      },
+      {
+        "key": "sz",
+        "title": "Sins of the Zodiac",
+        "accent": "glow-soft"
+      },
+      {
+        "key": "novella",
+        "title": "Novellas & bonus stories",
+        "accent": "ink"
+      }
+    ],
+    "items": [
+      {
+        "id": "solchron-dark-fae",
+        "book": "rb",
+        "label": "Dark Fae",
+        "note": "Ruthless Boys — set ~5 years before Zodiac Academy"
+      },
+      {
+        "id": "solchron-savage-fae",
+        "book": "rb",
+        "label": "Savage Fae"
+      },
+      {
+        "id": "solchron-vicious-fae",
+        "book": "rb",
+        "label": "Vicious Fae"
+      },
+      {
+        "id": "solchron-broken-fae",
+        "book": "rb",
+        "label": "Broken Fae"
+      },
+      {
+        "id": "solchron-warrior-fae",
+        "book": "rb",
+        "label": "Warrior Fae"
+      },
+      {
+        "id": "solchron-origins-of-an-academy-bully",
+        "book": "novella",
+        "label": "Origins of an Academy Bully",
+        "note": "#0.5 — set before Zodiac Academy begins"
+      },
+      {
+        "id": "solchron-zodiac-academy-the-awakening",
+        "book": "za",
+        "label": "Zodiac Academy: The Awakening"
+      },
+      {
+        "id": "solchron-the-awakening-as-told-by-the-boys",
+        "book": "novella",
+        "label": "The Awakening as Told by the Boys",
+        "note": "#1.5 — the same events from the Heirs' and Orion's side"
+      },
+      {
+        "id": "solchron-ruthless-fae",
+        "book": "za",
+        "label": "Ruthless Fae"
+      },
+      {
+        "id": "solchron-the-reckoning",
+        "book": "za",
+        "label": "The Reckoning"
+      },
+      {
+        "id": "solchron-shadow-princess",
+        "book": "za",
+        "label": "Shadow Princess"
+      },
+      {
+        "id": "solchron-foxy-tales",
+        "book": "novella",
+        "label": "Foxy Tales",
+        "note": "optional — limited charity collection of alt-POV scenes from books 2–4"
+      },
+      {
+        "id": "solchron-cursed-fates",
+        "book": "za",
+        "label": "Cursed Fates"
+      },
+      {
+        "id": "solchron-the-big-a-s-s-party",
+        "book": "novella",
+        "label": "The Big A.S.S. Party",
+        "note": "#5.5"
+      },
+      {
+        "id": "solchron-seth-on-the-moon",
+        "book": "novella",
+        "label": "Seth on the Moon",
+        "note": "#5.6 — read just this chapter of Live and Let Lionel"
+      },
+      {
+        "id": "solchron-night",
+        "book": "novella",
+        "label": "Night",
+        "note": "read just this chapter of Live and Let Lionel — it spoils both series, which is fine by now"
+      },
+      {
+        "id": "solchron-fated-throne",
+        "book": "za",
+        "label": "Fated Throne"
+      },
+      {
+        "id": "solchron-heartless-sky",
+        "book": "za",
+        "label": "Heartless Sky"
+      },
+      {
+        "id": "solchron-sorrow-and-starlight",
+        "book": "za",
+        "label": "Sorrow and Starlight",
+        "note": "read in tandem with Beyond the Veil — they happen at the same time (see the tandem guide)"
+      },
+      {
+        "id": "solchron-beyond-the-veil",
+        "book": "za",
+        "label": "Beyond the Veil",
+        "note": "#8.5"
+      },
+      {
+        "id": "solchron-live-and-let-lionel",
+        "book": "novella",
+        "label": "Live and Let Lionel",
+        "note": "#8.6 — the rest of the collection, incl. Savage and The Shimmering Springs"
+      },
+      {
+        "id": "solchron-restless-stars",
+        "book": "za",
+        "label": "Restless Stars",
+        "note": "the finale"
+      },
+      {
+        "id": "solchron-on-the-cursed-day-of-christmas",
+        "book": "za",
+        "label": "On the Cursed Day of Christmas",
+        "note": "ZA10 — festive advent-calendar special, October 2026"
+      },
+      {
+        "id": "solchron-caged-wolf",
+        "book": "dp",
+        "label": "Caged Wolf",
+        "note": "Darkmore — set ~5 years after Zodiac Academy"
+      },
+      {
+        "id": "solchron-alpha-wolf",
+        "book": "dp",
+        "label": "Alpha Wolf"
+      },
+      {
+        "id": "solchron-feral-wolf",
+        "book": "dp",
+        "label": "Feral Wolf"
+      },
+      {
+        "id": "solchron-wild-wolf",
+        "book": "dp",
+        "label": "Wild Wolf"
+      },
+      {
+        "id": "solchron-never-keep",
+        "book": "sz",
+        "label": "Never Keep",
+        "note": "Sins of the Zodiac — set after Zodiac Academy; no crossovers. Still ongoing"
+      },
+      {
+        "id": "solchron-echo-fort",
+        "book": "sz",
+        "label": "Echo Fort"
+      },
+      {
+        "id": "solchron-cinder-vale",
+        "book": "sz",
+        "label": "Cinder Vale"
+      }
+    ]
+  },
+  {
+    "slug": "solaria-publication-order",
+    "title": "The Solaria Universe — Publication Order",
+    "summary": "Every Solaria book, novella and bonus story in the order it was released — the authors' own journey, best for a reread.",
+    "intro": "The order the Twisted Sisters released everything, dated from the first ebook editions — so you watch the series grow the way early fans did, crossovers and Easter eggs landing as they were written. It's a reread order: it puts Shadow Princess (Jan 2020) before Ruthless Boys 3–5, which spoils how Ruthless Boys ends, so on a first read use the main path. Three bonus stories first appeared in charity anthologies and a limited paperback before being collected in Live and Let Lionel.",
+    "updated": "2026-09-23",
+    "books": [
+      {
+        "key": "za",
+        "title": "Zodiac Academy",
+        "accent": "gold"
+      },
+      {
+        "key": "rb",
+        "title": "Ruthless Boys of the Zodiac",
+        "accent": "glow"
+      },
+      {
+        "key": "dp",
+        "title": "Darkmore Penitentiary",
+        "accent": "magenta"
+      },
+      {
+        "key": "sz",
+        "title": "Sins of the Zodiac",
+        "accent": "glow-soft"
+      },
+      {
+        "key": "novella",
+        "title": "Novellas & bonus stories",
+        "accent": "ink"
+      }
+    ],
+    "items": [
+      {
+        "id": "solpub-origins-of-an-academy-bully",
+        "book": "novella",
+        "label": "Origins of an Academy Bully",
+        "note": "July 2019 — the first Solaria release"
+      },
+      {
+        "id": "solpub-zodiac-academy-the-awakening",
+        "book": "za",
+        "label": "Zodiac Academy: The Awakening",
+        "note": "August 2019"
+      },
+      {
+        "id": "solpub-ruthless-fae",
+        "book": "za",
+        "label": "Ruthless Fae",
+        "note": "August 2019"
+      },
+      {
+        "id": "solpub-the-reckoning",
+        "book": "za",
+        "label": "The Reckoning",
+        "note": "October 2019"
+      },
+      {
+        "id": "solpub-dark-fae",
+        "book": "rb",
+        "label": "Dark Fae",
+        "note": "October 2019"
+      },
+      {
+        "id": "solpub-savage-fae",
+        "book": "rb",
+        "label": "Savage Fae",
+        "note": "December 2019"
+      },
+      {
+        "id": "solpub-shadow-princess",
+        "book": "za",
+        "label": "Shadow Princess",
+        "note": "January 2020 — ⚠ spoils how Ruthless Boys ends"
+      },
+      {
+        "id": "solpub-vicious-fae",
+        "book": "rb",
+        "label": "Vicious Fae",
+        "note": "February 2020"
+      },
+      {
+        "id": "solpub-caged-wolf",
+        "book": "dp",
+        "label": "Caged Wolf",
+        "note": "March 2020 — Darkmore begins, set five years ahead"
+      },
+      {
+        "id": "solpub-cursed-fates",
+        "book": "za",
+        "label": "Cursed Fates",
+        "note": "May 2020"
+      },
+      {
+        "id": "solpub-the-big-a-s-s-party",
+        "book": "novella",
+        "label": "The Big A.S.S. Party",
+        "note": "August 2020"
+      },
+      {
+        "id": "solpub-broken-fae",
+        "book": "rb",
+        "label": "Broken Fae",
+        "note": "August 2020"
+      },
+      {
+        "id": "solpub-alpha-wolf",
+        "book": "dp",
+        "label": "Alpha Wolf",
+        "note": "October 2020"
+      },
+      {
+        "id": "solpub-fated-throne",
+        "book": "za",
+        "label": "Fated Throne",
+        "note": "December 2020"
+      },
+      {
+        "id": "solpub-seth-on-the-moon",
+        "book": "novella",
+        "label": "Seth on the Moon",
+        "note": "March 2021 — free chapter, now in Live and Let Lionel"
+      },
+      {
+        "id": "solpub-warrior-fae",
+        "book": "rb",
+        "label": "Warrior Fae",
+        "note": "April 2021"
+      },
+      {
+        "id": "solpub-feral-wolf",
+        "book": "dp",
+        "label": "Feral Wolf",
+        "note": "July 2021"
+      },
+      {
+        "id": "solpub-the-awakening-as-told-by-the-boys",
+        "book": "novella",
+        "label": "The Awakening as Told by the Boys",
+        "note": "August 2021"
+      },
+      {
+        "id": "solpub-night",
+        "book": "novella",
+        "label": "Night",
+        "note": "November 2021 — free chapter, now in Live and Let Lionel"
+      },
+      {
+        "id": "solpub-heartless-sky",
+        "book": "za",
+        "label": "Heartless Sky",
+        "note": "December 2021"
+      },
+      {
+        "id": "solpub-the-shimmering-springs",
+        "book": "novella",
+        "label": "The Shimmering Springs",
+        "note": "April 2022 — Nightingale charity anthology, now in Live and Let Lionel"
+      },
+      {
+        "id": "solpub-foxy-tales",
+        "book": "novella",
+        "label": "Foxy Tales",
+        "note": "June 2022 — limited charity collection"
+      },
+      {
+        "id": "solpub-savage",
+        "book": "novella",
+        "label": "Savage",
+        "note": "October 2022 — Hell Hath No Fury anthology, now in Live and Let Lionel"
+      },
+      {
+        "id": "solpub-sorrow-and-starlight",
+        "book": "za",
+        "label": "Sorrow and Starlight",
+        "note": "December 2022"
+      },
+      {
+        "id": "solpub-beyond-the-veil",
+        "book": "za",
+        "label": "Beyond the Veil",
+        "note": "June 2023"
+      },
+      {
+        "id": "solpub-live-and-let-lionel",
+        "book": "novella",
+        "label": "Live and Let Lionel",
+        "note": "February 2024 — skip the stories you've already read"
+      },
+      {
+        "id": "solpub-restless-stars",
+        "book": "za",
+        "label": "Restless Stars",
+        "note": "April 2024 — the Zodiac Academy finale"
+      },
+      {
+        "id": "solpub-wild-wolf",
+        "book": "dp",
+        "label": "Wild Wolf",
+        "note": "July 2024 — the Darkmore finale"
+      },
+      {
+        "id": "solpub-never-keep",
+        "book": "sz",
+        "label": "Never Keep",
+        "note": "September 2024"
+      },
+      {
+        "id": "solpub-echo-fort",
+        "book": "sz",
+        "label": "Echo Fort",
+        "note": "June 2025"
+      },
+      {
+        "id": "solpub-cinder-vale",
+        "book": "sz",
+        "label": "Cinder Vale",
+        "note": "March 2026"
+      },
+      {
+        "id": "solpub-on-the-cursed-day-of-christmas",
+        "book": "za",
+        "label": "On the Cursed Day of Christmas",
+        "note": "October 2026 — ZA10"
+      }
+    ]
   }
 ]

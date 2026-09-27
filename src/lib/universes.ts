@@ -57,7 +57,7 @@ const UniverseSchema = z.object({
     .array(
       z.object({
         slug: Kebab,
-        role: z.enum(["main", "tandem", "combined"]),
+        role: z.enum(["main", "alternate", "tandem", "combined"]),
         blurb: z.string().optional(),
       }),
     )

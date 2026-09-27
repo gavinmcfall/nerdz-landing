@@ -8,6 +8,7 @@ import type { Universe, UniverseWork } from "@/lib/universes";
 
 const ROLE_LABEL = {
   main: "reading path",
+  alternate: "alternate order",
   tandem: "tandem read",
   combined: "combined order",
 } as const;

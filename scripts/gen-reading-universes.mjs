@@ -140,6 +140,107 @@ const btvTandem = {
   items: tandemItems,
 };
 
+// ── Solaria: chronological (story-timeline) order ─────────────
+// Thatgirlreads' "chronological" order: events in the order they happen.
+const SOLARIA_BOOKS = [
+  { key: "za", title: "Zodiac Academy", accent: "gold" },
+  { key: "rb", title: "Ruthless Boys of the Zodiac", accent: "glow" },
+  { key: "dp", title: "Darkmore Penitentiary", accent: "magenta" },
+  { key: "sz", title: "Sins of the Zodiac", accent: "glow-soft" },
+  { key: "novella", title: "Novellas & bonus stories", accent: "ink" },
+];
+const solariaChrono = {
+  slug: "solaria-chronological-order",
+  title: "The Solaria Universe — Chronological Order",
+  summary:
+    "Solaria in story order — Ruthless Boys first, Zodiac Academy with its novellas in sequence, then Darkmore five years on.",
+  intro:
+    "For readers who want the timeline straight: Ruthless Boys happens five years before Zodiac Academy, so it comes first, then the prequel novella, then Zodiac Academy with every companion story where it falls in time. In this order the Sorrow and Starlight / Beyond the Veil tandem matters most — the two books happen at the same moment. Heads up: reading Ruthless Boys first means Zodiac Academy's crossover reveals won't surprise you. For maximum impact on a first read, use the main path instead.",
+  updated: UPDATED,
+  books: SOLARIA_BOOKS,
+  items: rows("solchron", [
+    ["Dark Fae", "rb", "Ruthless Boys — set ~5 years before Zodiac Academy"],
+    ["Savage Fae", "rb"],
+    ["Vicious Fae", "rb"],
+    ["Broken Fae", "rb"],
+    ["Warrior Fae", "rb"],
+    ["Origins of an Academy Bully", "novella", "#0.5 — set before Zodiac Academy begins"],
+    ["Zodiac Academy: The Awakening", "za"],
+    ["The Awakening as Told by the Boys", "novella", "#1.5 — the same events from the Heirs' and Orion's side"],
+    ["Ruthless Fae", "za"],
+    ["The Reckoning", "za"],
+    ["Shadow Princess", "za"],
+    ["Foxy Tales", "novella", "optional — limited charity collection of alt-POV scenes from books 2–4"],
+    ["Cursed Fates", "za"],
+    ["The Big A.S.S. Party", "novella", "#5.5"],
+    ["Seth on the Moon", "novella", "#5.6 — read just this chapter of Live and Let Lionel"],
+    ["Night", "novella", "read just this chapter of Live and Let Lionel — it spoils both series, which is fine by now"],
+    ["Fated Throne", "za"],
+    ["Heartless Sky", "za"],
+    ["Sorrow and Starlight", "za", "read in tandem with Beyond the Veil — they happen at the same time (see the tandem guide)"],
+    ["Beyond the Veil", "za", "#8.5"],
+    ["Live and Let Lionel", "novella", "#8.6 — the rest of the collection, incl. Savage and The Shimmering Springs"],
+    ["Restless Stars", "za", "the finale"],
+    ["On the Cursed Day of Christmas", "za", "ZA10 — festive advent-calendar special, October 2026"],
+    ["Caged Wolf", "dp", "Darkmore — set ~5 years after Zodiac Academy"],
+    ["Alpha Wolf", "dp"],
+    ["Feral Wolf", "dp"],
+    ["Wild Wolf", "dp"],
+    ["Never Keep", "sz", "Sins of the Zodiac — set after Zodiac Academy; no crossovers. Still ongoing"],
+    ["Echo Fort", "sz"],
+    ["Cinder Vale", "sz"],
+  ]),
+};
+
+// ── Solaria: publication order ────────────────────────────────
+// First ebook release dates (Goodreads Kindle editions, cross-checked);
+// no two titles share a day. Corrects the guesses in Thatgirlreads'
+// publication list (e.g. The Awakening as Told by the Boys is Aug 2021).
+const solariaPub = {
+  slug: "solaria-publication-order",
+  title: "The Solaria Universe — Publication Order",
+  summary:
+    "Every Solaria book, novella and bonus story in the order it was released — the authors' own journey, best for a reread.",
+  intro:
+    "The order the Twisted Sisters released everything, dated from the first ebook editions — so you watch the series grow the way early fans did, crossovers and Easter eggs landing as they were written. It's a reread order: it puts Shadow Princess (Jan 2020) before Ruthless Boys 3–5, which spoils how Ruthless Boys ends, so on a first read use the main path. Three bonus stories first appeared in charity anthologies and a limited paperback before being collected in Live and Let Lionel.",
+  updated: UPDATED,
+  books: SOLARIA_BOOKS,
+  items: rows("solpub", [
+    ["Origins of an Academy Bully", "novella", "July 2019 — the first Solaria release"],
+    ["Zodiac Academy: The Awakening", "za", "August 2019"],
+    ["Ruthless Fae", "za", "August 2019"],
+    ["The Reckoning", "za", "October 2019"],
+    ["Dark Fae", "rb", "October 2019"],
+    ["Savage Fae", "rb", "December 2019"],
+    ["Shadow Princess", "za", "January 2020 — ⚠ spoils how Ruthless Boys ends"],
+    ["Vicious Fae", "rb", "February 2020"],
+    ["Caged Wolf", "dp", "March 2020 — Darkmore begins, set five years ahead"],
+    ["Cursed Fates", "za", "May 2020"],
+    ["The Big A.S.S. Party", "novella", "August 2020"],
+    ["Broken Fae", "rb", "August 2020"],
+    ["Alpha Wolf", "dp", "October 2020"],
+    ["Fated Throne", "za", "December 2020"],
+    ["Seth on the Moon", "novella", "March 2021 — free chapter, now in Live and Let Lionel"],
+    ["Warrior Fae", "rb", "April 2021"],
+    ["Feral Wolf", "dp", "July 2021"],
+    ["The Awakening as Told by the Boys", "novella", "August 2021"],
+    ["Night", "novella", "November 2021 — free chapter, now in Live and Let Lionel"],
+    ["Heartless Sky", "za", "December 2021"],
+    ["The Shimmering Springs", "novella", "April 2022 — Nightingale charity anthology, now in Live and Let Lionel"],
+    ["Foxy Tales", "novella", "June 2022 — limited charity collection"],
+    ["Savage", "novella", "October 2022 — Hell Hath No Fury anthology, now in Live and Let Lionel"],
+    ["Sorrow and Starlight", "za", "December 2022"],
+    ["Beyond the Veil", "za", "June 2023"],
+    ["Live and Let Lionel", "novella", "February 2024 — skip the stories you've already read"],
+    ["Restless Stars", "za", "April 2024 — the Zodiac Academy finale"],
+    ["Wild Wolf", "dp", "July 2024 — the Darkmore finale"],
+    ["Never Keep", "sz", "September 2024"],
+    ["Echo Fort", "sz", "June 2025"],
+    ["Cinder Vale", "sz", "March 2026"],
+    ["On the Cursed Day of Christmas", "za", "October 2026 — ZA10"],
+  ]),
+};
+
 // ── Throne of Glass ───────────────────────────────────────────
 const tog = {
   slug: "throne-of-glass-reading-order",
@@ -274,7 +375,7 @@ const maasverse = {
 };
 
 // ── Upsert ────────────────────────────────────────────────────
-const upserts = [solaria, btvTandem, tog, acotar, cc, maasverse];
+const upserts = [solaria, solariaChrono, solariaPub, btvTandem, tog, acotar, cc, maasverse];
 const guides = JSON.parse(await fs.readFile(OUT, "utf8"));
 for (const g of upserts) {
   const ids = new Set(g.items.map((i) => i.id));
