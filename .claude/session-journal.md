@@ -78,6 +78,10 @@
 
 ## Log
 
+### 2026-09-27 — Decision: Solaria main path = Thatgirlreads' spoiler-free order
+- Gavin supplied Thatgirlreads' "Ultimate Guide to Solaria" transcript. Main path steps 1–22 now match her #1 order exactly (ZA1–3, RB1–5, ZA4, 0.5, 1.5, Foxy Tales, ZA5, 5.5, Seth, Night, ZA6–8 + 8.5 tandem, LaLL, ZA9), then ZA10/Darkmore/Sins which her video predates.
+- Key facts: RB must precede ZA4 because Shadow Princess introduces Gabriel and names his wife (spoils RB's ending) — NOT a ZA5 reveal. Savage & Shimmering Springs are read as part of LaLL after 8.5, not as early standalone stops. Seth on the Moon / Night = read only those LaLL chapters early. Sins: set after ZA, no crossovers/spoilers.
+
 ### 2026-09-23 — Universe sections + bonus-aware Maas/Solaria guides: Completed
 - Research (5 parallel agents) → docs/research/2026-09-23-bonus-chapters-and-tandem-reads.md: every bonus chapter for TOG (6), ACOTAR (3), CC (8), Solaria (12 companion works + per-edition extras), placements w/ confidence, tandem guides, map/art rights.
 - New universe sections at /reading/{solaria,throne-of-glass,acotar,crescent-city}: data in src/lib/universes.data.json (zod in universes.ts; validates guide refs + that universe slugs never collide with guide slugs — both share /reading/[slug]). Hub leads with universes; standalone guides = those not claimed by a universe.
