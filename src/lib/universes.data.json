@@ -7,7 +7,7 @@
     "updated": "2026-09-23",
     "guides": [
       { "slug": "solaria-reading-order", "role": "main", "blurb": "The whole universe in one spoiler-safe path, every bonus story slotted in." },
-      { "slug": "sorrow-starlight-beyond-the-veil-tandem", "role": "tandem", "blurb": "Optional: ZA8 and ZA8.5 chapter by chapter (fan order — the authors suggest reading 8.5 after 8)." }
+      { "slug": "sorrow-starlight-beyond-the-veil-tandem", "role": "tandem", "blurb": "ZA8 and ZA8.5 chapter by chapter — the two books happen at the same time. Recommended by many reviewers even on a first read." }
     ],
     "timeline": [
       { "label": "~5 years before", "detail": "Ruthless Boys of the Zodiac — Aurora Academy and Darkmore's future inmates. Origins of an Academy Bully and Savage are prequels too." },
@@ -16,10 +16,10 @@
       { "label": "A new era", "detail": "Sins of the Zodiac — a new cast in the same world." }
     ],
     "crossovers": [
-      { "title": "Ruthless Boys ↔ Zodiac Academy", "detail": "A Ruthless Boys character turns out to be family to the Vega twins, revealed in Cursed Fates (ZA5). Reading Ruthless Boys before ZA4 makes that land." },
+      { "title": "Ruthless Boys ↔ Zodiac Academy", "detail": "Gabriel, a Ruthless Boys lead, arrives at Zodiac Academy in Shadow Princess (ZA4) and names his wife on the spot — which spoils how Ruthless Boys' romance ends. Read all five Ruthless Boys books before ZA4." },
       { "title": "Night", "detail": "The explicit bridge between the two series — the authors warn it spoils both, so it waits until after all of Ruthless Boys and Cursed Fates." },
       { "title": "Darkmore ↔ Ruthless Boys", "detail": "Darkmore's leads, Rosalie Oscura and Roary Night, first appear in Ruthless Boys." },
-      { "title": "Sins of the Zodiac", "detail": "Mostly separate; readers report only light hints of the wider world." }
+      { "title": "Sins of the Zodiac", "detail": "Set after Zodiac Academy in a changed Solaria with a new cast — reviewers report no character crossovers and nothing that spoils ZA. The series is still ongoing." }
     ],
     "works": [
       { "title": "Zodiac Academy 1–9", "kind": "series", "detail": "The Vega twins at Zodiac Academy — the heart of the universe.", "availability": "standard" },
@@ -30,14 +30,14 @@
       { "title": "The Awakening as Told by the Boys (#1.5)", "kind": "companion", "detail": "Book 1 retold from the Heirs' and Orion's side, with 50k+ new words.", "availability": "paid", "placement": "After you know the story — the authors say after the original" },
       { "title": "The Big A.S.S. Party (#5.5)", "kind": "novella", "detail": "Max and Geraldine during Cursed Fates.", "availability": "paid", "placement": "After Cursed Fates" },
       { "title": "Beyond the Veil (#8.5)", "kind": "novella", "detail": "The events of book 8 among the dead.", "availability": "paid", "placement": "After Sorrow and Starlight (or in tandem)" },
-      { "title": "Live and Let Lionel (#8.6)", "kind": "companion", "detail": "A 100k-word bonus collection hosted by Lionel — includes several earlier freebies, new scenes and a new map.", "availability": "paid", "placement": "Before Restless Stars" },
+      { "title": "Live and Let Lionel (#8.6)", "kind": "companion", "detail": "A 100k-word bonus collection hosted by Lionel — includes several earlier freebies, new scenes and a new map.", "availability": "paid", "placement": "After Beyond the Veil, before Restless Stars (Seth on the Moon and Night get read earlier)" },
       { "title": "On the Cursed Day of Christmas (ZA10)", "kind": "upcoming", "detail": "An illustrated advent-calendar book, one sealed chapter a day.", "availability": "upcoming", "where": "October 2026 (retailers list the 13th and the 20th)", "placement": "After Restless Stars" },
-      { "title": "Savage", "kind": "bonus", "detail": "How Hail and Merissa Vega met.", "availability": "paid", "where": "Hell Hath No Fury charity anthology; Live and Let Lionel", "placement": "With the ZA4 prequels" },
-      { "title": "The Shimmering Springs", "kind": "bonus", "detail": "Caleb and Seth's did-they-didn't-they night.", "availability": "paid", "where": "Nightingale charity anthology; Live and Let Lionel", "placement": "Around ZA4" },
+      { "title": "Savage", "kind": "bonus", "detail": "How Hail and Merissa Vega met.", "availability": "paid", "where": "Hell Hath No Fury charity anthology; Live and Let Lionel", "placement": "With the rest of Live and Let Lionel, after Beyond the Veil" },
+      { "title": "The Shimmering Springs", "kind": "bonus", "detail": "Caleb and Seth's did-they-didn't-they night.", "availability": "paid", "where": "Nightingale charity anthology; Live and Let Lionel", "placement": "With the rest of Live and Let Lionel, after Beyond the Veil" },
       { "title": "The Tale of Geraldine and the Moon Madness", "kind": "bonus", "detail": "Geraldine at the Lunar Eclipse.", "availability": "paid", "where": "Short story — distribution unclear", "placement": "After ZA4" },
       { "title": "Foxy Tales", "kind": "bonus", "detail": "Darius and Orion alt-POV scenes from books 2–4.", "availability": "out-of-print", "where": "Limited charity paperback", "placement": "After ZA4" },
-      { "title": "Seth on the Moon (#5.6)", "kind": "bonus", "detail": "Seth's best day ever.", "availability": "free", "where": "Authors' Reading Tribe Facebook group; Live and Let Lionel", "placement": "Between ZA5 and ZA6" },
-      { "title": "Night (#5.4)", "kind": "bonus", "detail": "The twins meet the Ruthless Boys, from Leon's side.", "availability": "free", "where": "Authors' Reading Tribe Facebook group; Live and Let Lionel", "placement": "After all of Ruthless Boys and ZA5", "warning": "Major spoilers for both Zodiac Academy and Ruthless Boys." },
+      { "title": "Seth on the Moon (#5.6)", "kind": "bonus", "detail": "Seth's best day ever.", "availability": "free", "where": "Authors' Reading Tribe Facebook group; Live and Let Lionel", "placement": "Between ZA5 and ZA6 — read just this chapter of Live and Let Lionel" },
+      { "title": "Night (#5.4)", "kind": "bonus", "detail": "The twins meet the Ruthless Boys, from Leon's side.", "availability": "free", "where": "Authors' Reading Tribe Facebook group; Live and Let Lionel", "placement": "After all of Ruthless Boys and ZA5 — read just this chapter of Live and Let Lionel", "warning": "Major spoilers for both Zodiac Academy and Ruthless Boys." },
       { "title": "Print-reissue bonus chapters", "kind": "bonus", "detail": "Since 2024 each ZA print reissue carries an exclusive bonus chapter and a new world map (book 1's is an Orion POV class). Ebooks don't include them.", "availability": "edition-exclusive", "where": "2024+ paperbacks" },
       { "title": "Luxe edition bonus chapters", "kind": "bonus", "detail": "Each Luxe edition adds a never-before-seen bonus chapter plus commissioned art and maps.", "availability": "edition-exclusive", "where": "Luxe editions (King's Hollow / Elysian Crates)" }
     ],

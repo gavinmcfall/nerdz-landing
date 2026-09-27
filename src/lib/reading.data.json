@@ -1687,7 +1687,7 @@
     "slug": "solaria-reading-order",
     "title": "The Solaria Universe — Reading Order",
     "summary": "Zodiac Academy and everything orbiting it — Ruthless Boys, Darkmore, Sins of the Zodiac, every novella and bonus story — in one spoiler-safe path.",
-    "intro": "Peckham & Valenti say there's no single right way to read Solaria, so this is the path the bonus-aware guides converge on: three Zodiac Academy books to learn the world, all of Ruthless Boys (set five years earlier), then the rest of ZA with every companion story slotted where it lands safely. Darkmore (five years later) waits until after the finale, and Sins of the Zodiac comes last. Several bonus stories were later collected in Live and Let Lionel — the notes say which, so you can skip repeats.",
+    "intro": "Peckham & Valenti say there's no single right way to read Solaria; this is the spoiler-free, maximum-impact path the big reader guides share (Thatgirlreads' favourite, Read Romantasy's emotional-impact order). Three Zodiac Academy books teach the world, then all of Ruthless Boys (set five years earlier) BEFORE Shadow Princess, which spoils its ending. After ZA4 comes the painful-on-purpose trip back to the 0.5 and 1.5 prequels. Seth on the Moon and Night are read early as single chapters of Live and Let Lionel; the rest of that book waits until after 8.5. Darkmore (five years later) follows the finale, and Sins of the Zodiac comes last.",
     "updated": "2026-09-23",
     "books": [
       {
@@ -1737,7 +1737,7 @@
         "id": "sol-dark-fae",
         "book": "rb",
         "label": "Dark Fae",
-        "note": "Ruthless Boys is set ~5 years before ZA — reading it here makes ZA's later crossovers land"
+        "note": "read ALL of Ruthless Boys before Shadow Princess — ZA4 introduces Gabriel and immediately spoils how this series ends"
       },
       {
         "id": "sol-savage-fae",
@@ -1771,24 +1771,6 @@
         "note": "#0.5 prequel (Darius & Orion) — reads best once you know them"
       },
       {
-        "id": "sol-savage",
-        "book": "novella",
-        "label": "Savage",
-        "note": "Hail & Merissa Vega — from the Hell Hath No Fury anthology; also in Live and Let Lionel"
-      },
-      {
-        "id": "sol-the-shimmering-springs",
-        "book": "novella",
-        "label": "The Shimmering Springs",
-        "note": "Caleb & Seth — from the Nightingale anthology; also in Live and Let Lionel"
-      },
-      {
-        "id": "sol-the-tale-of-geraldine-and-the-moon-madness",
-        "book": "novella",
-        "label": "The Tale of Geraldine and the Moon Madness",
-        "note": "short Geraldine story set at the Lunar Eclipse; availability varies"
-      },
-      {
         "id": "sol-the-awakening-as-told-by-the-boys",
         "book": "novella",
         "label": "The Awakening as Told by the Boys",
@@ -1815,13 +1797,13 @@
         "id": "sol-seth-on-the-moon",
         "book": "novella",
         "label": "Seth on the Moon",
-        "note": "#5.6 — free in the authors' Reading Tribe group; also in Live and Let Lionel"
+        "note": "#5.6 — in Live and Let Lionel: read just this chapter now, leave the rest of the book for later"
       },
       {
         "id": "sol-night",
         "book": "novella",
         "label": "Night",
-        "note": "⚠ the twins meet the Ruthless Boys — major spoilers for BOTH series; only after all of Ruthless Boys and Cursed Fates. Also in Live and Let Lionel"
+        "note": "⚠ the twins meet the Ruthless Boys — spoils BOTH series, so only after all of Ruthless Boys and Cursed Fates. In Live and Let Lionel: read just this chapter now"
       },
       {
         "id": "sol-fated-throne",
@@ -1837,7 +1819,7 @@
         "id": "sol-sorrow-and-starlight",
         "book": "za",
         "label": "Sorrow and Starlight",
-        "note": "optional: read it chapter-by-chapter with Beyond the Veil — see the tandem guide"
+        "note": "recommended: read it chapter-by-chapter with Beyond the Veil — see the tandem guide (then tick both here)"
       },
       {
         "id": "sol-beyond-the-veil",
@@ -1849,7 +1831,7 @@
         "id": "sol-live-and-let-lionel",
         "book": "novella",
         "label": "Live and Let Lionel",
-        "note": "#8.6 — collects Savage, Shimmering Springs, Seth on the Moon and Night plus new scenes and a new map; skip what you've read"
+        "note": "#8.6 — the rest of the collection now: incl. Savage (the Vega parents) and The Shimmering Springs; skip Seth on the Moon and Night"
       },
       {
         "id": "sol-restless-stars",
@@ -1888,7 +1870,7 @@
         "id": "sol-never-keep",
         "book": "sz",
         "label": "Never Keep",
-        "note": "Sins of the Zodiac — a new cast in the same world"
+        "note": "Sins of the Zodiac — set after ZA in a changed Solaria; new cast, no ZA spoilers. Still ongoing"
       },
       {
         "id": "sol-echo-fort",
@@ -1906,7 +1888,7 @@
     "slug": "sorrow-starlight-beyond-the-veil-tandem",
     "title": "Sorrow and Starlight & Beyond the Veil — Tandem Read",
     "summary": "Zodiac Academy 8 and 8.5 chapter by chapter — follow the living and the dead through the same days.",
-    "intro": "Beyond the Veil tells what happens among the dead while Sorrow and Starlight unfolds, so fans read them interleaved: mostly one Beyond the Veil chapter between runs of Sorrow and Starlight. Two pairs are read out of order on purpose (15 before 14, 24 before 23). Heads up: the authors' own advice is to read Beyond the Veil after book 8, so this is a fan way to read it — on a first read, the main Solaria path keeps them separate.",
+    "intro": "Beyond the Veil tells what happens among the dead while Sorrow and Starlight unfolds, so fans read them interleaved: mostly one Beyond the Veil chapter between runs of Sorrow and Starlight. Two pairs are read out of order on purpose (15 before 14, 24 before 23). The authors' book description says read Beyond the Veil after book 8, but many reviewers (Thatgirlreads included) recommend this tandem even on a first read because the two books happen at the same time. Either way works.",
     "updated": "2026-09-23",
     "credit": {
       "text": "Tandem order by SQUIB (\"S.T.R.A.P.O.N.\" checklist)"
