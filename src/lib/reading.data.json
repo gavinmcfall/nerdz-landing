@@ -3357,5 +3357,98 @@
         "note": "October 2026 — ZA10"
       }
     ]
+  },
+  {
+    "slug": "empyrean-reading-order",
+    "title": "The Empyrean — Reading Order with Bonus Chapters",
+    "summary": "Fourth Wing, Iron Flame and Onyx Storm with the three official Xaden chapters slotted in by chapter, and where Threshing Day goes.",
+    "intro": "The Empyrean has exactly three official bonus chapters, all from Fourth Wing and all in Xaden's head: chapter 9 (the first sparring match), chapter 16 (just after Threshing) and chapter 27 (the Montserrat Battle Brief). Each retells its chapter, so read it right after that chapter and not before. Threshing Day is a book of thirteen Threshing stories set years before Fourth Wing, but it is framed from after Onyx Storm and carries spoilers — Entangled's own advice is to read it after Onyx Storm, and that is where it sits here. No bonus chapters exist for Iron Flame or Onyx Storm; the Iron Flame chapter 35 Xaden scene teased in July 2025 has never been released. Book 4 is untitled with no date.",
+    "updated": "2026-10-13",
+    "books": [
+      {
+        "key": "empyrean",
+        "title": "The Empyrean",
+        "accent": "gold"
+      },
+      {
+        "key": "bonus",
+        "title": "Bonus chapters",
+        "accent": "glow"
+      },
+      {
+        "key": "collection",
+        "title": "Threshing Day",
+        "accent": "magenta"
+      },
+      {
+        "key": "upcoming",
+        "title": "Upcoming",
+        "accent": "ink"
+      }
+    ],
+    "items": [
+      {
+        "id": "empyrean-fourth-wing-ch-1-9",
+        "book": "empyrean",
+        "label": "Fourth Wing — ch. 1–9"
+      },
+      {
+        "id": "empyrean-bonus-chapter-9",
+        "book": "bonus",
+        "label": "Bonus Chapter 9 — Xaden",
+        "note": "the first sparring match, where she becomes Violence — Nov 2023 special edition; free on the author's site"
+      },
+      {
+        "id": "empyrean-fourth-wing-ch-10-16",
+        "book": "empyrean",
+        "label": "Fourth Wing — ch. 10–16"
+      },
+      {
+        "id": "empyrean-bonus-chapter-16",
+        "book": "bonus",
+        "label": "Bonus Chapter 16 — Xaden",
+        "note": "just after Threshing: the argument with Dain, and what the mated bond means — same special edition; free on the author's site"
+      },
+      {
+        "id": "empyrean-fourth-wing-ch-17-27",
+        "book": "empyrean",
+        "label": "Fourth Wing — ch. 17–27"
+      },
+      {
+        "id": "empyrean-bonus-chapter-27",
+        "book": "bonus",
+        "label": "Bonus Chapter 27 — Xaden",
+        "note": "the Montserrat Battle Brief and the retreat when the wards fall — Sept 2024 limited paperback; free on the author's site"
+      },
+      {
+        "id": "empyrean-fourth-wing-ch-28-to-end",
+        "book": "empyrean",
+        "label": "Fourth Wing — ch. 28 to end"
+      },
+      {
+        "id": "empyrean-iron-flame",
+        "book": "empyrean",
+        "label": "Iron Flame",
+        "note": "no bonus chapters exist for it"
+      },
+      {
+        "id": "empyrean-onyx-storm",
+        "book": "empyrean",
+        "label": "Onyx Storm",
+        "note": "no bonus chapters exist for it"
+      },
+      {
+        "id": "empyrean-threshing-day",
+        "book": "collection",
+        "label": "Threshing Day",
+        "note": "thirteen Threshing stories, ordered by when each rider bonded — set before Fourth Wing but framed from after Onyx Storm, so read it here"
+      },
+      {
+        "id": "empyrean-book-4",
+        "book": "upcoming",
+        "label": "Book 4",
+        "note": "untitled — being written, no date announced"
+      }
+    ]
   }
 ]

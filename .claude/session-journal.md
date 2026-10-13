@@ -2,6 +2,8 @@
 
 ## Current state
 
+**2026-10-13 — `/reading/empyrean-reading-order` added** (standalone guide, picked up by the hub automatically): Fourth Wing split at ch. 9/16/27 around the three official Xaden bonus chapters, Iron Flame, Onyx Storm, Threshing Day after Onyx Storm per Entangled's advice, Book 4 untitled. PDF rendered via `MSYS_NO_PATHCONV=1 wsl -d home-ops -- /home/gavin/code/home-ops/.venv/bin/python scripts/render_reading_pdf.py empyrean-reading-order`. Source facts and the shelved chapters live in nerdz-reading (journal 2026-10-13).
+
 **Branch:** `main`. The hub redesign shipped long ago; the site is the personal-hub design (Topbar/Hero/Workshop/Workbench/Ramblings/Cluster/Colophon) with `/about`, `/projects`, `/lab`, `/manuals`, `/agentic-engineering` — and now `/reading`.
 
 **Newest area — `/reading` (2026-08-26):** book reading guides. Hub at `/reading`, first guide `/reading/eos-tod-reading-order` (EOS/ToD tandem reading order, 145 steps). One data source `src/lib/reading.data.json` (+ zod accessor `src/lib/reading.ts`, generator `scripts/gen-reading-eos-tod.mjs`) drives both the interactive web checklist (`src/components/reading/ReadingGuide.tsx`, localStorage key `nerdz.reading.<slug>`, versioned payload, useSyncExternalStore) and the fillable PDF (`scripts/render_reading_pdf.py` + `scripts/print/reading.css` → `public/reading/<slug>.pdf`, WeasyPrint `pdf_forms=True` from the home-ops WSL venv at `/home/gavin/code/home-ops/.venv`, repo reachable at `/mnt/g/code/nerdz/nerdz-landing`). Spec + plan under `docs/superpowers/`. Future phase noted in spec: live "what I'm reading" data (Hardcover/Audiobookshelf) on the reading hub.
