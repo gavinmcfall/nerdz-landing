@@ -1688,7 +1688,7 @@
     "title": "The Solaria Universe — Reading Order",
     "summary": "Zodiac Academy and everything orbiting it — Ruthless Boys, Darkmore, Sins of the Zodiac, every novella and bonus story — in one spoiler-safe path.",
     "intro": "Peckham & Valenti say there's no single right way to read Solaria; this is the spoiler-free, maximum-impact path the big reader guides share (Thatgirlreads' favourite, Read Romantasy's emotional-impact order). Three Zodiac Academy books teach the world, then all of Ruthless Boys (set five years earlier) BEFORE Shadow Princess, which spoils its ending. After ZA4 comes the painful-on-purpose trip back to the 0.5 and 1.5 prequels. Seth on the Moon and Night are read early as single chapters of Live and Let Lionel; the rest of that book waits until after 8.5. Darkmore (five years later) follows the finale, and Sins of the Zodiac comes last.",
-    "updated": "2026-09-23",
+    "updated": "2026-10-16",
     "books": [
       {
         "key": "za",
@@ -1780,7 +1780,7 @@
         "id": "sol-foxy-tales",
         "book": "novella",
         "label": "Foxy Tales",
-        "note": "limited charity paperback — alt-POV scenes from books 2–4"
+        "note": "limited charity paperback — read parts 1–4 (Darius and Orion alt-POV scenes from books 2–4); part 5 is a Kings of Quarantine epilogue, leave it until after that series"
       },
       {
         "id": "sol-cursed-fates",
@@ -2935,7 +2935,7 @@
     "title": "The Solaria Universe — Chronological Order",
     "summary": "Solaria in story order — Ruthless Boys first, Zodiac Academy with its novellas in sequence, then Darkmore five years on.",
     "intro": "For readers who want the timeline straight: Ruthless Boys happens five years before Zodiac Academy, so it comes first, then the prequel novella, then Zodiac Academy with every companion story where it falls in time. In this order the Sorrow and Starlight / Beyond the Veil tandem matters most — the two books happen at the same moment. Heads up: reading Ruthless Boys first means Zodiac Academy's crossover reveals won't surprise you. For maximum impact on a first read, use the main path instead.",
-    "updated": "2026-09-23",
+    "updated": "2026-10-16",
     "books": [
       {
         "key": "za",
@@ -3026,7 +3026,7 @@
         "id": "solchron-foxy-tales",
         "book": "novella",
         "label": "Foxy Tales",
-        "note": "optional — limited charity collection of alt-POV scenes from books 2–4"
+        "note": "optional — limited charity collection; read parts 1–4 (alt-POV scenes from books 2–4), part 5 is a Kings of Quarantine epilogue, leave it until after that series"
       },
       {
         "id": "solchron-cursed-fates",
@@ -3135,7 +3135,7 @@
     "title": "The Solaria Universe — Publication Order",
     "summary": "Every Solaria book, novella and bonus story in the order it was released — the authors' own journey, best for a reread.",
     "intro": "The order the Twisted Sisters released everything, dated from the first ebook editions — so you watch the series grow the way early fans did, crossovers and Easter eggs landing as they were written. It's a reread order: it puts Shadow Princess (Jan 2020) before Ruthless Boys 3–5, which spoils how Ruthless Boys ends, so on a first read use the main path. Three bonus stories first appeared in charity anthologies and a limited paperback before being collected in Live and Let Lionel.",
-    "updated": "2026-09-23",
+    "updated": "2026-10-16",
     "books": [
       {
         "key": "za",
@@ -3294,7 +3294,7 @@
         "id": "solpub-foxy-tales",
         "book": "novella",
         "label": "Foxy Tales",
-        "note": "June 2022 — limited charity collection"
+        "note": "June 2022 — limited charity collection; parts 1–4 are Solaria, part 5 is a Kings of Quarantine epilogue"
       },
       {
         "id": "solpub-savage",
