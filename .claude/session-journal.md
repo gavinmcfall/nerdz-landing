@@ -2,6 +2,9 @@
 
 ## Current state
 
+**2026-10-31 — Next.js 16.4.1 security bump deployed** (commit d12bc8f, deploy run 41145206100 green 23:34 UTC 2026-10-30). Closes the 14 Oct 2026 out-of-band advisories (use cache RCE GHSA-673q-mjm6-r5xr, Image Optimization SVG RCE CVE-2026-96889, Server Actions DoS GHSA-p3m5-59mp-jv5r) and the September range. Exposure was low: no `use cache`, no Server Actions, no Node image optimizer on the Worker. `npm audit fix` (no --force) also moved sharp 0.35.5, @opennextjs/cloudflare 1.20.15, wrangler 4.156.0, postcss/nanoid/source-map-js/brace-expansion. Left: zod 3->4 (breaking, GHSA-mrhx-c7xc-m3w5) and the glob CLI advisory inside @opennextjs/aws (build-time only). Pre-existing lint errors unchanged (ReadingGuide.tsx:150 react-hooks/refs, one jsx-no-comment-textnodes). Prompted by Gavin asking whether the PHP2Shell flaws touched the site: the site has no PHP; the cluster's only PHP apps are pelican / pelican-dev, already on PHP 8.5.12 since home-ops #2870 (2026-10-22).
+
+
 **2026-10-13 — `/reading/empyrean-reading-order` added** (standalone guide, picked up by the hub automatically): Fourth Wing split at ch. 9/16/27 around the three official Xaden bonus chapters, Iron Flame, Onyx Storm, Threshing Day after Onyx Storm per Entangled's advice, Book 4 untitled. PDF rendered via `MSYS_NO_PATHCONV=1 wsl -d home-ops -- /home/gavin/code/home-ops/.venv/bin/python scripts/render_reading_pdf.py empyrean-reading-order`. Source facts and the shelved chapters live in nerdz-reading (journal 2026-10-13).
 
 **Branch:** `main`. The hub redesign shipped long ago; the site is the personal-hub design (Topbar/Hero/Workshop/Workbench/Ramblings/Cluster/Colophon) with `/about`, `/projects`, `/lab`, `/manuals`, `/agentic-engineering` — and now `/reading`.
