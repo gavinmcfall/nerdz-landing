@@ -24,6 +24,9 @@ export type Summary = {
   guild?: string | null;
   achievementPoints?: number;
   inset?: string | null;
+  // The full transparent render and where the figure stands in it (sync
+  // v2.1+). Absent in older indexes; null when the render couldn't be read.
+  portrait?: { url: string; focus: { x: number; top: number; height: number } } | null;
   lastSuccessAt?: string;
   error?: string;
 };

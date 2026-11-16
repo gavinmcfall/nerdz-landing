@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { classSlug, formatSynced, hasData, sortRetail, staleNote } from "./format.ts";
+import { classSlug, formatSynced, hasData, portraitStyle, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -44,4 +44,15 @@ test("sortRetail orders by level, then item level, highest first", () => {
     { name: "d" },
   ]);
   assert.deepEqual(sorted.map((s) => s.name), ["c", "b", "a", "d"]);
+});
+
+test("portraitStyle scales the render so the focus window fills the frame", () => {
+  // Cònsecrator's measured focus: window starts 33.1% down, is 25.2% tall,
+  // figure centred at 50.19% across.
+  assert.deepEqual(portraitStyle({ x: 0.5019, top: 0.331, height: 0.252 }), {
+    height: "396.8254%",
+    top: "-131.3492%",
+    left: "50%",
+    transform: "translateX(-50.19%)",
+  });
 });

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Summary } from "@/lib/warcraft/types";
 import { characterHref } from "@/lib/warcraft/resolve";
-import { classSlug, hasData, staleNote } from "@/lib/warcraft/format";
+import { classSlug, hasData, portraitStyle, staleNote } from "@/lib/warcraft/format";
 import { FactionBadge, GameBadge } from "./Badges";
 
 export function CharacterName({ summary }: { summary: Summary }) {
@@ -36,7 +36,17 @@ export function RosterCard({ summary }: { summary: Summary }) {
   return (
     <Link href={characterHref(summary.route)} className="wow-card" data-class={classSlug(summary.characterClass)}>
       <div className="wow-card__art">
-        {summary.inset && <img src={summary.inset} alt="" loading="lazy" />}
+        {summary.portrait ? (
+          <img
+            className="wow-card__portrait"
+            src={summary.portrait.url}
+            alt=""
+            loading="lazy"
+            style={portraitStyle(summary.portrait.focus)}
+          />
+        ) : (
+          summary.inset && <img className="wow-card__inset" src={summary.inset} alt="" loading="lazy" />
+        )}
         <span className="wow-card__stripe" aria-hidden="true" />
       </div>
       <div className="wow-card__body">
