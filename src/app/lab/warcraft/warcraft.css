@@ -672,6 +672,38 @@ a.wow-card:focus-visible { border-color: var(--glow); }
 .wow-pve__mode--done { color: var(--ink); border-color: var(--glow); }
 .wow-pve__kills { font-family: var(--font-mono); }
 
+/* ── Player vs Player tab ── */
+.wow-pvptab { display: flex; flex-direction: column; gap: 40px; margin-bottom: 56px; }
+.wow-pvptab__brackets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.wow-pvptab__bracket { font-size: 15px; color: var(--ink); }
+.wow-pvptab__scroll { overflow-x: auto; }
+.wow-pvptab__table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.wow-pvptab__table th,
+.wow-pvptab__table td { padding: 10px 12px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+.wow-pvptab__table th:first-child { padding-left: 0; text-align: left; white-space: normal; }
+.wow-pvptab__table thead th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.wow-pvptab__table tbody th { font-weight: 400; color: var(--ink); }
+.wow-pvptab__table td { font-family: var(--font-mono); color: var(--ink-mid); }
+@media (max-width: 480px) {
+  .wow-pvptab__table th,
+  .wow-pvptab__table td { padding: 10px 6px; }
+  .wow-pvptab__table thead th { letter-spacing: 0.06em; }
+}
+
 /* Narrow screens: gear above and below the render, tooltips under the slot. */
 @media (max-width: 900px) {
   .wow-doll { grid-template-columns: minmax(0, 1fr); }
