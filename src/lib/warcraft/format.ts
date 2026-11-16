@@ -167,3 +167,9 @@ export function expansionSummary(instances: { modes: { completed: number; total:
   if (cleared === 0) return head;
   return `${head} · ${n === 1 ? "cleared" : `${count(cleared)} cleared`}`;
 }
+
+// "50%": the share of games won. A dash when none were played.
+export function winRate({ played, won }: { played: number; won: number }): string {
+  if (played <= 0) return "–";
+  return `${Math.round((100 * won) / played)}%`;
+}

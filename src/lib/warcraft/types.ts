@@ -175,3 +175,19 @@ export type PveView = {
   raids: PveGroup[];
   dungeons: PveGroup[];
 };
+
+// view:v1:{key}:pvp (sync v2.7+).
+export type PvpBracket = { id: string; name: string; rating: number | null };
+
+export type BattlegroundRecord = { name: string; played: number; won: number; lost: number };
+
+export type PvpView = {
+  schemaVersion: number;
+  game: Game;
+  fetchedAt: string;
+  honorLevel: number | null;
+  honorableKills: number;
+  rank: number | null;
+  brackets: PvpBracket[];
+  battlegrounds: BattlegroundRecord[];
+};

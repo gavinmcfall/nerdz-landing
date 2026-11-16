@@ -18,11 +18,3 @@ export function TabBar({ route, active }: { route: string[]; active: Tab }) {
     </nav>
   );
 }
-
-export function ComingSoon({ tab }: { tab: Tab }) {
-  return (
-    <div className="wow-soon">
-      <p>{TAB_LABELS[tab]} is coming soon.</p>
-    </div>
-  );
-}

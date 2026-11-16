@@ -6,9 +6,10 @@ import { CharacterTab } from "@/components/warcraft/CharacterTab";
 import { AchievementsTab } from "@/components/warcraft/AchievementsTab";
 import { CollectionsTab } from "@/components/warcraft/CollectionsTab";
 import { PveTab } from "@/components/warcraft/PveTab";
+import { PvpTab } from "@/components/warcraft/PvpTab";
 import { ReputationTab } from "@/components/warcraft/ReputationTab";
-import { ComingSoon, TabBar } from "@/components/warcraft/TabBar";
-import { getAchievementsView, getCharacterView, getCollectionsView, getIndex, getPveView, getReputationView } from "@/lib/warcraft/data";
+import { TabBar } from "@/components/warcraft/TabBar";
+import { getAchievementsView, getCharacterView, getCollectionsView, getIndex, getPveView, getPvpView, getReputationView } from "@/lib/warcraft/data";
 import { hasData } from "@/lib/warcraft/format";
 import { resolveCharacterPath } from "@/lib/warcraft/resolve";
 import type { Summary } from "@/lib/warcraft/types";
@@ -70,10 +71,10 @@ export default async function CharacterPage({ params }: Params) {
           <CollectionsTab view={await getCollectionsView(summary.key)} route={summary.route} collection={collection} />
         ) : tab === "pve" ? (
           <PveTab view={await getPveView(summary.key)} />
-        ) : tab === "reputation" ? (
-          <ReputationTab view={await getReputationView(summary.key)} />
+        ) : tab === "pvp" ? (
+          <PvpTab view={await getPvpView(summary.key)} />
         ) : (
-          <ComingSoon tab={tab} />
+          <ReputationTab view={await getReputationView(summary.key)} />
         )}
       </div>
     </section>

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { categoryProgress, classSlug, collectionCount, expansionSummary, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
+import { categoryProgress, classSlug, collectionCount, expansionSummary, winRate, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -158,4 +158,11 @@ test("expansionSummary counts instances and those cleared on any difficulty", ()
   assert.equal(expansionSummary(instances, "raid"), "3 raids · 2 cleared");
   assert.equal(expansionSummary([instances[2]], "raid"), "1 raid");
   assert.equal(expansionSummary([instances[0]], "dungeon"), "1 dungeon · cleared");
+});
+
+test("winRate is the share of games won, as a whole percentage", () => {
+  assert.equal(winRate({ played: 6, won: 3 }), "50%");
+  assert.equal(winRate({ played: 3, won: 1 }), "33%");
+  assert.equal(winRate({ played: 1, won: 1 }), "100%");
+  assert.equal(winRate({ played: 0, won: 0 }), "–");
 });
