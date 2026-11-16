@@ -1,5 +1,5 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import type { ArmoryIndex, CharacterView, ReputationView } from "./types";
+import type { AchievementsView, ArmoryIndex, CharacterView, ReputationView } from "./types";
 
 // Reads the WOW_ARMORY KV namespace written by wow-armoury-sync. Any missing
 // binding, key or unexpected shape reads as null, so a page shows its "no
@@ -44,4 +44,8 @@ export function getCharacterView(key: string): Promise<CharacterView | null> {
 
 export function getReputationView(key: string): Promise<ReputationView | null> {
   return getView<ReputationView>(key, "reputation", (v) => Array.isArray(v.groups));
+}
+
+export function getAchievementsView(key: string): Promise<AchievementsView | null> {
+  return getView<AchievementsView>(key, "achievements", (v) => Array.isArray(v.completed) && Array.isArray(v.categories));
 }

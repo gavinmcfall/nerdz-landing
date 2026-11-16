@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { classSlug, dollScene, filterReputation, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
+import { categoryProgress, classSlug, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -116,4 +116,26 @@ test("filterReputation keeps a whole group when its name matches", () => {
 
 test("filterReputation returns every group for an empty query", () => {
   assert.equal(filterReputation(GROUPS, "   "), GROUPS);
+});
+
+test("categoryProgress gives a rounded percentage of the category's total", () => {
+  assert.equal(categoryProgress(486, { quantity: 1589, points: 16875 }), 31);
+  assert.equal(categoryProgress(40, { quantity: 40, points: 495 }), 100);
+});
+
+test("categoryProgress is 0 without a total and never passes 100", () => {
+  assert.equal(categoryProgress(3, null), 0);
+  assert.equal(categoryProgress(3, { quantity: 0, points: 0 }), 0);
+  assert.equal(categoryProgress(1377, { quantity: 1373, points: 0 }), 100);
+});
+
+test("formatEarned shows the day an achievement was earned in New Zealand", () => {
+  assert.equal(formatEarned("2026-02-17T19:52:00.000Z"), "18 Feb 2026");
+  assert.equal(formatEarned("not a date"), null);
+});
+
+test("filterAchievements matches names case-insensitively and returns everything for an empty query", () => {
+  const list = [{ name: "Explore Westfall" }, { name: "Level 10" }, { name: "Explore Duskwood" }];
+  assert.equal(filterAchievements(list, "  "), list);
+  assert.deepEqual(filterAchievements(list, "EXPLORE").map((a) => a.name), ["Explore Westfall", "Explore Duskwood"]);
 });

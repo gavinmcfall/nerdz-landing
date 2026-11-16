@@ -112,3 +112,33 @@ export function filterReputation<G extends { name: string; factions: { name: str
     )
     .filter((g) => g.factions.length > 0);
 }
+
+const NZ_DAY = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Pacific/Auckland",
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+
+// "18 Feb 2026": the day an achievement was earned, in New Zealand; null for
+// a bad date.
+export function formatEarned(iso: string): string | null {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return null;
+  return NZ_DAY.format(date);
+}
+
+// How much of an achievement category the character has done, as a whole
+// percentage. Blizzard's counts can run past the total (removed
+// achievements still count), so it stops at 100.
+export function categoryProgress(quantity: number, total: { quantity: number; points: number } | null): number {
+  if (!total || total.quantity <= 0) return 0;
+  return Math.min(100, Math.round((100 * quantity) / total.quantity));
+}
+
+// The Achievements tab's filter: achievements whose name contains the query.
+export function filterAchievements<A extends { name: string }>(list: A[], query: string): A[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return list;
+  return list.filter((a) => a.name.toLowerCase().includes(q));
+}

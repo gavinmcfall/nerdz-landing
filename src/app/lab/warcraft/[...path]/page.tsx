@@ -3,9 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CharacterHeader } from "@/components/warcraft/CharacterHeader";
 import { CharacterTab } from "@/components/warcraft/CharacterTab";
+import { AchievementsTab } from "@/components/warcraft/AchievementsTab";
 import { ReputationTab } from "@/components/warcraft/ReputationTab";
 import { ComingSoon, TabBar } from "@/components/warcraft/TabBar";
-import { getCharacterView, getIndex, getReputationView } from "@/lib/warcraft/data";
+import { getAchievementsView, getCharacterView, getIndex, getReputationView } from "@/lib/warcraft/data";
 import { hasData } from "@/lib/warcraft/format";
 import { resolveCharacterPath } from "@/lib/warcraft/resolve";
 import type { Summary } from "@/lib/warcraft/types";
@@ -61,6 +62,8 @@ export default async function CharacterPage({ params }: Params) {
         <TabBar route={summary.route} active={tab} />
         {tab === "character" ? (
           <CharacterTab view={await getCharacterView(summary.key)} summary={summary} />
+        ) : tab === "achievements" ? (
+          <AchievementsTab view={await getAchievementsView(summary.key)} />
         ) : tab === "reputation" ? (
           <ReputationTab view={await getReputationView(summary.key)} />
         ) : (

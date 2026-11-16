@@ -517,6 +517,70 @@ a.wow-card:focus-visible { border-color: var(--glow); }
 .wow-rep__fill--paragon { background: var(--gold); }
 .wow-rep__detail { font-family: var(--font-mono); font-size: 12px; color: var(--ink-mute); }
 
+/* ── Achievements tab ── */
+.wow-ach { display: flex; flex-direction: column; gap: 40px; margin-bottom: 56px; }
+.wow-ach__totals { display: flex; flex-wrap: wrap; gap: 40px; margin: 0; }
+.wow-ach__totals > div { display: flex; flex-direction: column; gap: 2px; }
+.wow-ach__totals dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.wow-ach__totals dd { margin: 0; font-size: 34px; line-height: 1.1; color: var(--ink); }
+.wow-ach__totals .wow-ach__points { color: var(--gold); }
+.wow-ach__cats {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+  gap: 12px;
+}
+.wow-ach__cat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.wow-ach__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 10px; }
+.wow-ach__head .wow-h2 { margin: 0; }
+.wow-ach__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+  gap: 0 28px;
+}
+.wow-ach__row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.wow-ach__icon {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  background: var(--paper-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+}
+.wow-ach__icon img { display: block; width: 100%; height: 100%; }
+.wow-ach__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.wow-ach__badge {
+  flex: none;
+  min-width: 32px;
+  padding: 3px 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-align: center;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+}
+
 /* Narrow screens: gear above and below the render, tooltips under the slot. */
 @media (max-width: 900px) {
   .wow-doll { grid-template-columns: minmax(0, 1fr); }
