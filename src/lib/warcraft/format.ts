@@ -156,3 +156,14 @@ export function collectionCount(collection: "pets" | "mounts" | "toys" | "heirlo
   if (n === 0) return `No ${many.replace("unique ", "")}`;
   return `${count(n)} ${n === 1 ? one : many}`;
 }
+
+// "3 raids · 2 cleared", "1 dungeon · cleared", "1 raid": how many
+// instances an expansion group holds, and how many have every boss down on
+// at least one difficulty.
+export function expansionSummary(instances: { modes: { completed: number; total: number }[] }[], noun: "raid" | "dungeon"): string {
+  const n = instances.length;
+  const cleared = instances.filter((i) => i.modes.some((m) => m.total > 0 && m.completed >= m.total)).length;
+  const head = `${count(n)} ${n === 1 ? noun : `${noun}s`}`;
+  if (cleared === 0) return head;
+  return `${head} · ${n === 1 ? "cleared" : `${count(cleared)} cleared`}`;
+}

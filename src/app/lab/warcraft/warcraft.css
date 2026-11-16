@@ -628,6 +628,50 @@ a.wow-card:focus-visible { border-color: var(--glow); }
 .wow-col__grid--renders .wow-col__icon { width: 100%; height: auto; aspect-ratio: 1; background: #000; }
 .wow-col__grid--renders .wow-col__icon img { transform: scale(1.6); }
 
+/* ── Dungeons & Raids tab ── */
+.wow-pve { display: flex; flex-direction: column; gap: 40px; margin-bottom: 56px; }
+.wow-pve__mplus { align-self: flex-start; min-width: min(280px, 100%); }
+.wow-pve__section .wow-h2 { margin-bottom: 10px; }
+.wow-pve__group { border-bottom: 1px solid var(--rule); }
+.wow-pve__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 14px;
+  padding: 14px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.wow-pve__summary::-webkit-details-marker { display: none; }
+.wow-pve__summary::before { content: "▸"; color: var(--ink-mute); margin-right: -6px; }
+.wow-pve__group[open] > .wow-pve__summary::before { content: "▾"; }
+.wow-pve__summary:focus-visible { outline: 2px solid var(--glow); outline-offset: 2px; }
+.wow-pve__expansion { flex: 1; font-size: 17px; color: var(--ink); }
+.wow-pve__count { font-family: var(--font-mono); font-size: 12px; color: var(--ink-mute); }
+.wow-pve__list { list-style: none; margin: 0 0 14px; padding: 0; }
+.wow-pve__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+}
+.wow-pve__name { font-size: 15px; color: var(--ink-mid); }
+.wow-pve__modes { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.wow-pve__mode {
+  padding: 3px 9px;
+  font-size: 12px;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.wow-pve__mode--done { color: var(--ink); border-color: var(--glow); }
+.wow-pve__kills { font-family: var(--font-mono); }
+
 /* Narrow screens: gear above and below the render, tooltips under the slot. */
 @media (max-width: 900px) {
   .wow-doll { grid-template-columns: minmax(0, 1fr); }

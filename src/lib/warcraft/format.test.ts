@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { categoryProgress, classSlug, collectionCount, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
+import { categoryProgress, classSlug, collectionCount, expansionSummary, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -145,4 +145,17 @@ test("collectionCount says how many, with pets counted by species", () => {
   assert.equal(collectionCount("mounts", 1200), "1,200 mounts");
   assert.equal(collectionCount("toys", 1), "1 toy");
   assert.equal(collectionCount("heirlooms", 0), "No heirlooms");
+});
+
+const mode = (completed: number, total: number) => ({ difficulty: "Normal", completed, total });
+
+test("expansionSummary counts instances and those cleared on any difficulty", () => {
+  const instances = [
+    { id: 1, name: "Molten Core", modes: [mode(10, 10)] },
+    { id: 2, name: "Blackwing Lair", modes: [mode(8, 8), { difficulty: "Heroic", completed: 2, total: 8 }] },
+    { id: 3, name: "Ahn'Qiraj", modes: [mode(3, 9)] },
+  ];
+  assert.equal(expansionSummary(instances, "raid"), "3 raids · 2 cleared");
+  assert.equal(expansionSummary([instances[2]], "raid"), "1 raid");
+  assert.equal(expansionSummary([instances[0]], "dungeon"), "1 dungeon · cleared");
 });

@@ -159,3 +159,19 @@ export type CollectionsView = {
   // upgrade is 0 when the heirloom has not been upgraded.
   heirlooms: (Collectible & { upgrade: number })[];
 };
+
+// view:v1:{key}:pve (sync v2.6+).
+export type PveMode = { difficulty: string; completed: number; total: number };
+
+export type PveInstance = { id: number; name: string; modes: PveMode[] };
+
+export type PveGroup = { id: number; name: string; instances: PveInstance[] };
+
+export type PveView = {
+  schemaVersion: number;
+  game: Game;
+  fetchedAt: string;
+  mythicPlus: { rating: number | null } | null;
+  raids: PveGroup[];
+  dungeons: PveGroup[];
+};
