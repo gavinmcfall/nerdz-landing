@@ -1,40 +1,55 @@
-<<<<<<< HEAD
-# ok8.sh
-=======
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# nerdz-landing
 
-## Getting Started
+The personal hub at [nerdz.cloud](https://nerdz.cloud): projects, the workbench,
+ramblings, live cluster stats, reading guides, manuals and the lab.
 
-First, run the development server:
+## Stack
+
+- [Next.js](https://nextjs.org) (App Router) with React, TypeScript and Tailwind CSS
+- Packaged for Cloudflare Workers with
+  [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) and deployed with
+  `wrangler`
+- Colour and type tokens live in `src/app/shell-tokens.css`. The source of truth
+  is `nerdz/docs/unified-shell-spec.md`, shared with nerdz-blog.
+
+## Routes
+
+| Path | What it is |
+|------|------------|
+| `/` | The hub |
+| `/about` | About |
+| `/projects` | Project cards with build-time GitHub stats |
+| `/lab` | Side interests (BBQ, Star Citizen) |
+| `/manuals` | Field manuals |
+| `/reading` | Reading guides and the book club |
+| `/agentic-engineering` | How the work is built |
+| `/privacy` | Privacy notice |
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`npm run dev` and `npm run build` first run the generators in `scripts/`
+(`npm run gen`), which write the manuals index and project stats into
+`src/lib/*.data.json`. Project stats need a `GH_STATS_TOKEN` in the environment.
+Without it they render as dashes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To build and preview the Cloudflare Worker locally:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run cf:build
+npm run cf:preview
+```
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+`.github/workflows/deploy.yaml` builds the Worker and runs `wrangler deploy` on
+every push to `main`, on manual dispatch, and every 6 hours to refresh project
+stats. It needs the `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and
+`GH_STATS_TOKEN` repository secrets.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
->>>>>>> dc0c7fa (Initial commit from Create Next App)
+Live cluster stats come from kromgo (`kromgo.nerdz.cloud`) in the home-ops
+cluster, read by `src/app/api/cluster/route.ts`.
