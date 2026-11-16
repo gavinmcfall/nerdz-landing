@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import type { CollectionsView } from "@/lib/warcraft/types";
-import { collectionCount, filterAchievements } from "@/lib/warcraft/format";
+import { collectionCount, filterAchievements, mountRender } from "@/lib/warcraft/format";
 import { COLLECTIONS, COLLECTION_LABELS, collectionHref, type Collection } from "@/lib/warcraft/resolve";
 
 type Entry = CollectionsView[Collection][number];
@@ -69,7 +69,7 @@ export function CollectionsTab({
       {items.length > 0 && shown.length === 0 && (
         <p className="wow-spec__muted">Nothing matches &ldquo;{query.trim()}&rdquo;.</p>
       )}
-      {/* Mount pictures are 600px renders with the mount small in the middle, so they get larger, cropped tiles. */}
+      {/* Mounts get larger tiles with a picture of the model. */}
       <ul className={`wow-col__grid${collection === "mounts" ? " wow-col__grid--renders" : ""}`}>
         {shown.map((item) => (
           <Tile key={item.id} item={item} />
@@ -92,12 +92,36 @@ function Tile({ item }: { item: Entry }) {
   return (
     <li className="wow-col__tile">
       <span className="wow-col__icon" aria-hidden="true">
-        {item.icon && <img src={item.icon} alt="" width={56} height={56} loading="lazy" />}
+        {item.icon && (mountRender(item.icon) ? <MountPicture icon={item.icon} /> : <img src={item.icon} alt="" width={56} height={56} loading="lazy" />)}
       </span>
       <span className="wow-ach__text">
         <span className="wow-col__name">{item.name}</span>
         {note && <span className="wow-rep__detail">{note}</span>}
       </span>
     </li>
+  );
+}
+
+// Wowhead's framed thumbnail of the mount, or Blizzard's render (the mount
+// small on black, so it is shown enlarged) if Wowhead has none. An image
+// can fail before React hydrates and attaches onError, so the ref checks
+// for that too.
+function MountPicture({ icon }: { icon: string }) {
+  const [failed, setFailed] = useState(false);
+  const src = failed ? icon : (mountRender(icon) as string);
+  return (
+    <img
+      key={src}
+      src={src}
+      alt=""
+      width={300}
+      height={300}
+      loading="lazy"
+      className={failed ? "wow-col__render wow-col__render--blizzard" : "wow-col__render"}
+      onError={failed ? undefined : () => setFailed(true)}
+      ref={(img) => {
+        if (!failed && img?.complete && img.naturalWidth === 0) setFailed(true);
+      }}
+    />
   );
 }

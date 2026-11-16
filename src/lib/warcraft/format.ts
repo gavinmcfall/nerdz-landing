@@ -193,3 +193,13 @@ export function keystoneTime(ms: number): string {
   const s = String(total % 60).padStart(2, "0");
   return h > 0 ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${m}:${s}`;
 }
+
+// Wowhead's thumbnail of the model in a Blizzard creature render: a 300px
+// PNG on a transparent background, framed to the mount rather than leaving
+// it small on black. Not an official API, so callers fall back to the
+// Blizzard render when it fails to load. Null for any other picture.
+export function mountRender(icon: string | null): string | null {
+  const id = Number(icon?.match(/\/creature-display-(\d+)\.jpg$/)?.[1]);
+  if (!id) return null;
+  return `https://wow.zamimg.com/modelviewer/live/webthumbs/npc/${id % 256}/${id}.png`;
+}
