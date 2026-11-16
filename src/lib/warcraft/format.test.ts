@@ -1,6 +1,20 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { classSlug, formatSynced, sortRetail } from "./format.ts";
+import { classSlug, formatSynced, hasData, sortRetail, staleNote } from "./format.ts";
+
+test("hasData is true only for a summary with a successful sync behind it", () => {
+  assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
+  assert.equal(hasData({ status: "error", lastSuccessAt: "2026-11-15T14:17:00.000Z" }), true);
+  // A not-listed character whose profile then errored: no data to link to.
+  assert.equal(hasData({ status: "error" }), false);
+  assert.equal(hasData({ status: "not-listed" }), false);
+});
+
+test("staleNote says how old an error summary's data is", () => {
+  assert.equal(staleNote({ status: "error", lastSuccessAt: "2026-11-15T14:17:00.000Z" }), "data from 16 nov · 03:17 nzdt");
+  assert.equal(staleNote({ status: "ok", lastSuccessAt: "2026-11-15T14:17:00.000Z" }), null);
+  assert.equal(staleNote({ status: "error" }), null);
+});
 
 test("formatSynced shows the day, month and time in New Zealand", () => {
   // 14:17 UTC on 16 Nov is 03:17 on 17 Nov in Auckland (NZDT, UTC+13).

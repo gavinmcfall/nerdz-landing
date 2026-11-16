@@ -3,7 +3,8 @@ import Link from "next/link";
 import { SectionHead } from "@/components/SectionHead";
 import { RosterCard } from "@/components/warcraft/RosterCard";
 import { getIndex } from "@/lib/warcraft/data";
-import { formatSynced, sortRetail } from "@/lib/warcraft/format";
+import { formatSynced, hasData, sortRetail } from "@/lib/warcraft/format";
+import type { Summary } from "@/lib/warcraft/types";
 
 // Read from KV on each request: the sync rewrites it nightly.
 export const dynamic = "force-dynamic";
@@ -16,10 +17,10 @@ export const metadata: Metadata = {
 export default async function WarcraftPage() {
   const index = await getIndex();
   const characters = index?.characters ?? [];
-  const retail = sortRetail(characters.filter((c) => c.game === "retail" && c.status !== "not-listed"));
-  const forever = characters.filter((c) => c.game === "forever");
-  const foreverListed = forever.filter((c) => c.status !== "not-listed");
-  const foreverPending = forever.filter((c) => c.status === "not-listed");
+  // Characters with data first; the rest show as pending cards.
+  const byData = <T extends Summary>(list: T[]) => [...list.filter(hasData), ...list.filter((c) => !hasData(c))];
+  const retail = byData(sortRetail(characters.filter((c) => c.game === "retail")));
+  const forever = byData(characters.filter((c) => c.game === "forever"));
   const realms = [...new Set(retail.map((c) => c.realm).filter(Boolean))];
   const surnames = [...new Set(forever.map((c) => c.surname).filter(Boolean))];
   const synced = formatSynced(index?.updatedAt);
@@ -72,7 +73,7 @@ export default async function WarcraftPage() {
                   </span>
                 </div>
                 <div className="wow-grid">
-                  {[...foreverListed, ...foreverPending].map((c) => (
+                  {forever.map((c) => (
                     <RosterCard key={c.key} summary={c} />
                   ))}
                 </div>

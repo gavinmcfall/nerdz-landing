@@ -5,6 +5,7 @@ import { CharacterHeader } from "@/components/warcraft/CharacterHeader";
 import { CharacterTab } from "@/components/warcraft/CharacterTab";
 import { ComingSoon, TabBar } from "@/components/warcraft/TabBar";
 import { getCharacterView, getIndex } from "@/lib/warcraft/data";
+import { hasData } from "@/lib/warcraft/format";
 import { resolveCharacterPath } from "@/lib/warcraft/resolve";
 import type { Summary } from "@/lib/warcraft/types";
 
@@ -13,15 +14,15 @@ export const dynamic = "force-dynamic";
 
 type Params = { params: Promise<{ path: string[] }> };
 
-// The character for this address, or null. Characters the API doesn't list
-// yet have no page: the roster shows them without a link.
+// The character for this address, or null. Characters that have never
+// synced have no page: the roster shows them without a link.
 async function findCharacter(path: string[]) {
   const index = await getIndex();
   if (!index) return null;
   const match = resolveCharacterPath(index.characters, path);
   if (!match) return null;
   const summary = index.characters[match.index];
-  if (summary.status === "not-listed" || !summary.lastSuccessAt) return null;
+  if (!hasData(summary)) return null;
   return { summary, tab: match.tab };
 }
 

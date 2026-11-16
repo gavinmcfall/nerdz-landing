@@ -46,9 +46,21 @@
 [data-class="shaman"] { --wow-class: #0070dd; }
 [data-class="warlock"] { --wow-class: #8788ee; }
 [data-class="warrior"] { --wow-class: #c69b6d; }
-/* Priest white and Rogue yellow vanish on the light paper. */
-[data-theme="light"] [data-class="priest"] { --wow-class: #6b6b6b; }
-[data-theme="light"] [data-class="rogue"] { --wow-class: #8a7a00; }
+/* Blizzard's class colours are tuned for dark backgrounds and wash out on
+   the light paper, so light theme uses a darker shade of each. */
+[data-theme="light"] [data-class="death-knight"] { --wow-class: #a8182f; }
+[data-theme="light"] [data-class="demon-hunter"] { --wow-class: #8226a3; }
+[data-theme="light"] [data-class="druid"] { --wow-class: #9e4800; }
+[data-theme="light"] [data-class="evoker"] { --wow-class: #1f6656; }
+[data-theme="light"] [data-class="hunter"] { --wow-class: #44661c; }
+[data-theme="light"] [data-class="mage"] { --wow-class: #12657d; }
+[data-theme="light"] [data-class="monk"] { --wow-class: #006b42; }
+[data-theme="light"] [data-class="paladin"] { --wow-class: #a3386c; }
+[data-theme="light"] [data-class="priest"] { --wow-class: #5f5f5f; }
+[data-theme="light"] [data-class="rogue"] { --wow-class: #6e6100; }
+[data-theme="light"] [data-class="shaman"] { --wow-class: #0058b0; }
+[data-theme="light"] [data-class="warlock"] { --wow-class: #4b4db5; }
+[data-theme="light"] [data-class="warrior"] { --wow-class: #7a5329; }
 
 /* ── shared ─────────────────────────────────────────── */
 
@@ -125,6 +137,7 @@ a.wow-card:focus-visible { border-color: var(--glow); }
 .wow-card__name { font-size: 20px; font-weight: 600; }
 .wow-card__ilvl { font-family: var(--font-mono); font-size: 13px; color: var(--gold); white-space: nowrap; }
 .wow-card__line { font-size: 14px; color: var(--ink-mid); }
+.wow-card__stale { font-family: var(--font-mono); font-size: 12px; color: var(--ink-mute); }
 .wow-card__body .wow-badges { margin-top: 6px; }
 
 .wow-card--pending {

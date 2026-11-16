@@ -21,6 +21,22 @@ export function formatSynced(iso: string | undefined | null): string | null {
   return `${part("day")} ${part("month")} · ${part("hour")}:${part("minute")} ${part("timeZoneName")}`.toLowerCase();
 }
 
+type SyncState = { status: string; lastSuccessAt?: string };
+
+// Whether a character has synced successfully at least once, so has a page
+// to link to. A not-listed character whose profile later errors has none.
+export function hasData(s: SyncState): boolean {
+  return s.status !== "not-listed" && Boolean(s.lastSuccessAt);
+}
+
+// "data from 16 nov · 03:17 nzdt" when the last sync failed and the page is
+// showing older data; otherwise null.
+export function staleNote(s: SyncState): string | null {
+  if (s.status !== "error") return null;
+  const when = formatSynced(s.lastSuccessAt);
+  return when ? `data from ${when}` : null;
+}
+
 // "Demon Hunter" → "demon-hunter", for the data-class attribute the CSS
 // colours by.
 export function classSlug(name: string | null | undefined): string {
