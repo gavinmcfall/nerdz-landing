@@ -1,14 +1,12 @@
 "use client";
 
 import { useId, useState } from "react";
-import type { AchievementCategory, AchievementsView, EarnedAchievement } from "@/lib/warcraft/types";
-import { categoryProgress, filterAchievements, formatEarned } from "@/lib/warcraft/format";
+import type { AchievementCategory, AchievementsView, DetailedAchievement } from "@/lib/warcraft/types";
+import { categoryProgress, filterAchievements, formatEarned, withDetails } from "@/lib/warcraft/format";
 
 // The filter lists at most this many matches; a retail character has
 // over a thousand completions.
 const MATCH_LIMIT = 100;
-
-type Recent = AchievementsView["recent"][number];
 
 const count = (n: number) => n.toLocaleString("en-US");
 
@@ -28,17 +26,11 @@ export function AchievementsTab({ view }: { view: AchievementsView | null }) {
   const hasPoints = view.total.points > 0;
   const searching = query.trim() !== "";
   const matches = filterAchievements(view.completed, query);
-  const details = new Map(view.recent.map((a) => [a.id, a]));
 
   return (
     <section className="wow-ach" aria-label="Achievements">
+      {/* Points are in the header already. */}
       <dl className="wow-ach__totals">
-        {hasPoints && (
-          <div>
-            <dt>Points</dt>
-            <dd className="wow-ach__points">{count(view.total.points)}</dd>
-          </div>
-        )}
         <div>
           <dt>Earned</dt>
           <dd>{count(view.total.quantity)}</dd>
@@ -80,7 +72,7 @@ export function AchievementsTab({ view }: { view: AchievementsView | null }) {
             <>
               <ul className="wow-ach__list">
                 {matches.slice(0, MATCH_LIMIT).map((a) => (
-                  <AchievementRow key={a.id} achievement={details.get(a.id) ?? a} showPoints={hasPoints} />
+                  <AchievementRow key={a.id} achievement={withDetails(a, view.details)} showPoints={hasPoints} />
                 ))}
               </ul>
               {matches.length > MATCH_LIMIT && (
@@ -131,21 +123,20 @@ function CategoryCard({ category: c, showPoints }: { category: AchievementCatego
   );
 }
 
-function AchievementRow({ achievement: a, showPoints }: { achievement: EarnedAchievement | Recent; showPoints: boolean }) {
-  const extra = "icon" in a ? a : null;
-  const meta = [extra?.category, formatEarned(a.completedAt)].filter(Boolean).join(" · ");
+function AchievementRow({ achievement: a, showPoints }: { achievement: DetailedAchievement; showPoints: boolean }) {
+  const meta = [a.category, formatEarned(a.completedAt)].filter(Boolean).join(" · ");
   return (
     <li className="wow-ach__row">
       <span className="wow-ach__icon" aria-hidden="true">
-        {extra?.icon && <img src={extra.icon} alt="" width={36} height={36} loading="lazy" />}
+        {a.icon && <img src={a.icon} alt="" width={36} height={36} loading="lazy" />}
       </span>
       <span className="wow-ach__text">
         <span className="wow-rep__name">{a.name}</span>
         <span className="wow-rep__detail">{meta}</span>
       </span>
-      {showPoints && extra?.points ? (
-        <span className="wow-ach__badge" aria-label={`${extra.points} points`}>
-          {extra.points}
+      {showPoints && a.points ? (
+        <span className="wow-ach__badge" aria-label={`${a.points} points`}>
+          {a.points}
         </span>
       ) : null}
     </li>

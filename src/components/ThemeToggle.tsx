@@ -1,25 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Theme = "dark" | "light";
 const STORAGE_KEY = "nerdz-theme";
 
-// Reads <html data-theme>, which the inline no-flash script in layout.tsx
-// sets BEFORE first paint (from localStorage, falling back to the user's
-// system preference). Initialising state from that means the right icon
-// renders on the first client paint, matching the actual theme.
-function initialTheme(): Theme {
-  if (typeof document === "undefined") return "dark";
-  return (document.documentElement.getAttribute("data-theme") as Theme) || "dark";
+// The theme is <html data-theme>, which the inline no-flash script in
+// layout.tsx sets before first paint (from localStorage, falling back to
+// the system preference). The server can't know it, so hydration renders
+// the server's "dark" and React switches to the real theme straight after.
+// Rendering the saved theme during hydration instead made the icon differ
+// from the server's, and React's recovery re-rendered the whole document,
+// dropping the data-theme the script had set.
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
 }
 
-export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(initialTheme);
+const currentTheme = (): Theme => (document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
+const serverTheme = (): Theme => "dark";
 
+export function ThemeToggle() {
+  const theme = useSyncExternalStore(subscribe, currentTheme, serverTheme);
+
+  // Changing the attribute re-renders this through the observer.
   const toggle = () => {
     const next: Theme = theme === "light" ? "dark" : "light";
-    setTheme(next);
     if (next === "light") {
       document.documentElement.setAttribute("data-theme", "light");
     } else {
@@ -42,9 +49,6 @@ export function ThemeToggle() {
       aria-label={label}
       title={label}
       onClick={toggle}
-      // server renders one icon, client may render the other if the user has
-      // a saved light preference — suppress that one-element diff
-      suppressHydrationWarning
     >
       {isLight ? (
         // moon

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { categoryProgress, classSlug, collectionCount, expansionSummary, winRate, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
+import { categoryProgress, classSlug, collectionCount, expansionSummary, keystoneTime, winRate, withDetails, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -165,4 +165,24 @@ test("winRate is the share of games won, as a whole percentage", () => {
   assert.equal(winRate({ played: 3, won: 1 }), "33%");
   assert.equal(winRate({ played: 1, won: 1 }), "100%");
   assert.equal(winRate({ played: 0, won: 0 }), "–");
+});
+
+test("withDetails adds an achievement's points, category and icon from the details map", () => {
+  const earned = { id: 6, name: "Level 10", completedAt: "2008-10-11T00:00:00.000Z" };
+  assert.deepEqual(withDetails(earned, { 6: { points: 10, category: "Characters", icon: "https://render/6.jpg" } }), {
+    ...earned,
+    points: 10,
+    category: "Characters",
+    icon: "https://render/6.jpg",
+  });
+  assert.deepEqual(withDetails(earned, {}), { ...earned, points: null, category: null, icon: null });
+  // Views written before the sync kept details have none.
+  assert.deepEqual(withDetails(earned, undefined), { ...earned, points: null, category: null, icon: null });
+});
+
+test("keystoneTime writes a run's duration as minutes and seconds", () => {
+  assert.equal(keystoneTime(1_800_000), "30:00");
+  assert.equal(keystoneTime(1_497_654), "24:57");
+  assert.equal(keystoneTime(65_400), "1:05");
+  assert.equal(keystoneTime(3_725_000), "1:02:05");
 });
