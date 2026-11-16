@@ -149,3 +149,84 @@ a.wow-card:focus-visible { border-color: var(--glow); }
 .wow-card__pending-body { display: flex; flex-direction: column; gap: 6px; }
 
 .wow-foot { margin: 0; font-size: 11px; letter-spacing: 0.12em; color: var(--ink-dim); }
+
+/* ── character header ───────────────────────────────── */
+
+.wow-character .wow-crumb { margin-bottom: 28px; }
+
+.wow-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 28px;
+}
+.wow-head__id { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.wow-head__name {
+  margin: 0;
+  font-size: clamp(40px, 7vw, 60px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+.wow-head__title { margin: 0; font-size: 18px; font-style: italic; color: var(--glow-soft); }
+.wow-head__line { margin: 0; font-size: 16px; color: var(--ink-mid); }
+.wow-head__class { color: var(--wow-class); }
+.wow-head__guild { color: var(--gold); }
+.wow-head__stale { margin: 0; font-size: 14px; color: var(--ink-mute); }
+
+.wow-head__stats { display: flex; flex-wrap: wrap; gap: 20px 36px; align-items: flex-end; margin: 0; }
+.wow-head__stats > div { display: flex; flex-direction: column; gap: 4px; }
+.wow-head__stats dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.wow-head__stats dd { margin: 0; font-size: 30px; font-weight: 600; }
+.wow-head__stats .wow-head__ach { color: var(--gold); }
+.wow-head__stats .wow-head__updated {
+  padding-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-mid);
+}
+
+/* ── tabs ───────────────────────────────────────────── */
+
+.wow-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--rule-strong);
+  scrollbar-width: thin;
+}
+.wow-tab {
+  flex: none;
+  margin-bottom: -1px;
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--gold);
+  border-bottom: 2px solid transparent;
+}
+.wow-tab:hover { color: var(--ink); }
+.wow-tab[aria-current="page"] { color: var(--ink); border-bottom-color: var(--glow); }
+
+.wow-soon {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--ink-mute);
+  border: 1px dashed var(--rule-strong);
+  border-radius: 14px;
+}
+.wow-soon p { margin: 0; }
