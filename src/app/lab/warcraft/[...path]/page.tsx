@@ -5,9 +5,10 @@ import { CharacterHeader } from "@/components/warcraft/CharacterHeader";
 import { CharacterTab } from "@/components/warcraft/CharacterTab";
 import { AchievementsTab } from "@/components/warcraft/AchievementsTab";
 import { CollectionsTab } from "@/components/warcraft/CollectionsTab";
+import { PveTab } from "@/components/warcraft/PveTab";
 import { ReputationTab } from "@/components/warcraft/ReputationTab";
 import { ComingSoon, TabBar } from "@/components/warcraft/TabBar";
-import { getAchievementsView, getCharacterView, getCollectionsView, getIndex, getReputationView } from "@/lib/warcraft/data";
+import { getAchievementsView, getCharacterView, getCollectionsView, getIndex, getPveView, getReputationView } from "@/lib/warcraft/data";
 import { hasData } from "@/lib/warcraft/format";
 import { resolveCharacterPath } from "@/lib/warcraft/resolve";
 import type { Summary } from "@/lib/warcraft/types";
@@ -67,6 +68,8 @@ export default async function CharacterPage({ params }: Params) {
           <AchievementsTab view={await getAchievementsView(summary.key)} />
         ) : tab === "collections" ? (
           <CollectionsTab view={await getCollectionsView(summary.key)} route={summary.route} collection={collection} />
+        ) : tab === "pve" ? (
+          <PveTab view={await getPveView(summary.key)} />
         ) : tab === "reputation" ? (
           <ReputationTab view={await getReputationView(summary.key)} />
         ) : (
