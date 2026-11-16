@@ -19,7 +19,8 @@ ramblings, live cluster stats, reading guides, manuals and the lab.
 | `/` | The hub |
 | `/about` | About |
 | `/projects` | Project cards with build-time GitHub stats |
-| `/lab` | Side interests (BBQ, Star Citizen) |
+| `/lab` | Side interests (BBQ, Star Citizen, World of Warcraft) |
+| `/lab/warcraft` | WoW armoury: my retail and WoW Forever characters, from the `WOW_ARMORY` KV the nightly [wow-armoury-sync](https://github.com/gavinmcfall/wow-armoury-sync) Worker writes |
 | `/manuals` | Field manuals |
 | `/reading` | Reading guides and the book club |
 | `/agentic-engineering` | How the work is built |

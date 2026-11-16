@@ -1,7 +1,7 @@
 # WoW Armoury on nerdz.cloud: design
 
 **Date:** 2026-11-16
-**Status:** approved by Gavin, 2026-11-16
+**Status:** approved by Gavin, 2026-11-16. Step 1 shipped 2026-11-16 (sync v2.0.1; roster, character header, tab bar and Character tab).
 **Repos:** `nerdz-landing` (the pages) and `wow-armoury-sync` (the data, at github.com/gavinmcfall/wow-armoury-sync)
 
 ## Intent
