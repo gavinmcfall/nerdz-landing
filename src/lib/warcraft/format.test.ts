@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { categoryProgress, classSlug, collectionCount, expansionSummary, keystoneTime, winRate, withDetails, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
+import { categoryProgress, classSlug, collectionCount, expansionSummary, keystoneTime, mountRender, winRate, withDetails, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -185,4 +185,18 @@ test("keystoneTime writes a run's duration as minutes and seconds", () => {
   assert.equal(keystoneTime(1_497_654), "24:57");
   assert.equal(keystoneTime(65_400), "1:05");
   assert.equal(keystoneTime(3_725_000), "1:02:05");
+});
+
+test("mountRender points a Blizzard creature render at Wowhead's thumbnail of the same model", () => {
+  assert.equal(
+    mountRender("https://render.worldofwarcraft.com/us/npcs/zoom/creature-display-21974.jpg"),
+    "https://wow.zamimg.com/modelviewer/live/webthumbs/npc/214/21974.png",
+  );
+  // Thumbnails are filed in 256 folders by model id.
+  assert.equal(
+    mountRender("https://render.worldofwarcraft.com/forever-us/npcs/zoom/creature-display-256.jpg"),
+    "https://wow.zamimg.com/modelviewer/live/webthumbs/npc/0/256.png",
+  );
+  assert.equal(mountRender("https://render.worldofwarcraft.com/us/icons/56/inv_misc_toy_01.jpg"), null);
+  assert.equal(mountRender(null), null);
 });
