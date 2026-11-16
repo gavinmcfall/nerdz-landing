@@ -13,6 +13,10 @@ declare global {
       ): Promise<void>;
       delete(key: string): Promise<void>;
     };
+    // Read-only from the site's side.
+    WOW_ARMORY: {
+      get(key: string, type: "json"): Promise<unknown>;
+    };
   }
 }
 

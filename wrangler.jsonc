@@ -14,6 +14,14 @@
       // docs/superpowers/specs/2026-08-28-reading-sync-auth-design.md).
       "binding": "READING_SYNC",
       "id": "e428a370d1b747fdb94fa9663aaa9d11"
+    },
+    {
+      // WoW character data written nightly by wow-armoury-sync; the site only
+      // reads it (see docs/superpowers/specs/2026-11-16-wow-armoury-design.md).
+      // "remote" makes `next dev` read the real namespace; deploys ignore it.
+      "binding": "WOW_ARMORY",
+      "id": "3f1c3a246ead46b6a6bddeb7db8b8455",
+      "remote": true
     }
   ],
   "observability": {
