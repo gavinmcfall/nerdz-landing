@@ -142,3 +142,17 @@ export function filterAchievements<A extends { name: string }>(list: A[], query:
   if (!q) return list;
   return list.filter((a) => a.name.toLowerCase().includes(q));
 }
+
+const COLLECTION_NOUNS: Record<string, [string, string]> = {
+  pets: ["unique pet", "unique pets"],
+  mounts: ["mount", "mounts"],
+  toys: ["toy", "toys"],
+  heirlooms: ["heirloom", "heirlooms"],
+};
+
+// "256 unique pets", "1 toy", "No heirlooms".
+export function collectionCount(collection: "pets" | "mounts" | "toys" | "heirlooms", n: number): string {
+  const [one, many] = COLLECTION_NOUNS[collection];
+  if (n === 0) return `No ${many.replace("unique ", "")}`;
+  return `${count(n)} ${n === 1 ? one : many}`;
+}
