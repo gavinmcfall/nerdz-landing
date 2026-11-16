@@ -146,8 +146,12 @@ export function ReadingGuideChecklist({ guide }: { guide: ReadingGuide }) {
       typeof window !== "undefined" &&
       new URLSearchParams(window.location.search).has("auth_error"),
   );
+  // pushNow runs from timers, after commit, so the ref can follow sync in
+  // an effect rather than being written during render.
   const syncRef = useRef(sync);
-  syncRef.current = sync;
+  useEffect(() => {
+    syncRef.current = sync;
+  }, [sync]);
   const pushTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const progressUrl = `/api/reading/progress?guide=${encodeURIComponent(guide.slug)}`;

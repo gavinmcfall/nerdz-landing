@@ -12,7 +12,16 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated output: the OpenNext Worker bundle and Fumadocs' collections.
+    ".open-next/**",
+    ".wrangler/**",
+    ".source/**",
   ]),
+  {
+    // Pages use plain <img>: on Cloudflare Workers next/image needs a paid
+    // Cloudflare Images setup to resize, and the site doesn't have one.
+    rules: { "@next/next/no-img-element": "off" },
+  },
 ]);
 
 export default eslintConfig;
