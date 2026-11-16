@@ -116,3 +116,30 @@ export type ReputationView = {
   // headers. "Other" (last) holds factions outside every header.
   groups: { name: string; factions: Faction[] }[];
 };
+
+// view:v1:{key}:achievements (sync v2.4+).
+export type AchievementCount = { quantity: number; points: number };
+
+export type AchievementCategory = AchievementCount & {
+  id: number;
+  name: string;
+  // What the category holds for the character's faction, subcategories
+  // included; null when Blizzard gives none.
+  total: AchievementCount | null;
+};
+
+export type EarnedAchievement = { id: number; name: string; completedAt: string };
+
+export type AchievementsView = {
+  schemaVersion: number;
+  game: Game;
+  fetchedAt: string;
+  total: AchievementCount;
+  // Blizzard's top-level categories, in its order; empty when unavailable.
+  categories: AchievementCategory[];
+  // The newest completions; points, category and icon are null until the
+  // sync has looked them up.
+  recent: (EarnedAchievement & { points: number | null; category: string | null; icon: string | null })[];
+  // Every completed achievement, newest first.
+  completed: EarnedAchievement[];
+};
