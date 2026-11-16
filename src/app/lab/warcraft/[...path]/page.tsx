@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { CharacterHeader } from "@/components/warcraft/CharacterHeader";
 import { CharacterTab } from "@/components/warcraft/CharacterTab";
 import { AchievementsTab } from "@/components/warcraft/AchievementsTab";
+import { CollectionsTab } from "@/components/warcraft/CollectionsTab";
 import { ReputationTab } from "@/components/warcraft/ReputationTab";
 import { ComingSoon, TabBar } from "@/components/warcraft/TabBar";
-import { getAchievementsView, getCharacterView, getIndex, getReputationView } from "@/lib/warcraft/data";
+import { getAchievementsView, getCharacterView, getCollectionsView, getIndex, getReputationView } from "@/lib/warcraft/data";
 import { hasData } from "@/lib/warcraft/format";
 import { resolveCharacterPath } from "@/lib/warcraft/resolve";
 import type { Summary } from "@/lib/warcraft/types";
@@ -25,7 +26,7 @@ async function findCharacter(path: string[]) {
   if (!match) return null;
   const summary = index.characters[match.index];
   if (!hasData(summary)) return null;
-  return { summary, tab: match.tab };
+  return { summary, tab: match.tab, collection: match.collection ?? "pets" };
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
@@ -52,7 +53,7 @@ function Crumb({ summary }: { summary: Summary }) {
 export default async function CharacterPage({ params }: Params) {
   const found = await findCharacter((await params).path);
   if (!found) notFound();
-  const { summary, tab } = found;
+  const { summary, tab, collection } = found;
 
   return (
     <section className="section wow-character" aria-label={summary.name}>
@@ -64,6 +65,8 @@ export default async function CharacterPage({ params }: Params) {
           <CharacterTab view={await getCharacterView(summary.key)} summary={summary} />
         ) : tab === "achievements" ? (
           <AchievementsTab view={await getAchievementsView(summary.key)} />
+        ) : tab === "collections" ? (
+          <CollectionsTab view={await getCollectionsView(summary.key)} route={summary.route} collection={collection} />
         ) : tab === "reputation" ? (
           <ReputationTab view={await getReputationView(summary.key)} />
         ) : (

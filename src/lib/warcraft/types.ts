@@ -143,3 +143,19 @@ export type AchievementsView = {
   // Every completed achievement, newest first.
   completed: EarnedAchievement[];
 };
+
+// view:v1:{key}:collections (sync v2.5+). Each list is sorted by name; icon
+// is null until the sync has fetched it. A mount's icon is a zoomed render.
+export type Collectible = { id: number; name: string; icon: string | null };
+
+export type CollectionsView = {
+  schemaVersion: number;
+  game: Game;
+  fetchedAt: string;
+  mounts: Collectible[];
+  // One per species: how many are owned, and the highest level among them.
+  pets: (Collectible & { owned: number; level: number })[];
+  toys: Collectible[];
+  // upgrade is 0 when the heirloom has not been upgraded.
+  heirlooms: (Collectible & { upgrade: number })[];
+};

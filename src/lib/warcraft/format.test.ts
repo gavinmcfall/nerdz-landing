@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { categoryProgress, classSlug, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
+import { categoryProgress, classSlug, collectionCount, dollScene, filterAchievements, filterReputation, formatEarned, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -138,4 +138,11 @@ test("filterAchievements matches names case-insensitively and returns everything
   const list = [{ name: "Explore Westfall" }, { name: "Level 10" }, { name: "Explore Duskwood" }];
   assert.equal(filterAchievements(list, "  "), list);
   assert.deepEqual(filterAchievements(list, "EXPLORE").map((a) => a.name), ["Explore Westfall", "Explore Duskwood"]);
+});
+
+test("collectionCount says how many, with pets counted by species", () => {
+  assert.equal(collectionCount("pets", 256), "256 unique pets");
+  assert.equal(collectionCount("mounts", 1200), "1,200 mounts");
+  assert.equal(collectionCount("toys", 1), "1 toy");
+  assert.equal(collectionCount("heirlooms", 0), "No heirlooms");
 });

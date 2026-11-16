@@ -581,6 +581,53 @@ a.wow-card:focus-visible { border-color: var(--glow); }
   border-radius: 999px;
 }
 
+/* ── Collections tab ── */
+.wow-col { display: flex; flex-direction: column; gap: 24px; margin-bottom: 56px; }
+.wow-col__nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.wow-col__link {
+  padding: 7px 14px;
+  font-size: 14px;
+  color: var(--ink-mute);
+  text-decoration: none;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+}
+.wow-col__link:hover { color: var(--ink); }
+.wow-col__link[aria-current="page"] { color: var(--ink); border-color: var(--glow); background: var(--paper-card); }
+.wow-col__n { font-family: var(--font-mono); font-size: 12px; color: var(--gold); }
+.wow-col__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: 10px;
+}
+.wow-col__tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.wow-col__icon {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  background: var(--paper-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+}
+.wow-col__icon img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.wow-col__name { font-size: 14px; line-height: 1.3; color: var(--ink); }
+.wow-col__grid--renders { grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr)); }
+.wow-col__grid--renders .wow-col__tile { flex-direction: column; align-items: stretch; text-align: center; }
+.wow-col__grid--renders .wow-col__icon { width: 100%; height: auto; aspect-ratio: 1; background: #000; }
+.wow-col__grid--renders .wow-col__icon img { transform: scale(1.6); }
+
 /* Narrow screens: gear above and below the render, tooltips under the slot. */
 @media (max-width: 900px) {
   .wow-doll { grid-template-columns: minmax(0, 1fr); }

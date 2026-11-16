@@ -1,7 +1,7 @@
 // Run: node --test src/lib/warcraft/resolve.test.ts (Node strips the types).
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { characterHref, resolveCharacterPath } from "./resolve.ts";
+import { characterHref, collectionHref, resolveCharacterPath } from "./resolve.ts";
 
 const CHARACTERS = [
   { route: ["retail", "barthilas", "cònsecrator"] },
@@ -56,4 +56,32 @@ test("characterHref encodes accents", () => {
 test("characterHref adds tabs other than character", () => {
   assert.equal(characterHref(["forever", "recurve-ravenholt"], "pvp"), "/lab/warcraft/forever/recurve-ravenholt/pvp");
   assert.equal(characterHref(["forever", "recurve-ravenholt"], "character"), "/lab/warcraft/forever/recurve-ravenholt");
+});
+
+test("the collections tab opens on pets", () => {
+  assert.deepEqual(resolveCharacterPath(CHARACTERS, ["forever", "recurve-ravenholt", "collections"]), {
+    index: 1,
+    tab: "collections",
+    collection: "pets",
+  });
+});
+
+test("matches a named collection", () => {
+  assert.deepEqual(resolveCharacterPath(CHARACTERS, ["retail", "barthilas", "cònsecrator", "collections", "mounts"]), {
+    index: 0,
+    tab: "collections",
+    collection: "mounts",
+  });
+});
+
+test("an unknown collection is null", () => {
+  assert.equal(resolveCharacterPath(CHARACTERS, ["forever", "recurve-ravenholt", "collections", "transmogs"]), null);
+});
+
+test("only the collections tab takes a further segment", () => {
+  assert.equal(resolveCharacterPath(CHARACTERS, ["forever", "recurve-ravenholt", "reputation", "mounts"]), null);
+});
+
+test("collectionHref names the collection under the collections tab", () => {
+  assert.equal(collectionHref(["forever", "recurve-ravenholt"], "toys"), "/lab/warcraft/forever/recurve-ravenholt/collections/toys");
 });
