@@ -129,8 +129,19 @@
 }
 a.wow-card:hover,
 a.wow-card:focus-visible { border-color: var(--glow); }
-.wow-card__art { position: relative; height: 132px; background: var(--paper-soft); }
-.wow-card__art img { display: block; width: 100%; height: 132px; object-fit: cover; object-position: center 20%; }
+.wow-card__art {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  /* The portrait is a transparent render: a soft class-coloured glow behind it. */
+  background:
+    radial-gradient(ellipse 55% 85% at 50% 100%, color-mix(in srgb, var(--wow-class) 30%, transparent), transparent 75%),
+    var(--paper-soft);
+}
+/* Position, scale and crop come inline from the sync's focus window. */
+.wow-card__portrait { position: absolute; width: auto; max-width: none; }
+/* Older indexes: Blizzard's small inset image. */
+.wow-card__inset { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
 .wow-card__stripe { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--wow-class); }
 .wow-card__body { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 18px; }
 .wow-card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }

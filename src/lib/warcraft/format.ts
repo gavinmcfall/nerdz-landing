@@ -37,6 +37,22 @@ export function staleNote(s: SyncState): string | null {
   return when ? `data from ${when}` : null;
 }
 
+type Focus = { x: number; top: number; height: number };
+
+const pct = (n: number) => `${Math.round(n * 1e4) / 1e4}%`;
+
+// Positions a character's full render inside a frame so the sync's focus
+// window (fractions of the image) fills it: scale the image so the window's
+// height is the frame's, lift it by the window's top, and centre the figure.
+export function portraitStyle(f: Focus) {
+  return {
+    height: pct(100 / f.height),
+    top: pct((-100 * f.top) / f.height),
+    left: "50%",
+    transform: `translateX(${pct(-100 * f.x)})`,
+  };
+}
+
 // "Demon Hunter" → "demon-hunter", for the data-class attribute the CSS
 // colours by.
 export function classSlug(name: string | null | undefined): string {
