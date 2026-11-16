@@ -64,7 +64,7 @@
         this._loaded = true;
         this._failedFresh = false;
         this.render();
-      } catch (e) {
+      } catch {
         if (this._abort && this._abort.signal.aborted) return; // superseded
         if (!this._loaded) {
           this._failedFresh = true;

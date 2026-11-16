@@ -27,7 +27,7 @@ export function HubCockpit({ manuals }: { manuals: ManualCard[] }) {
         </div>
 
         <h1 className="ck-title">
-          THE FIELD MANUAL <span className="ck-slash">//</span>{" "}
+          THE FIELD MANUAL <span className="ck-slash">{"//"}</span>{" "}
           <span className="ck-sub">printable refs</span>
         </h1>
 
