@@ -34,6 +34,8 @@ export type Summary = {
   portrait?: { url: string; focus: Frame; figure?: Frame } | null;
   // The scene Blizzard's Armory stands this class in (v2.2+).
   background?: string | null;
+  // Primary professions, in Blizzard's order (v2.3+).
+  professions?: { id: number; name: string }[];
   lastSuccessAt?: string;
   error?: string;
 };
@@ -92,4 +94,25 @@ export type CharacterView = {
   mythicPlus: { rating: number | null } | null;
   raids: RaidProgress | null;
   pvp: { honorLevel: number | null; honorableKills: number; rank: number | null };
+};
+
+// view:v1:{key}:reputation (sync v2.3+).
+export type Faction = {
+  id: number;
+  name: string;
+  standing: string;
+  // Progress through the current standing; 0 of 0 at the top standing.
+  value: number;
+  max: number;
+  renown: number | null;
+  paragon: { value: number; max: number } | null;
+};
+
+export type ReputationView = {
+  schemaVersion: number;
+  game: Game;
+  fetchedAt: string;
+  // Retail: one per expansion, newest first. Forever: Blizzard's faction
+  // headers. "Other" (last) holds factions outside every header.
+  groups: { name: string; factions: Faction[] }[];
 };

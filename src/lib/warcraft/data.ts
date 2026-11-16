@@ -1,5 +1,5 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import type { ArmoryIndex, CharacterView } from "./types";
+import type { ArmoryIndex, CharacterView, ReputationView } from "./types";
 
 // Reads the WOW_ARMORY KV namespace written by wow-armoury-sync. Any missing
 // binding, key or unexpected shape reads as null, so a page shows its "no
@@ -26,12 +26,22 @@ export async function getIndex(): Promise<ArmoryIndex | null> {
   return index as ArmoryIndex;
 }
 
-export async function getCharacterView(key: string): Promise<CharacterView | null> {
+// The newest supported version of one of a character's views that passes
+// `valid`, or null.
+async function getView<T>(key: string, tab: string, valid: (view: T) => boolean): Promise<T | null> {
   const store = await kv();
   if (!store) return null;
   for (const version of SUPPORTED_VIEW_VERSIONS) {
-    const view = (await store.get(`view:v${version}:${key}:character`, "json")) as CharacterView | null;
-    if (view && Array.isArray(view.equipment)) return view;
+    const view = (await store.get(`view:v${version}:${key}:${tab}`, "json")) as T | null;
+    if (view && valid(view)) return view;
   }
   return null;
+}
+
+export function getCharacterView(key: string): Promise<CharacterView | null> {
+  return getView<CharacterView>(key, "character", (v) => Array.isArray(v.equipment));
+}
+
+export function getReputationView(key: string): Promise<ReputationView | null> {
+  return getView<ReputationView>(key, "reputation", (v) => Array.isArray(v.groups));
 }

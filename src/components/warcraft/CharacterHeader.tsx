@@ -21,6 +21,9 @@ export function CharacterHeader({ summary }: { summary: Summary }) {
           <span className="wow-head__class">{summary.characterClass}</span>
           {summary.guild && <span className="wow-head__guild"> ‹{summary.guild}›</span>}
         </p>
+        {summary.professions && summary.professions.length > 0 && (
+          <p className="wow-head__prof">{summary.professions.map((p) => p.name).join(" · ")}</p>
+        )}
         {summary.status === "error" && updated && (
           <p className="wow-head__stale">Blizzard&rsquo;s API didn&rsquo;t answer last night: data from {updated}.</p>
         )}

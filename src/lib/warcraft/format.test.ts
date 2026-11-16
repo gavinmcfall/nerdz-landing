@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { classSlug, dollScene, formatSynced, hasData, portraitStyle, sortRetail, staleNote } from "./format.ts";
+import { classSlug, dollScene, filterReputation, formatSynced, hasData, portraitStyle, reputationProgress, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -81,4 +81,39 @@ test("dollScene is null without a figure frame (index older than sync 2.2)", () 
   assert.equal(dollScene({ portrait: { url: "u", focus: { x: 0.5, top: 0.1, height: 0.3 } } }), null);
   assert.equal(dollScene({ portrait: null }), null);
   assert.equal(dollScene({}), null);
+});
+
+const faction = (over: object) => ({ id: 1, name: "Ironforge", standing: "Friendly", value: 1571, max: 6000, renown: null, paragon: null, ...over });
+
+test("reputationProgress fills the bar by progress through the current standing", () => {
+  assert.deepEqual(reputationProgress(faction({})), { percent: 26, detail: "1,571 / 6,000" });
+});
+
+test("reputationProgress shows a full bar and no numbers at the top standing", () => {
+  assert.deepEqual(reputationProgress(faction({ standing: "Exalted", value: 0, max: 0 })), { percent: 100, detail: null });
+});
+
+test("reputationProgress shows paragon progress once a faction has it", () => {
+  const nightfallen = faction({ standing: "Exalted", value: 0, max: 0, paragon: { value: 9137, max: 10000 } });
+  assert.deepEqual(reputationProgress(nightfallen), { percent: 91, detail: "Paragon 9,137 / 10,000" });
+});
+
+const GROUPS = [
+  { name: "Legion", factions: [faction({ id: 1, name: "The Nightfallen" }), faction({ id: 2, name: "Valarjar" })] },
+  { name: "Classic", factions: [faction({ id: 3, name: "Ironforge" }), faction({ id: 4, name: "Darnassus" })] },
+];
+
+test("filterReputation keeps factions whose name matches, ignoring case", () => {
+  assert.deepEqual(
+    filterReputation(GROUPS, "  NIGHT ").map((g) => [g.name, g.factions.map((f) => f.name)]),
+    [["Legion", ["The Nightfallen"]]],
+  );
+});
+
+test("filterReputation keeps a whole group when its name matches", () => {
+  assert.deepEqual(filterReputation(GROUPS, "classic").map((g) => g.factions.length), [2]);
+});
+
+test("filterReputation returns every group for an empty query", () => {
+  assert.equal(filterReputation(GROUPS, "   "), GROUPS);
 });

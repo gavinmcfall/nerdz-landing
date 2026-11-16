@@ -200,6 +200,7 @@ a.wow-card:focus-visible { border-color: var(--glow); }
 .wow-head__class { color: var(--wow-class); }
 .wow-head__guild { color: var(--gold); }
 .wow-head__stale { margin: 0; font-size: 14px; color: var(--ink-mute); }
+.wow-head__prof { margin: 0; font-family: var(--font-mono); font-size: 13px; color: var(--ink-mute); }
 
 .wow-head__stats { display: flex; flex-wrap: wrap; gap: 20px 36px; align-items: flex-end; margin: 0; }
 .wow-head__stats > div { display: flex; flex-direction: column; gap: 4px; }
@@ -475,6 +476,46 @@ a.wow-card:focus-visible { border-color: var(--glow); }
 .wow-raid__progress { font-family: var(--font-mono); color: var(--ink-mute); white-space: nowrap; }
 .wow-pvp { display: flex; flex-wrap: wrap; gap: 32px; }
 .wow-pvp > div { display: flex; flex-direction: column; gap: 2px; }
+
+/* ── Reputation tab ── */
+.wow-rep { display: flex; flex-direction: column; gap: 40px; margin-bottom: 56px; }
+.wow-rep__filter { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.wow-rep__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.wow-rep__input {
+  flex: 1 1 260px;
+  max-width: 420px;
+  padding: 10px 14px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--paper-card);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+}
+.wow-rep__input:focus-visible { outline: 2px solid var(--glow); outline-offset: 2px; }
+.wow-rep__group .wow-h2 { margin-bottom: 14px; }
+.wow-rep__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 10px 28px;
+}
+.wow-rep__row { display: flex; flex-direction: column; gap: 6px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.wow-rep__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.wow-rep__name { font-size: 15px; color: var(--ink); }
+.wow-rep__standing { font-family: var(--font-mono); font-size: 12px; color: var(--gold); white-space: nowrap; }
+.wow-rep__bar { height: 6px; overflow: hidden; background: var(--paper-soft); border-radius: 3px; }
+.wow-rep__fill { display: block; height: 100%; background: var(--glow); border-radius: 3px; }
+.wow-rep__fill--paragon { background: var(--gold); }
+.wow-rep__detail { font-family: var(--font-mono); font-size: 12px; color: var(--ink-mute); }
 
 /* Narrow screens: gear above and below the render, tooltips under the slot. */
 @media (max-width: 900px) {

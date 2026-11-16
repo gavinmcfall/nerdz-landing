@@ -78,3 +78,37 @@ export function sortRetail<T extends { level?: number; itemLevel?: number | null
     (a, b) => (b.level ?? 0) - (a.level ?? 0) || (b.itemLevel ?? 0) - (a.itemLevel ?? 0),
   );
 }
+
+type FactionStanding = {
+  value: number;
+  max: number;
+  paragon: { value: number; max: number } | null;
+};
+
+const count = (n: number) => n.toLocaleString("en-US");
+
+// A reputation bar: how far through the current standing, and the numbers
+// to show. At the top standing (0 of 0) the bar is full, unless the faction
+// has paragon progress, which then takes over the bar.
+export function reputationProgress(f: FactionStanding): { percent: number; detail: string | null } {
+  if (f.paragon && f.paragon.max > 0) {
+    return {
+      percent: Math.round((100 * f.paragon.value) / f.paragon.max),
+      detail: `Paragon ${count(f.paragon.value)} / ${count(f.paragon.max)}`,
+    };
+  }
+  if (f.max <= 0) return { percent: 100, detail: null };
+  return { percent: Math.round((100 * f.value) / f.max), detail: `${count(f.value)} / ${count(f.max)}` };
+}
+
+// The Reputation tab's filter: factions whose name contains the query, or a
+// whole group when the group's name does. Groups left empty are dropped.
+export function filterReputation<G extends { name: string; factions: { name: string }[] }>(groups: G[], query: string): G[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return groups;
+  return groups
+    .map((g) =>
+      g.name.toLowerCase().includes(q) ? g : { ...g, factions: g.factions.filter((f) => f.name.toLowerCase().includes(q)) },
+    )
+    .filter((g) => g.factions.length > 0);
+}
