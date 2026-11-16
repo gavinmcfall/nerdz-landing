@@ -173,3 +173,23 @@ export function winRate({ played, won }: { played: number; won: number }): strin
   if (played <= 0) return "–";
   return `${Math.round((100 * won) / played)}%`;
 }
+
+// An earned achievement with its points, category and icon from the view's
+// details map, each null when the sync hasn't looked it up.
+export function withDetails(
+  a: { id: number; name: string; completedAt: string },
+  details: Record<string, { points: number; category: string | null; icon: string | null }> | undefined,
+) {
+  const d = details?.[a.id];
+  return { ...a, points: d?.points ?? null, category: d?.category ?? null, icon: d?.icon ?? null };
+}
+
+// A keystone run's time: "24:57", or "1:02:05" past an hour. Seconds are
+// rounded down, as the game shows them.
+export function keystoneTime(ms: number): string {
+  const total = Math.floor(ms / 1000);
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = String(total % 60).padStart(2, "0");
+  return h > 0 ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${m}:${s}`;
+}

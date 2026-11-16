@@ -139,10 +139,17 @@ export type AchievementsView = {
   categories: AchievementCategory[];
   // The newest completions; points, category and icon are null until the
   // sync has looked them up.
-  recent: (EarnedAchievement & { points: number | null; category: string | null; icon: string | null })[];
+  recent: DetailedAchievement[];
   // Every completed achievement, newest first.
   completed: EarnedAchievement[];
+  // Points, category and icon for each completed achievement the sync has
+  // looked up, by id (sync v2.8+; absent from older views).
+  details?: Record<string, AchievementDetail>;
 };
+
+export type AchievementDetail = { points: number; category: string | null; icon: string | null };
+
+export type DetailedAchievement = EarnedAchievement & { points: number | null; category: string | null; icon: string | null };
 
 // view:v1:{key}:collections (sync v2.5+). Each list is sorted by name; icon
 // is null until the sync has fetched it. A mount's icon is a zoomed render.
@@ -167,11 +174,16 @@ export type PveInstance = { id: number; name: string; modes: PveMode[] };
 
 export type PveGroup = { id: number; name: string; instances: PveInstance[] };
 
+export type KeystoneRun = { dungeon: string; level: number; timed: boolean; duration: number; completedAt: string; score: number };
+
 export type PveView = {
   schemaVersion: number;
   game: Game;
   fetchedAt: string;
   mythicPlus: { rating: number | null } | null;
+  // The rating's colour and the best run in each dungeon this season (sync
+  // v2.8+; absent from older views, null on Forever).
+  mythicSeason?: { color: string | null; runs: KeystoneRun[] } | null;
   raids: PveGroup[];
   dungeons: PveGroup[];
 };

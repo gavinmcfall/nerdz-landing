@@ -1,0 +1,9 @@
+# Cloudflare static-asset headers (served before the Worker runs).
+# Next.js puts a content hash in every /_next/static file name, so a file
+# never changes once published: browsers may keep it for a year.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The self-hosted fonts have fixed names, so they get a month, not forever.
+/fonts/*
+  Cache-Control: public, max-age=2592000

@@ -59,8 +59,8 @@ export function PvpTab({ view }: { view: PvpView | null }) {
         {view.battlegrounds.length === 0 ? (
           <p className="wow-spec__muted">No battlegrounds played.</p>
         ) : (
-          <div className="wow-pvptab__scroll">
-            <table className="wow-pvptab__table">
+          <div className="wow-table-scroll">
+            <table className="wow-table">
               <thead>
                 <tr>
                   <th scope="col">Battleground</th>

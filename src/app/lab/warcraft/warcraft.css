@@ -529,7 +529,6 @@ a.wow-card:focus-visible { border-color: var(--glow); }
   color: var(--ink-mute);
 }
 .wow-ach__totals dd { margin: 0; font-size: 34px; line-height: 1.1; color: var(--ink); }
-.wow-ach__totals .wow-ach__points { color: var(--gold); }
 .wow-ach__cats {
   list-style: none;
   margin: 14px 0 0;
@@ -630,7 +629,9 @@ a.wow-card:focus-visible { border-color: var(--glow); }
 
 /* ── Dungeons & Raids tab ── */
 .wow-pve { display: flex; flex-direction: column; gap: 40px; margin-bottom: 56px; }
-.wow-pve__mplus { align-self: flex-start; min-width: min(280px, 100%); }
+.wow-pve__rating { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; }
+.wow-pve__dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.wow-table .wow-pve__over { margin-left: 6px; font-family: var(--font-sans); font-size: 12px; color: var(--ink-mute); }
 .wow-pve__section .wow-h2 { margin-bottom: 10px; }
 .wow-pve__group { border-bottom: 1px solid var(--rule); }
 .wow-pve__summary {
@@ -683,12 +684,12 @@ a.wow-card:focus-visible { border-color: var(--glow); }
   padding: 0;
 }
 .wow-pvptab__bracket { font-size: 15px; color: var(--ink); }
-.wow-pvptab__scroll { overflow-x: auto; }
-.wow-pvptab__table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.wow-pvptab__table th,
-.wow-pvptab__table td { padding: 10px 12px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
-.wow-pvptab__table th:first-child { padding-left: 0; text-align: left; white-space: normal; }
-.wow-pvptab__table thead th {
+.wow-table-scroll { overflow-x: auto; }
+.wow-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.wow-table th,
+.wow-table td { padding: 10px 12px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+.wow-table th:first-child { padding-left: 0; text-align: left; white-space: normal; }
+.wow-table thead th {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
@@ -696,12 +697,12 @@ a.wow-card:focus-visible { border-color: var(--glow); }
   text-transform: uppercase;
   color: var(--ink-mute);
 }
-.wow-pvptab__table tbody th { font-weight: 400; color: var(--ink); }
-.wow-pvptab__table td { font-family: var(--font-mono); color: var(--ink-mid); }
+.wow-table tbody th { font-weight: 400; color: var(--ink); }
+.wow-table td { font-family: var(--font-mono); color: var(--ink-mid); }
 @media (max-width: 480px) {
-  .wow-pvptab__table th,
-  .wow-pvptab__table td { padding: 10px 6px; }
-  .wow-pvptab__table thead th { letter-spacing: 0.06em; }
+  .wow-table th,
+  .wow-table td { padding: 10px 6px; }
+  .wow-table thead th { letter-spacing: 0.06em; }
 }
 
 /* Narrow screens: gear above and below the render, tooltips under the slot. */

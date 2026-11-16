@@ -1,5 +1,5 @@
-import type { PveGroup, PveInstance, PveView } from "@/lib/warcraft/types";
-import { expansionSummary } from "@/lib/warcraft/format";
+import type { KeystoneRun, PveGroup, PveInstance, PveView } from "@/lib/warcraft/types";
+import { expansionSummary, formatEarned, keystoneTime } from "@/lib/warcraft/format";
 
 export function PveTab({ view }: { view: PveView | null }) {
   if (!view) {
@@ -12,18 +12,7 @@ export function PveTab({ view }: { view: PveView | null }) {
 
   return (
     <div className="wow-pve">
-      {view.mythicPlus && (
-        <section className="wow-panel wow-pve__mplus" aria-labelledby="wow-pve-mplus">
-          <h2 id="wow-pve-mplus" className="wow-h2">
-            Mythic+ rating
-          </h2>
-          {view.mythicPlus.rating == null ? (
-            <span className="wow-spec__muted">No Mythic+ rating this season.</span>
-          ) : (
-            <span className="wow-panel__big">{view.mythicPlus.rating.toLocaleString("en-US")}</span>
-          )}
-        </section>
-      )}
+      {view.mythicPlus && <MythicPlus rating={view.mythicPlus.rating} season={view.mythicSeason ?? null} />}
       <PveSection title="Raids" noun="raid" groups={view.raids} />
       <PveSection title="Dungeons" noun="dungeon" groups={view.dungeons} />
     </div>
@@ -71,5 +60,55 @@ function InstanceRow({ instance }: { instance: PveInstance }) {
         ))}
       </ul>
     </li>
+  );
+}
+
+function MythicPlus({ rating, season }: { rating: number | null; season: { color: string | null; runs: KeystoneRun[] } | null }) {
+  const runs = season?.runs ?? [];
+  return (
+    <section className="wow-pve__section" aria-labelledby="wow-pve-mplus">
+      <h2 id="wow-pve-mplus" className="wow-h2">
+        Mythic+ this season
+      </h2>
+      {rating == null ? (
+        <p className="wow-spec__muted">No Mythic+ rating this season.</p>
+      ) : (
+        <p className="wow-pve__rating">
+          {season?.color && <span className="wow-pve__dot" style={{ background: season.color }} aria-hidden="true" />}
+          <span className="wow-panel__big">{rating.toLocaleString("en-US")}</span>
+          <span className="wow-spec__muted">rating</span>
+        </p>
+      )}
+      {runs.length > 0 && (
+        <div className="wow-table-scroll">
+          <table className="wow-table">
+            <thead>
+              <tr>
+                <th scope="col">Dungeon</th>
+                <th scope="col">Key</th>
+                <th scope="col">Time</th>
+                <th scope="col">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {runs.map((run) => (
+                <tr key={run.dungeon}>
+                  <th scope="row">
+                    {run.dungeon}
+                    <span className="wow-rep__detail"> · {formatEarned(run.completedAt)}</span>
+                  </th>
+                  <td>
+                    +{run.level}
+                    {!run.timed && <span className="wow-pve__over">over time</span>}
+                  </td>
+                  <td>{keystoneTime(run.duration)}</td>
+                  <td>{run.score.toLocaleString("en-US")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
   );
 }
