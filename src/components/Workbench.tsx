@@ -59,6 +59,14 @@ const WORKBENCH: WorkbenchItem[] = [
     conciergeLevel: "Wing Commander",
     href: "/lab/star-citizen",
   },
+  {
+    id: "wb-warcraft",
+    title: "World of Warcraft",
+    tag: "retail · forever",
+    cap: "Every character I play, synced nightly from Blizzard.",
+    span: "span-4",
+    href: "/lab/warcraft",
+  },
 ];
 
 /* SC Fleet — Concierge tile. Renders inside the standard wbcard's photo

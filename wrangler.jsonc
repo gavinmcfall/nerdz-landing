@@ -14,6 +14,15 @@
       // docs/superpowers/specs/2026-08-28-reading-sync-auth-design.md).
       "binding": "READING_SYNC",
       "id": "e428a370d1b747fdb94fa9663aaa9d11"
+    },
+    {
+      // WoW character data written nightly by wow-armoury-sync; the site only
+      // reads it (see docs/superpowers/specs/2026-11-16-wow-armoury-design.md).
+      // `next dev` uses empty local storage. To develop against the real data,
+      // add "remote": true here temporarily and set CLOUDFLARE_API_TOKEN; don't
+      // commit it, because the CI build has no token and would fail.
+      "binding": "WOW_ARMORY",
+      "id": "3f1c3a246ead46b6a6bddeb7db8b8455"
     }
   ],
   "observability": {
