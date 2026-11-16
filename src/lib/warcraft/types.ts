@@ -4,6 +4,10 @@
 
 export type Game = "retail" | "forever";
 
+// A window over a render, as fractions of the image: x is the figure's
+// horizontal centre, top and height the window's vertical extent.
+export type Frame = { x: number; top: number; height: number };
+
 export type Summary = {
   key: string;
   game: Game;
@@ -24,9 +28,12 @@ export type Summary = {
   guild?: string | null;
   achievementPoints?: number;
   inset?: string | null;
-  // The full transparent render and where the figure stands in it (sync
-  // v2.1+). Absent in older indexes; null when the render couldn't be read.
-  portrait?: { url: string; focus: { x: number; top: number; height: number } } | null;
+  // The full transparent render and where the figure stands in it: focus
+  // (head and upper body, sync v2.1+) and figure (whole body, v2.2+). Absent
+  // in older indexes; null when the render couldn't be read.
+  portrait?: { url: string; focus: Frame; figure?: Frame } | null;
+  // The scene Blizzard's Armory stands this class in (v2.2+).
+  background?: string | null;
   lastSuccessAt?: string;
   error?: string;
 };

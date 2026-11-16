@@ -53,6 +53,19 @@ export function portraitStyle(f: Focus) {
   };
 }
 
+// The Character tab's centrepiece: the whole figure, scaled to fill the
+// frame's height, standing in its class's Armory background. Null for an
+// index written before the sync measured the figure (2.2); the tab then
+// shows the render as it comes.
+export function dollScene(summary: {
+  portrait?: { url: string; focus: Focus; figure?: Focus } | null;
+  background?: string | null;
+}) {
+  const portrait = summary.portrait;
+  if (!portrait?.figure) return null;
+  return { url: portrait.url, background: summary.background ?? null, stageStyle: portraitStyle(portrait.figure) };
+}
+
 // "Demon Hunter" → "demon-hunter", for the data-class attribute the CSS
 // colours by.
 export function classSlug(name: string | null | undefined): string {

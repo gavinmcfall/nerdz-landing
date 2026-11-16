@@ -293,13 +293,31 @@ a.wow-card:focus-visible { border-color: var(--glow); }
   border-radius: 14px;
   background: radial-gradient(ellipse at 50% 35%, var(--paper-soft), var(--paper) 72%);
 }
-.wow-doll__render img {
+/* Older indexes: the render as Blizzard frames it. */
+.wow-doll__plain {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
+}
+/* The stage is the render's own box (4:3), scaled and placed inline so the
+   whole figure fills the frame's height. The class background is 1.5× the
+   render (2400×1860 against 1600×1200), centred and top-aligned. */
+.wow-doll__render--scene { background: #060309; }
+.wow-doll__stage { position: absolute; aspect-ratio: 4 / 3; }
+.wow-doll__scene,
+.wow-doll__figure { position: absolute; max-width: none; }
+.wow-doll__scene { left: -25%; top: 0; width: 150%; height: 155%; }
+.wow-doll__figure { inset: 0; width: 100%; height: 100%; }
+/* Fade the scene's edges into the frame. */
+.wow-doll__render--scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 75% 70% at 50% 55%, transparent 60%, rgba(6, 3, 9, 0.75));
 }
 .wow-doll__weapons {
   display: flex;

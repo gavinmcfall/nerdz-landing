@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { classSlug, formatSynced, hasData, portraitStyle, sortRetail, staleNote } from "./format.ts";
+import { classSlug, dollScene, formatSynced, hasData, portraitStyle, sortRetail, staleNote } from "./format.ts";
 
 test("hasData is true only for a summary with a successful sync behind it", () => {
   assert.equal(hasData({ status: "ok", lastSuccessAt: "2026-11-16T14:17:00.000Z" }), true);
@@ -55,4 +55,30 @@ test("portraitStyle scales the render so the focus window fills the frame", () =
     left: "50%",
     transform: "translateX(-50.19%)",
   });
+});
+
+test("dollScene stands the whole figure in its class background", () => {
+  const url = "https://render.worldofwarcraft.com/us/character/barthilas/77/206868045-main-raw.png";
+  const background = "https://render.worldofwarcraft.com/profile-backgrounds/v2/armory_bg_class_demon_hunter.jpg";
+  const focus = { x: 0.4988, top: 0.2904, height: 0.2778 };
+  // Dìabolical's figure frame: 54.5% of the render tall, so the render is
+  // drawn at 1/0.545 of the frame's height.
+  const scene = dollScene({ portrait: { url, focus, figure: { x: 0.4988, top: 0.2904, height: 0.545 } }, background });
+  assert.deepEqual(scene, {
+    url,
+    background,
+    stageStyle: { height: "183.4862%", top: "-53.2844%", left: "50%", transform: "translateX(-49.88%)" },
+  });
+});
+
+test("dollScene keeps the figure without a background when the class has none", () => {
+  const portrait = { url: "u", focus: { x: 0.5, top: 0.1, height: 0.3 }, figure: { x: 0.5, top: 0.1, height: 0.6 } };
+  assert.equal(dollScene({ portrait, background: null })?.background, null);
+  assert.equal(dollScene({ portrait })?.background, null);
+});
+
+test("dollScene is null without a figure frame (index older than sync 2.2)", () => {
+  assert.equal(dollScene({ portrait: { url: "u", focus: { x: 0.5, top: 0.1, height: 0.3 } } }), null);
+  assert.equal(dollScene({ portrait: null }), null);
+  assert.equal(dollScene({}), null);
 });
