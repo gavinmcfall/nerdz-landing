@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CharacterHeader } from "@/components/warcraft/CharacterHeader";
+import { CharacterTab } from "@/components/warcraft/CharacterTab";
 import { ComingSoon, TabBar } from "@/components/warcraft/TabBar";
-import { getIndex } from "@/lib/warcraft/data";
+import { getCharacterView, getIndex } from "@/lib/warcraft/data";
 import { resolveCharacterPath } from "@/lib/warcraft/resolve";
 import type { Summary } from "@/lib/warcraft/types";
 
@@ -56,7 +57,11 @@ export default async function CharacterPage({ params }: Params) {
         <Crumb summary={summary} />
         <CharacterHeader summary={summary} />
         <TabBar route={summary.route} active={tab} />
-        {tab === "character" ? <p className="wow-soon">Character tab coming in the next commit.</p> : <ComingSoon tab={tab} />}
+        {tab === "character" ? (
+          <CharacterTab view={await getCharacterView(summary.key)} summary={summary} />
+        ) : (
+          <ComingSoon tab={tab} />
+        )}
       </div>
     </section>
   );
