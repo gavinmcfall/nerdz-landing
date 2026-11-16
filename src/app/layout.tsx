@@ -1,27 +1,21 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
+import { preload } from "react-dom";
 import { Topbar } from "@/components/Topbar";
 import { Colophon } from "@/components/Colophon";
 import { PageTransition } from "@/components/PageTransition";
 import { Atmosphere } from "@/components/Atmosphere";
+import "./fonts.css";
 import "./globals.css";
 
-const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex-sans",
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  weight: ["400", "500", "600"],
-  subsets: ["latin"],
-  display: "swap",
-});
+// Fonts are self-hosted (see fonts.css): fetching them from Google at build
+// time made CI builds fail whenever Google didn't answer.
+const LATIN_FONTS = [
+  "/fonts/ibm-plex-sans-normal-latin.woff2",
+  "/fonts/ibm-plex-sans-italic-latin.woff2",
+  "/fonts/jetbrains-mono-latin.woff2",
+];
 
 const description =
   "Self-hostable tools for the nerdy hobbies Gavin McFall loves — Star Citizen, 3D printing, TTRPGs — and the homelab they all run on.";
@@ -61,6 +55,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Every page uses these three; start loading them before the CSS asks.
+  // React's preload() puts one <link rel="preload"> in <head> and dedupes it.
+  for (const href of LATIN_FONTS) preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+
   // No-flash theme script: runs synchronously in <head> before CSS applies, so
   // a returning visitor's saved light preference (or system preference) is on
   // the <html> as data-theme="light" before first paint — no flash of dark.
@@ -73,7 +71,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className={`${plexSans.variable} ${jetbrainsMono.variable}`}>
+      <body>
         <Topbar />
         <main id="main" className="page-stage">
           {/* Atmosphere reads ?atm=… and renders the cinematic background

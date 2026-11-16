@@ -36,7 +36,7 @@
   --radius-sm:    6px;
 
   /* type — the host sets --font-plex-sans / --font-jetbrains-mono
-     (next/font in the app; @font-face in the blog). Shell CSS reads
+     (self-hosted @font-face in fonts.css here and in the blog). Shell CSS reads
      --font-sans / --font-mono only. */
   --font-sans:    var(--font-plex-sans), system-ui, -apple-system, sans-serif;
   --font-mono:    var(--font-jetbrains-mono), ui-monospace, Menlo, monospace;
