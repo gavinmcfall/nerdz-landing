@@ -1,5 +1,6 @@
 import type { CharacterView, Summary } from "@/lib/warcraft/types";
 import { layoutSlots, raidRows } from "@/lib/warcraft/doll";
+import { dollScene } from "@/lib/warcraft/format";
 import { ItemSlot } from "./ItemSlot";
 
 export function CharacterTab({ view, summary }: { view: CharacterView | null; summary: Summary }) {
@@ -12,6 +13,7 @@ export function CharacterTab({ view, summary }: { view: CharacterView | null; su
   }
   const { left, right, bottom } = layoutSlots(view.equipment, view.game);
   const alt = `${summary.name}, ${[summary.race, summary.characterClass].filter(Boolean).join(" ")}, in current gear`;
+  const scene = dollScene(summary);
 
   return (
     <>
@@ -23,7 +25,18 @@ export function CharacterTab({ view, summary }: { view: CharacterView | null; su
             </li>
           ))}
         </ul>
-        <figure className="wow-doll__render">{view.render && <img src={view.render} alt={alt} />}</figure>
+        <figure className={`wow-doll__render${scene ? " wow-doll__render--scene" : ""}`}>
+          {scene ? (
+            // The background is drawn at 1.5× the render, as Blizzard composes
+            // it, so the figure stands where the Armory stands it.
+            <div className="wow-doll__stage" style={scene.stageStyle}>
+              {scene.background && <img className="wow-doll__scene" src={scene.background} alt="" />}
+              <img className="wow-doll__figure" src={scene.url} alt={alt} />
+            </div>
+          ) : (
+            view.render && <img className="wow-doll__plain" src={view.render} alt={alt} />
+          )}
+        </figure>
         <ul className="wow-doll__col">
           {right.map((s) => (
             <li key={s.slot}>
