@@ -21,6 +21,7 @@ ramblings, live cluster stats, reading guides, manuals and the lab.
 | `/projects` | Project cards with build-time GitHub stats |
 | `/lab` | Side interests (BBQ, Star Citizen, World of Warcraft) |
 | `/lab/warcraft` | WoW armoury: my retail and WoW Forever characters, from the `WOW_ARMORY` KV the nightly [wow-armoury-sync](https://github.com/gavinmcfall/wow-armoury-sync) Worker writes |
+| `/lab/warcraft/plan` | WoW Forever plan: levelling order, specs and dual specs, profession coverage. Anyone can view; only the Google logins in the `warcraft:editors` KV key can edit, and edits are saved to `plan:forever` in `WOW_ARMORY` |
 | `/manuals` | Field manuals |
 | `/reading` | Reading guides and the book club |
 | `/agentic-engineering` | How the work is built |

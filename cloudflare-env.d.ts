@@ -13,9 +13,11 @@ declare global {
       ): Promise<void>;
       delete(key: string): Promise<void>;
     };
-    // Read-only from the site's side.
+    // The site reads the sync's keys and writes only the Forever plan
+    // (src/lib/warcraft/plan.ts PLAN_KEY).
     WOW_ARMORY: {
       get(key: string, type: "json"): Promise<unknown>;
+      put(key: string, value: string): Promise<void>;
     };
   }
 }
