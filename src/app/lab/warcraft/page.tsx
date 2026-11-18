@@ -69,7 +69,8 @@ export default async function WarcraftPage() {
                 <div className="wow-group">
                   <h3 className="wow-group__title">WoW Forever</h3>
                   <span className="wow-group__meta">
-                    {forever.length} characters{surnames.length > 0 && ` · ${surnames.join(" & ")}`}
+                    {forever.length} characters{surnames.length > 0 && ` · ${surnames.join(" & ")}`} ·{" "}
+                    <Link href="/lab/warcraft/plan">levelling plan →</Link>
                   </span>
                 </div>
                 <div className="wow-grid">
